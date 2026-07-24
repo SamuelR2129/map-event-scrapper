@@ -1,0 +1,97 @@
+[
+  {
+    "venueName": "The Underground",
+    "venueAddress": "133 King St, Newcastle NSW 2300, Australia",
+    "lngLat": [151.779878, -32.92749]
+  },
+  {
+    "venueName": "Lass O'Gowrie Hotel",
+    "venueAddress": "14 Railway St, Wickham NSW 2293",
+    "lngLat": [151.756253, -32.9222659]
+  },
+  {
+    "venueName": "The Lass O'Gowrie Hotel",
+    "venueAddress": "14 Railway St, Wickham NSW 2293",
+    "lngLat": [151.756253, -32.9222659]
+  },
+  {
+    "venueName": "Lass",
+    "venueAddress": "14 Railway St, Wickham NSW 2293",
+    "lngLat": [151.756253, -32.9222659]
+  },
+  {
+    "venueName": "Maru Hi-Fi",
+    "venueAddress": "376 Hunter St, Newcastle West NSW 2302, Australia",
+    "lngLat": [151.767135, -32.927777]
+  },
+  {
+    "venueName": "Hamilton Station Hotel",
+    "venueAddress": "32 Australia St, Islington NSW 2296, Australia",
+    "lngLat": [151.751291, -32.921131]
+  },
+  {
+    "venueName": "Stag & Hunter",
+    "venueAddress": "209 Maitland Rd, Mayfield NSW 2304, Australia",
+    "lngLat": [151.739691, -32.914069]
+  },
+  {
+    "venueName": "King Street Hotel",
+    "venueAddress": "15 Steel St, Newcastle West NSW 2302",
+    "lngLat": [151.7616258, -32.9277652]
+  },
+  {
+    "venueName": "Bernies Bar",
+    "venueAddress": "153-155 Hunter St, Newcastle NSW 2300, Australia",
+    "lngLat": [151.777041, -32.927991]
+  },
+  {
+    "venueName": "Bernie's Bar",
+    "venueAddress": "153-155 Hunter St, Newcastle NSW 2300, Australia",
+    "lngLat": [151.777041, -32.927991]
+  },
+  {
+    "venueName": "Newcastle Art Gallery",
+    "venueAddress": "2 Art Gallery Rd, Newcastle East NSW 2300, Australia",
+    "lngLat": [151.787358, -32.925184]
+  },
+  {
+    "venueName": "Ori",
+    "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+    "lngLat": [151.7659125, -32.9310937]
+  },
+  {
+    "venueName": "Bar On The Hill",
+    "venueAddress": "University Dr, Callaghan NSW 2308, Australia",
+    "lngLat": [151.670892, -32.928335]
+  },
+  {
+    "venueName": "The Oak",
+    "venueAddress": "207 Maitland Rd, Tighes Hill NSW 2297",
+    "lngLat": [151.7477756, -32.9067825]
+  },
+  {
+    "venueName": "Beauford Hotel",
+    "venueAddress": "174 Union St, Newcastle West NSW 2302, Australia",
+    "lngLat": [151.773938, -32.927316]
+  },
+  {
+    "venueName": "The Wicko",
+    "venueAddress": "430 King St, Newcastle West NSW 2302, Australia",
+    "lngLat": [151.771176, -32.925465]
+  },
+  {
+    "venueName": "Queens Wharf Hotel",
+    "venueAddress": "35 Wharf Rd, Newcastle NSW 2300, Australia",
+    "lngLat": [151.782543, -32.924414]
+  },
+  {
+    "venueName": "Croatian",
+    "venueAddress": "20 Albert St, Wickham NSW 2293, Australia",
+    "lngLat": [150.2709961, -33.2477229]
+  },
+  {
+    "venueName": "Shout Brewing",
+    "venueAddress": "22 Clyde St, Islington NSW 2296",
+    "lngLat": [151.737149, -32.9106016]
+  }
+]

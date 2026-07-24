@@ -1,0 +1,31 @@
+export type ScrapedEvent = {
+  id?: string;
+  eventName?: string;
+  upVotes?: number;
+  eventDateTime?: string;
+  lngLat?: number[];
+  localTimeZone?: string;
+  genres?: string;
+  eventDescription?: string;
+  eventBannerImage?: string;
+  eventLink?: string;
+  eventPromoters?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  venueName?: string;
+  venueLink?: string;
+  socialLink?: string;
+  venueAddress?: string;
+  venueLocation?: string;
+  ticketCost?: string;
+  ticketLink?: string;
+  eventStartTime?: string;
+  eventEndTime?: string;
+  source?: string;
+  userEmail?: string;
+  userName?: string;
+  bandCampMediaIds?: {
+    artist: string;
+    mediaId: string;
+  };
+};
