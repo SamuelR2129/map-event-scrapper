@@ -11,7 +11,7 @@ Scraped data is sent directly to a production DB via API. No filesystem bridge b
 ## Build
 
 ```bash
-# From scrappers/map-event-scrapper/
+# From map-event-scrapper/
 docker build -f docker/Dockerfile -t scraper-container .
 ```
 
