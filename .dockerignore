@@ -1,4 +1,5 @@
 **/node_modules
+**/.git
 **/test-results
 **/playwright-report
 **/logs

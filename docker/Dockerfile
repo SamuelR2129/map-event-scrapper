@@ -9,6 +9,7 @@ RUN npm ci
 # Copy source code
 COPY . ./
 COPY .env ./
+RUN rm -rf .git
 
 RUN mkdir -p /app/seed && cp -r src/eventFiles /app/seed/eventFiles
 
