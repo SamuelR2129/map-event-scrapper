@@ -7,7 +7,9 @@ export function commitAndPushAllChanges(outcomes: { file: string; title: string 
 
     if (process.env.GITHUB_TOKEN) {
       const remote = execFileSync("git", ["remote", "get-url", "origin"], { encoding: "utf-8" }).trim();
-      const authedUrl = remote.replace("https://", `https://x-access-token:${process.env.GITHUB_TOKEN}@`);
+      const authedUrl = remote
+        .replace("https://", `https://x-access-token:${process.env.GITHUB_TOKEN}@`)
+        .replace("git@github.com:", `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/`);
       execFileSync("git", ["remote", "set-url", "origin", authedUrl]);
     }
 

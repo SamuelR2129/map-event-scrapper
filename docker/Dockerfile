@@ -9,7 +9,9 @@ RUN npm ci
 # Copy source code
 COPY . ./
 COPY .env ./
-RUN rm -rf .git
+
+RUN git config --global user.email "opencode@healer.bot" && \
+    git config --global user.name "OpenCode Healer"
 
 RUN mkdir -p /app/seed && cp -r src/eventFiles /app/seed/eventFiles
 
