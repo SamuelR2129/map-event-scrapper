@@ -8,10 +8,16 @@ class HealerReporter implements Reporter {
 
   onTestEnd(test: TestCase, result: TestResult) {
     if (result.status !== "passed" && result.status !== "skipped") {
+      const err = result.errors?.[0];
+      const errorContext = [
+        err?.message ?? "unknown error",
+        err?.snippet ?? "",
+      ].filter(Boolean).join("\n");
+      console.log(`[HEALER] Error context for "${test.title}":\n${errorContext}`);
       this.failures.push({
         file: test.location.file,
         title: test.title,
-        error: result.errors?.[0]?.message ?? "unknown error",
+        error: errorContext,
       });
     }
   }
