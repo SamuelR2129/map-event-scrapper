@@ -15,5 +15,5 @@ npm run scrape-xvfb
 echo "[$(date)] Enriching..."
 npm run map
 
-# echo "[$(date)] Sending to DB..."
-# npm run send-to-db
+echo "[$(date)] Sending to DB..."
+npm run send-to-db
