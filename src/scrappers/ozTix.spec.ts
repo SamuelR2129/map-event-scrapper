@@ -99,11 +99,14 @@ test("ScrapOztix", async ({ page, config }) => {
 
       const eventHref = await eventElement.getAttribute("href");
 
-      if (eventHref) {
-        event.ticketLink = eventHref;
+      if (!eventHref) {
+        console.log("No href found for event, skipping");
+        continue;
       }
 
-      await eventElement.click();
+      event.ticketLink = eventHref;
+
+      await page.goto(eventHref);
 
       await page.waitForLoadState();
 
