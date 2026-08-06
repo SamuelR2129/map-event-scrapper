@@ -58,7 +58,7 @@ Strict Rules:
    - Low (<0.5): Only if unsure — avoid guessing.
 7. If confidence Medium or Low, prefer a DIFFERENT artist rather than risking a failed or reused URL.
 8. LOCATION: The artist must be based in Australia and primarily match the provided genres.
-9. SOURCE: Try and get from the discover page of their genre like https://bandcamp.com/discover/${genres?.[0].toLowerCase()}
+9. SOURCE: Try and get from the discover page of their genre like https://bandcamp.com/discover/${genres?.[0]?.toLowerCase()}
 
 Output:
 Return ONLY a JSON object with:
