@@ -8,7 +8,7 @@
     "images": "ts-node ./src/helpers/extractEventsFromImages.ts",
     "send-to-db": "ts-node ./src/apis/sendCompleteEventsToDb.ts",
     "scrape": "npx playwright test --grep-invert witchhouseNewcastle",
-    "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results --grep \"Scrape humanitix|ScrapNewcastleLive\""
+    "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results"
   },
   "keywords": [],
   "author": "",

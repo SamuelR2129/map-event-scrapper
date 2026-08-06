@@ -103,78 +103,87 @@ test("ScrapOztix", async ({ page, config }) => {
         event.ticketLink = eventHref;
       }
 
-      await eventElement.click();
+      // Open the event detail page in a new tab so the current search results
+      // page is not navigated. Some events redirect to external ticketing sites
+      // and clicking them in the same tab would race with the `page.goto` calls
+      // used to return to the search results ("navigation is interrupted by
+      // another navigation").
+      const eventDetailPage = await page.context().newPage();
 
-      await page.waitForLoadState();
+      try {
+        await eventDetailPage.goto(eventHref ?? page.url(), { waitUntil: "domcontentloaded" });
 
-      const headingNode = page.locator("h1").first();
+        await eventDetailPage.waitForLoadState("domcontentloaded");
 
-      if (await headingNode.isVisible()) {
-        const venueName = await page.locator(".event-details-item").first().innerText();
+        const headingNode = eventDetailPage.locator("h1").first();
 
-        if (!venueName.toLowerCase().includes("calmer")) {
-          event.eventName = await headingNode.innerText();
+        if (await headingNode.isVisible()) {
+          const venueName = await eventDetailPage.locator(".event-details-item").first().innerText();
 
-          event.venueName = venueName;
+          if (!venueName.toLowerCase().includes("calmer")) {
+            event.eventName = await headingNode.innerText();
 
-          const eventImageUrl = await page.locator("#event-image").getAttribute("src");
+            event.venueName = venueName;
 
-          if (eventImageUrl) {
-            const url = new URL(eventImageUrl);
-            url.searchParams.set("width", "700");
-            url.searchParams.set("height", "350");
-            event.eventBannerImage = url.toString();
-          }
+            const eventImageUrl = await eventDetailPage.locator("#event-image").getAttribute("src");
 
-          const promoterElement = await page.locator(".presented-by").first();
-
-          if (await promoterElement.isVisible()) {
-            event.eventPromoters = await promoterElement.innerText();
-          }
-
-          const rawDateTime = (await page.locator(".event-details-item").nth(1).innerText()).trim();
-
-          const normalizedDateTime = rawDateTime.replace(/(\s)(\d:)/, "$10$2"); // Add leading zero if the hour is a single digit
-
-          const dateTimeObject = DateTime.fromFormat(normalizedDateTime, "EEEE, d LLLL yyyy hh:mm a");
-
-          const dateTimeSetToMidnight = dateTimeObject.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-
-          event.eventDateTime = dateTimeSetToMidnight.toUTC().toString() || undefined;
-
-          event.eventStartTime = dateTimeObject.toFormat("hh:mm a");
-
-          const eventTags = await page.locator(".event-tag").all();
-
-          for (const tag of eventTags) {
-            const tagCopy = (await tag.innerText()).toLowerCase();
-
-            if (!notGenres.includes(tagCopy) && !tagCopy.includes("days away")) {
-              event.genres = event.genres ? event.genres.concat(`, ${tagCopy}`) : tagCopy;
+            if (eventImageUrl) {
+              const url = new URL(eventImageUrl);
+              url.searchParams.set("width", "700");
+              url.searchParams.set("height", "350");
+              event.eventBannerImage = url.toString();
             }
+
+            const promoterElement = await eventDetailPage.locator(".presented-by").first();
+
+            if (await promoterElement.isVisible()) {
+              event.eventPromoters = await promoterElement.innerText();
+            }
+
+            const rawDateTime = (await eventDetailPage.locator(".event-details-item").nth(1).innerText()).trim();
+
+            const normalizedDateTime = rawDateTime.replace(/(\s)(\d:)/, "$10$2"); // Add leading zero if the hour is a single digit
+
+            const dateTimeObject = DateTime.fromFormat(normalizedDateTime, "EEEE, d LLLL yyyy hh:mm a");
+
+            const dateTimeSetToMidnight = dateTimeObject.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+
+            event.eventDateTime = dateTimeSetToMidnight.toUTC().toString() || undefined;
+
+            event.eventStartTime = dateTimeObject.toFormat("hh:mm a");
+
+            const eventTags = await eventDetailPage.locator(".event-tag").all();
+
+            for (const tag of eventTags) {
+              const tagCopy = (await tag.innerText()).toLowerCase();
+
+              if (!notGenres.includes(tagCopy) && !tagCopy.includes("days away")) {
+                event.genres = event.genres ? event.genres.concat(`, ${tagCopy}`) : tagCopy;
+              }
+            }
+
+            const priceNode = await eventDetailPage.locator(".ticket-price").first();
+
+            if (await priceNode.isVisible()) {
+              event.ticketCost = await priceNode.innerText();
+            }
+
+            const descriptionNode = eventDetailPage.locator(".event-description");
+
+            if (await descriptionNode.isVisible()) {
+              event.eventDescription = await descriptionNode.innerText();
+            }
+
+            event.localTimeZone = "Australia/Sydney";
+
+            events = events.length ? [...events, event] : [event];
           }
-
-          const priceNode = await page.locator(".ticket-price").first();
-
-          if (await priceNode.isVisible()) {
-            event.ticketCost = await priceNode.innerText();
-          }
-
-          const descriptionNode = page.locator(".event-description");
-
-          if (await descriptionNode.isVisible()) {
-            event.eventDescription = await descriptionNode.innerText();
-          }
-
-          event.localTimeZone = "Australia/Sydney";
-
-          events = events.length ? [...events, event] : [event];
         }
+      } finally {
+        await eventDetailPage.close();
       }
 
       console.log(eventName, "end");
-
-      await page.goto(`${pageUrl}&page=${pageNumber}`);
     }
 
     ++pageNumber;

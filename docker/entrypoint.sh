@@ -10,10 +10,10 @@ cp -r /app/seed/eventFiles/* src/eventFiles/
 cp -r /app/seed-scrappers/* src/scrappers/
 
 echo "[$(date)] Running scrapers..."
-npm run scrape-xvfb
+npm run scrape-xvfb || true
 
 echo "[$(date)] Enriching..."
 npm run map
 
-# echo "[$(date)] Sending to DB..."
-# npm run send-to-db
+echo "[$(date)] Sending to DB..."
+npm run send-to-db
