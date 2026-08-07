@@ -34,6 +34,12 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
+    /* All browser traffic goes through the in-container egress allowlist proxy
+       when running inside the scraper container (entrypoint sets EGRESS_PROXY_SERVER). */
+    ...(process.env.EGRESS_PROXY_SERVER
+      ? { proxy: { server: process.env.EGRESS_PROXY_SERVER, bypass: "localhost,127.0.0.1,::1" } }
+      : {}),
+
     /* Collect trace when retrying the first retry. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
     headless: false,

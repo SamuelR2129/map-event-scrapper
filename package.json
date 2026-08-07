@@ -8,7 +8,9 @@
     "images": "ts-node ./src/helpers/extractEventsFromImages.ts",
     "send-to-db": "ts-node ./src/apis/sendCompleteEventsToDb.ts",
     "scrape": "npx playwright test --grep-invert witchhouseNewcastle",
-    "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results"
+    "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results",
+    "egress-proxy": "ts-node ./src/egress/allowlist-proxy.ts",
+    "generate-allowlist": "ts-node ./scripts/generate-egress-allowlist.ts"
   },
   "keywords": [],
   "author": "",

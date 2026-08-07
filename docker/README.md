@@ -80,11 +80,13 @@ container and what leaks out:
   root, so `--tmpfs ...:uid=1000,gid=1000` re-owns it to `node` at mount time;
   without this the container — which runs as `USER node` — would get
   `EACCES`/`ENOENT` writing to those directories.
-- **Egress hardening.** An attacker-influenced URL is blocked at the app layer
-  (`src/helpers/ssrf.ts`: rejects private/loopback/link-local IPs, `host.docker.internal`
-  and friends, plus DNS-rebinding-style internal resolutions) before any `page.goto`.
-  For stronger isolation, run the container through an outbound allowlist proxy
-  by setting `HTTPS_PROXY`/`HTTP_PROXY` in `.env` (also wired via `--env-file`).
+- **Egress hardening.** All outbound traffic passes through an in-container
+  allowlist proxy (`src/egress/allowlist-proxy.ts`) that only forwards connections
+  to hosts listed in `docker/egress-allowlist.txt` — everything else gets `403`.
+  This is layered on top of the app-layer SSRF check (`src/helpers/ssrf.ts`:
+  rejects private/loopback/link-local IPs, `host.docker.internal` and friends, plus
+  DNS-rebinding-style internal resolutions) before any `page.goto`. See
+  [Egress allowlist](#egress-allowlist) below.
 
 For runtime egress allowlisting the container already reaches: the scraper target
 domains, `bandcamp.com`, `api.github.com`, the Google AI/Maps/Places API hosts and
@@ -109,6 +111,47 @@ zero-download-at-runtime sandbox.
 ### Ripgrep config
 
 The image and entrypoint create `~/.config/ripgrep/config` (in the node user's `$HOME`) with `--max-columns=10000`. This prevents ripgrep's JSON output from exceeding its 65536-byte internal buffer when searching files with very long lines (e.g., minified HTML, WebFetch output).
+
+### Egress allowlist
+
+Every outbound connection the container makes is routed through a forward proxy
+(`src/egress/allowlist-proxy.ts`, started by `docker/entrypoint.sh` on
+`127.0.0.1:7443`) that forwards only hosts listed in
+`docker/egress-allowlist.txt` (baked into the image at
+`/usr/local/etc/egress-allowlist.txt`). This covers the Playwright browser
+(configured via `use.proxy` in `playwright.config.ts`, keyed on
+`EGRESS_PROXY_SERVER`), Node/undici `fetch` and `@google/genai` (via
+`--use-env-proxy` + `HTTP(S)_PROXY`), and `git`/`curl`/the opencode healer CLI
+(standard proxy env vars). Connections to unlisted hosts are refused with `403`
+and logged to `logs/egress.log` — start strict, then add hosts as the log shows
+legitimate ones the scraper pages rely on.
+
+**Allowlist contents** (regenerate with `npm run generate-allowlist`):
+
+| Source | Hosts |
+|---|---|
+| Scraper targets (static) | `newcastlelive.com.au`, `humanitix.com`, `www.oztix.com.au`, `www.eventbrite.com`, `www.thehamiltonstationhotel.com`, `www.instagram.com`, `facebook.com` |
+| Bandcamp | `*.bandcamp.com`, `*.bcbits.com` (artist pages + media CDN) |
+| Google APIs | `*.googleapis.com` (genai / places / maps / geocode) |
+| GitHub (healer pushes/PRs) | `github.com`, `api.github.com`, `*.githubusercontent.com` |
+| Healer model API | `opencode.ai`, `api.opencode.ai` |
+| Env-derived (auto) | hosts parsed from `GOOGLE_PLACES_URL`, `GOOGLE_GEOCODE_URL`, `PRODUCTION_DB_URL` (e.g. `api.witchhouse-group.com` for prod) |
+
+**Adding hosts.** Adding a new scraper or project requires an allowlist entry:
+edit `scripts/generate-egress-allowlist.ts` (static list), re-run
+`npm run generate-allowlist`, and rebuild the image. The generated
+`docker/egress-allowlist.txt` is committed — the Docker build runs with no `.env`
+(`.dockerignore` excludes it), so env-derived hosts are resolved locally when the
+script runs, not during `docker build`.
+
+**Notes**
+- `logs/egress.log` lists every denied host:port — check it when a scrape or the
+  healer mysteriously fails (the proxy may be rejecting an unlisted host).
+- `NO_PROXY` exempts `127.0.0.1`, `localhost`, `::1` (keeps the proxy itself and
+  localhost-only tooling from looping).
+- The correct model/host for the opencode healer CLI is verified against the proxy
+  on first run; if a CLI version ever ignores `HTTPS_PROXY`, add its hosts to the
+  allowlist and treat healer egress as covered-by-config, not proxy-enforced.
 
 ## Troubleshooting
 
