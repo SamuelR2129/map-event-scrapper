@@ -3,10 +3,14 @@ set -e
 
 cd /app/scraper
 
-# Seed the writable eventFiles directory (mounted as tmpfs, starts empty)
+git config --global user.email "opencode@healer.bot"
+git config --global user.name "OpenCode Healer"
+
+mkdir -p "$HOME/.config/ripgrep"
+echo '--max-columns=10000' > "$HOME/.config/ripgrep/config"
+
 cp -r /app/seed/eventFiles/* src/eventFiles/
 
-# Seed the writable scrappers directory for test healing
 cp -r /app/seed-scrappers/* src/scrappers/
 
 echo "[$(date)] Running scrapers..."
