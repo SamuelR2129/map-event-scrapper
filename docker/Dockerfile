@@ -21,6 +21,10 @@ RUN npm install -g npm@12.0.1
 # Copy source code
 COPY . ./
 
+# Egress allowlist for the runtime proxy (see src/egress/allowlist-proxy.ts).
+# Regenerate with `npm run generate-allowlist` (the Docker build has no .env).
+COPY docker/egress-allowlist.txt /usr/local/etc/egress-allowlist.txt
+
 RUN mkdir -p /app/seed && cp -r src/eventFiles /app/seed/eventFiles
 
 RUN mkdir -p /app/seed-scrappers && cp -r src/scrappers/* /app/seed-scrappers/
