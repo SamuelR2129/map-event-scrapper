@@ -3,6 +3,12 @@ set -e
 
 cd /app/scraper
 
+git config --global user.email "opencode@healer.bot"
+git config --global user.name "OpenCode Healer"
+
+mkdir -p "$HOME/.config/ripgrep"
+echo '--max-columns=10000' > "$HOME/.config/ripgrep/config"
+
 # Seed the writable eventFiles directory (mounted as tmpfs, starts empty)
 cp -r /app/seed/eventFiles/* src/eventFiles/
 
