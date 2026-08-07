@@ -8,6 +8,7 @@ import { writeToCompleteEventFiles, writeToIncompleteEventFiles } from "./writeT
 import { findKnownAddressAndCoords } from "./findKnownAddressAndCoords";
 import { aiRemoveNonMusicEvents } from "./ai/removeNonMusicEvents";
 import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
+import { inspectEventCopy } from "./ai/promptInjectionDetector";
 
 (async () => {
   let completeEvent: ScrapedEvent[] = [];
@@ -22,6 +23,13 @@ import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
   const config = await cityConfig(city);
 
   for (const event of config.eventFiles.staging as ScrapedEvent[]) {
+    const injectionCheck = inspectEventCopy(event);
+    if (injectionCheck.detected) {
+      console.warn(`Skipping "${event.eventName ?? "unknown"}" - prompt injection detected:`, injectionCheck.matches);
+      incompleteEvent.push(event);
+      continue;
+    }
+
     console.log("Mapping " + event.eventName);
     const knownVenueEvents = findKnownAddressAndCoords(event);
     const googleParsedEvent = await findMissingAddressAndLngLat(knownVenueEvents);

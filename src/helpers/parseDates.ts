@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { aiGetDateTime } from "./ai/getDateString";
+import { detectPromptInjection } from "./ai/promptInjectionDetector";
 
 export const parseDate = async (dateStr: string) => {
   dateStr = dateStr.replace(/^Starts on /, "");
@@ -54,6 +55,12 @@ export const parseDate = async (dateStr: string) => {
   const parsedLocal = DateTime.fromFormat(withoutTz, "cccc, MMMM d ha").set({ year: 2026 });
 
   if (parsedLocal.isValid) return parsedLocal;
+
+  const injectionCheck = detectPromptInjection(dateStr);
+  if (injectionCheck.detected) {
+    console.warn(`Skipping AI date extraction for "${dateStr}" - prompt injection detected:`, injectionCheck.matches);
+    return;
+  }
 
   const aiDateString = await aiGetDateTime(dateStr);
 
