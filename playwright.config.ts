@@ -38,6 +38,11 @@ export default defineConfig({
     trace: "on-first-retry",
     headless: false,
     actionTimeout: process.env.PW_ACTION_TIMEOUT ? Number(process.env.PW_ACTION_TIMEOUT) : 10_000,
+    /* Chromium's setuid/namespace sandbox requires SYS_ADMIN + userns, which the
+       hardened non-root container (--cap-drop=ALL) does not provide. */
+    launchOptions: {
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    },
   },
 
   /* Configure projects for major browsers */

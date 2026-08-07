@@ -64,7 +64,7 @@ test("Scrape humanitix", async ({ page, config }) => {
 
     await page.waitForLoadState("domcontentloaded");
 
-    const titleElement = page.locator("h1").first();
+    const titleElement = page.locator('h1#event-title').first();
 
     const eventName = await titleElement.innerText();
 
