@@ -1,5 +1,6 @@
 import { Page } from "playwright";
 import { aiGenerateArtistBandCampUrl } from "./ai/aiGenerateArtistBandCampUrl";
+import { isSafeExternalUrl } from "./ssrf";
 
 type BandCampMedia = {
   artist: string;
@@ -54,6 +55,12 @@ async function fetchMediaIdFromUrl(
   genres: string[],
 ): Promise<BandCampMedia | null> {
   try {
+    const urlCheck = await isSafeExternalUrl(url);
+    if (!urlCheck.safe) {
+      console.warn(`[fetch] ❌ blocked unsafe URL: ${url} (${urlCheck.reason})`);
+      return null;
+    }
+
     console.log("[fetch] navigating to:", url, genres);
     await page.goto(url, { waitUntil: "load" });
     const signUpHeading = page.getByRole("heading", {
@@ -97,6 +104,13 @@ async function fetchMediaIdFromUrl(
     if (genres.length > 0) {
       const discoverUrl = `https://bandcamp.com/discover/${genres[0]}`;
       console.warn("[fetch] trying discover fallback:", discoverUrl);
+
+      const discoverCheck = await isSafeExternalUrl(discoverUrl);
+      if (!discoverCheck.safe) {
+        console.warn(`[fetch] ❌ blocked unsafe discover URL: ${discoverUrl} (${discoverCheck.reason})`);
+        return null;
+      }
+
       await page.goto(discoverUrl, { waitUntil: "load" });
 
       const gridItem = page.locator('[data-test^="results-grid-item-"]').first();

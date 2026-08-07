@@ -1,4 +1,5 @@
 import { ScrapedEvent } from "../scrappers/types";
+import { isBlockedExternalUrl } from "./ssrf";
 
 // Preserve newlines (normalize CRLF -> LF) and escape HTML characters safely.
 function escapeHtml(input: string): string {
@@ -91,12 +92,15 @@ function sanitizeUrl(value?: unknown): string | undefined {
   try {
     const url = new URL(trimmed);
     if (url.protocol === "http:" || url.protocol === "https:") {
-      return url.toString();
+      if (!isBlockedExternalUrl(url.toString())) {
+        return url.toString();
+      }
     }
   } catch {
     console.error(`Dangerous url - ${trimmed}`);
   }
 
+  console.error(`Dangerous url - ${trimmed}`);
   return undefined;
 }
 
