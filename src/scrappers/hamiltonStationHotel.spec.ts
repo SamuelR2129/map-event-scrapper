@@ -35,7 +35,7 @@ test("ScrapeHamiltonStationHotel", async ({ page, config }) => {
 
   await page.goto("https://www.thehamiltonstationhotel.com/music", { waitUntil: "domcontentloaded" });
 
-  const rawLogoSrc = await page.locator("#logoImage img").first().getAttribute("src");
+  const rawLogoSrc = await page.locator(".sqs-gallery-block-slider img").first().getAttribute("src");
   const eventBannerImage = rawLogoSrc ? new URL(rawLogoSrc, page.url()).href : undefined;
 
   // Extract raw event data from all <p> elements in the sqs-html-content div
