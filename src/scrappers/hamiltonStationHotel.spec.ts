@@ -35,8 +35,12 @@ test("ScrapeHamiltonStationHotel", async ({ page, config }) => {
 
   await page.goto("https://www.thehamiltonstationhotel.com/music", { waitUntil: "domcontentloaded" });
 
-  const rawLogoSrc = await page.locator("#logoImage img").first().getAttribute("src");
-  const eventBannerImage = rawLogoSrc ? new URL(rawLogoSrc, page.url()).href : undefined;
+  // Event banner/poster images live in the gallery slider, not in the HTML content block.
+  const rawBannerSrc = await page
+    .locator(".sqs-gallery-block-slider img.thumb-image")
+    .first()
+    .getAttribute("data-src");
+  const eventBannerImage = rawBannerSrc ? new URL(rawBannerSrc, page.url()).href : undefined;
 
   // Extract raw event data from all <p> elements in the sqs-html-content div
   const rawEvents = await page.$$eval(".sqs-html-content p", (paragraphs) => {
