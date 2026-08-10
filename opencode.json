@@ -66,9 +66,9 @@
         "playwright-test*browser_verify_element_visible": true,
         "playwright-test*browser_verify_text_visible": true,
         "playwright-test*browser_snapshot": true,
-        "playwright-test*test_debug": false,
+        "playwright-test*test_debug": true,
         "playwright-test*test_list": true,
-        "playwright-test*test_run": false
+        "playwright-test*test_run": true
       }
     },
     "playwright-test-planner": {

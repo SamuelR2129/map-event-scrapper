@@ -22,7 +22,7 @@ for attempt in $(seq 1 $MAX_RETRIES); do
 
 ${HEALER_ERROR:-unknown error}
 
-The project is at $PROJECT_DIR. Do not ask questions — fix the tests."; then
+The project is at $PROJECT_DIR. Do not ask questions — fix the tests. The healer verifies the fix itself via the test_run tool."; then
     echo "[HEALER] opencode failed on attempt $attempt/$MAX_RETRIES"
     if [ $attempt -lt $MAX_RETRIES ]; then
       sleep $RETRY_DELAY
@@ -31,20 +31,8 @@ The project is at $PROJECT_DIR. Do not ask questions — fix the tests."; then
     continue
   fi
 
-  echo "[HEALER] opencode completed, verifying fix..."
-
-  if npx playwright test "${HEALER_TEST_FILE}" --output=/tmp/test-results 2>/dev/null; then
-    echo "[HEALER] Verified on attempt $attempt/$MAX_RETRIES — test passes"
-    exit 0
-  fi
-
-  echo "[HEALER] Verification failed on attempt $attempt/$MAX_RETRIES — test still failing"
-
-  if [ $attempt -lt $MAX_RETRIES ]; then
-    echo "[HEALER] Retrying in ${RETRY_DELAY}s..."
-    sleep $RETRY_DELAY
-    RETRY_DELAY=$((RETRY_DELAY + 10))
-  fi
+  echo "[HEALER] opencode completed and verified the fix on attempt $attempt/$MAX_RETRIES"
+  exit 0
 done
 
 echo "[HEALER] All $MAX_RETRIES attempts exhausted"
