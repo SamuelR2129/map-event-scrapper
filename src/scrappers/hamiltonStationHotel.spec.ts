@@ -1,8 +1,8 @@
-import { ScrapedEvent } from "../scrappers/types";
+import { ScrapedEvent } from "./types";
 import { DateTime } from "luxon";
 import { randomUUID } from "crypto";
 import { sanitizeAndWriteToStagingFile } from "../helpers/sanitizeAndWriteToStaging";
-import { test } from "../scrappers/fixtures";
+import { test } from "./fixtures";
 
 let totalBytes = 0;
 
@@ -34,6 +34,9 @@ test("ScrapeHamiltonStationHotel", async ({ page, config }) => {
   let events: ScrapedEvent[] = [];
 
   await page.goto("https://www.thehamiltonstationhotel.com/music", { waitUntil: "domcontentloaded" });
+
+  const rawLogoSrc = await page.locator("#logoImage img").first().getAttribute("src");
+  const eventBannerImage = rawLogoSrc ? new URL(rawLogoSrc, page.url()).href : undefined;
 
   // Extract raw event data from all <p> elements in the sqs-html-content div
   const rawEvents = await page.$$eval(".sqs-html-content p", (paragraphs) => {
@@ -190,6 +193,7 @@ test("ScrapeHamiltonStationHotel", async ({ page, config }) => {
         source: "hamilton_station_hotel",
         localTimeZone: "Australia/Sydney",
         eventLink: "https://www.thehamiltonstationhotel.com/music",
+        eventBannerImage,
       };
 
       events = [...events, event];

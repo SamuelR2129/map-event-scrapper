@@ -1,5 +1,6 @@
 import { ScrapedEvent } from "../scrappers/types";
 import { isBlockedExternalUrl } from "./ssrf";
+import { mapTicketCost } from "./mapTicketCost";
 
 // Preserve newlines (normalize CRLF -> LF) and escape HTML characters safely.
 function escapeHtml(input: string): string {
@@ -118,7 +119,7 @@ export function sanitizeEvents(event: ScrapedEvent): ScrapedEvent {
     eventPromoters: sanitize(event.eventPromoters),
     eventDescription: sanitize(event.eventDescription),
     ticketLink: sanitizeUrl(event.ticketLink),
-    ticketCost: sanitize(event.ticketCost),
+    ticketCost: mapTicketCost(event.ticketCost),
     eventDateTime: sanitize(event.eventDateTime),
     socialLink: sanitizeUrl(event.socialLink),
     genres: sanitize(event.genres),

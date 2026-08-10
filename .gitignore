@@ -10,3 +10,4 @@ eventFiles/
 logs/*.log
 logs/*pipeline-done
 .playwright-mcp
+seed.spec.ts
