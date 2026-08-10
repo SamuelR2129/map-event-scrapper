@@ -38,10 +38,10 @@ unrelated host environment stops launching, drop `--cap-drop=ALL` for that run.
 
 ## Environment variables
 
-| Variable | Required | Description |
-|---|---|---|
-| `PROJECT` | no (baked into image as `newcastle`) | Playwright `--project` (city filter) |
-| `GITHUB_TOKEN` | for healer auto-PR | GitHub token with `contents:write` + `pull_requests:write` scope |
+| Variable       | Required                             | Description                                                      |
+| -------------- | ------------------------------------ | ---------------------------------------------------------------- |
+| `PROJECT`      | no (baked into image as `newcastle`) | Playwright `--project` (city filter)                             |
+| `GITHUB_TOKEN` | for healer auto-PR                   | GitHub token with `contents:write` + `pull_requests:write` scope |
 
 ## How it works
 
@@ -51,6 +51,38 @@ unrelated host environment stops launching, drop `--cap-drop=ALL` for that run.
 4. If a test fails, the healer (opencode agent) is invoked to fix it. It retries up to 3 times with backoff — each attempt: fix via opencode, then verify with `npx playwright test`. Only exits 0 if verification passes.
 5. After all tests complete, if any were fixed, `commitAndPushAllChanges` creates a branch (`healer-auto-fix-<timestamp>`), commits, pushes, and opens a PR via `gh`. Requires git credentials in the container (SSH key mount or `GITHUB_TOKEN` in `.env`).
 6. After completion, results are in the database
+
+## Playwright MCP server (opencode)
+
+The `playwright-test` MCP server gives opencode agents live browser control for
+scraper planning, generation, and healing. It is configured in `opencode.json`:
+
+```json
+{
+  "mcp": {
+    "playwright-test": {
+      "type": "local",
+      "command": ["npx", "playwright", "run-test-mcp-server"],
+      "enabled": true
+    }
+  }
+}
+```
+
+### How it launches
+
+- **Local stdio server.** On opencode startup, the config above spawns
+  `npx playwright run-test-mcp-server` as a child process. It must be launchable
+  from the project root (i.e. `playwright` installed via `npm ci` and
+  `npx` on `PATH`). The server exposes ~30 tools (`browser_navigate`,
+  `browser_snapshot`, `browser_click`, `generator_write_test`,
+  `planner_save_plan`, ...) to opencode.
+- **Namespacing.** Every MCP tool is exposed as `playwright-test/<toolName>`;
+  agent configs match them with glob patterns like `"playwright-test*browser_click"`.
+- **Main agents get none of them.** The top-level `"tools": { "playwright*": false }`
+  disables all Playwright tools for the main build/plan agents.
+- **Subagents get allowlists.** Each `playwright-test-*` agent re-enables its own
+  subset of tools:
 
 ## Security
 
@@ -66,7 +98,29 @@ container and what leaks out:
   (`/home/node`) for node/git/opencode state.
 - **Dropped capabilities.** `--cap-drop=ALL` plus a minimal allow-list
   (`CHOWN,DAC_OVERRIDE,FOWNER,SETUID,SETGID,SETPCAP,NET_BIND_SERVICE`), combined
-  with `--security-opt=no-new-privileges:true`.
+  with `--security-opt=no-new-privileges:true`. What each retained capability
+  actually grants (all Linux capability(7) scoped to the container's namespace):
+  - `CHOWN` — allow changing file ownership (`chown`); needed by npm/node when
+    fixing ownership of install artifacts written by root.
+  - `DAC_OVERRIDE` — bypass file read/write/execute permission checks; the
+    container's entrypoint and tmpfs re-owners rely on it to write where the
+    image stored files as root. Effectively lets the non-root user ignore
+    `DAC` (discretionary access control) permissions.
+  - `FOWNER` — bypass permission checks on operations normally requiring the
+    file's owner (e.g. `chmod` on root-owned files), used during setup scripts.
+  - `SETUID` / `SETGID` — allow changing the effective UID/GID of processes
+    and setting setuid/setgid bits; needed to drop from root to the `node`
+    user and for git's ssh helpers.
+  - `SETPCAP` — let the entrypoint modify its *own* capability sets (add/remove
+    capabilities on itself), required to drop further capabilities after
+    starting with the allow-list.
+  - `NET_BIND_SERVICE` — bind to low ports (<1024); kept so the server can bind
+    privileged ports if ever needed, harmless for scraping.
+
+  Everything else — `NET_RAW` (raw/packet sockets), `SYS_ADMIN` (mounts,
+  namespaces), `SYS_PTRACE`, `SYS_MODULE`, `DAC_READ_SEARCH`, etc. — is dropped,
+  so a compromised scraper process cannot load kernel modules, attach ptrace,
+  create raw sockets for network sniffing, or reconfigure namespaces.
 - **Chromium runs `--no-sandbox`.** The container lacks `SYS_ADMIN`/userns, which
   breaks Chromium's setuid sandbox; Playwright is configured with
   `--no-sandbox --disable-setuid-sandbox` as an explicit trade-off.
@@ -94,13 +148,13 @@ domains, `bandcamp.com`, `api.github.com`, the Google AI/Maps/Places API hosts a
 
 The built image is ~4.2 GB. Breakdown by layer:
 
-| Layer | Size | Notes |
-|---|---|---|
-| Playwright base (Chromium + system deps) | ~2.7 GB | `mcr.microsoft.com/playwright:v1.61.1-noble` |
-| `npm ci` — installed dependencies | ~137 MB | Baked into image, includes node_modules |
-| Opencode CLI | ~178 MB | Linux ARM64 binary for test self-healing |
-| Source code (excl. host node_modules) | ~2.1 MB | Via `.dockerignore` — host node_modules excluded |
-| Seed data backups | ~1.8 MB | Copied at build, restored to tmpfs at runtime |
+| Layer                                    | Size    | Notes                                            |
+| ---------------------------------------- | ------- | ------------------------------------------------ |
+| Playwright base (Chromium + system deps) | ~2.7 GB | `mcr.microsoft.com/playwright:v1.61.1-noble`     |
+| `npm ci` — installed dependencies        | ~137 MB | Baked into image, includes node_modules          |
+| Opencode CLI                             | ~178 MB | Linux ARM64 binary for test self-healing         |
+| Source code (excl. host node_modules)    | ~2.1 MB | Via `.dockerignore` — host node_modules excluded |
+| Seed data backups                        | ~1.8 MB | Copied at build, restored to tmpfs at runtime    |
 
 **Why not smaller?** The Playwright base image ships Chromium, Firefox, and WebKit
 (~1.2 GB of browser binaries). This is the standard trade-off for a
@@ -120,12 +174,12 @@ If the healer crashes immediately with `"UnknownError"` and `"Unexpected server 
 
 Running with `--read-only` breaks the healer and many tools. Specific symptoms:
 
-| Symptom | Cause |
-|---|---|
-| `Ripgrep JSON record exceeded 65536 bytes` | ripgrep can't write temp files, chokes on long lines |
-| `locator.innerText: Unexpected token ""` | healer can't write the fix to read-only `src/scrappers` |
-| `ENOENT: mkdir '/app/scraper/test-results'` | Playwright can't create output directory |
-| `UnknownError` on healer start | opencode can't initialize its DB in read-only `~/.local/share/opencode` |
-| `Failed to execute statement` | SQLite can't create WAL files |
+| Symptom                                     | Cause                                                                   |
+| ------------------------------------------- | ----------------------------------------------------------------------- |
+| `Ripgrep JSON record exceeded 65536 bytes`  | ripgrep can't write temp files, chokes on long lines                    |
+| `locator.innerText: Unexpected token ""`    | healer can't write the fix to read-only `src/scrappers`                 |
+| `ENOENT: mkdir '/app/scraper/test-results'` | Playwright can't create output directory                                |
+| `UnknownError` on healer start              | opencode can't initialize its DB in read-only `~/.local/share/opencode` |
+| `Failed to execute statement`               | SQLite can't create WAL files                                           |
 
 **Fix:** Don't use `--read-only`. The container is ephemeral anyway — torn down after each run, so no lasting security benefit.
