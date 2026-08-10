@@ -1,5 +1,7 @@
 # scraper-container
 
+> **HTML version:** open [README.html](README.html) (`open README.html` opens it in your default browser)
+
 Runs all Playwright scrapers sequentially in a container using [Orbstack](https://orbstack.dev) (Docker-compatible runtime on Mac).
 
 Scraped data is sent directly to a production DB via API. No filesystem bridge between host and container.
