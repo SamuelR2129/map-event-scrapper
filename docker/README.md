@@ -52,6 +52,42 @@ unrelated host environment stops launching, drop `--cap-drop=ALL` for that run.
 5. After all tests complete, if any were fixed, `commitAndPushAllChanges` creates a branch (`healer-auto-fix-<timestamp>`), commits, pushes, and opens a PR via `gh`. Requires git credentials in the container (SSH key mount or `GITHUB_TOKEN` in `.env`).
 6. After completion, results are in the database
 
+## Why event files and scrappers are seeded twice (Dockerfile + entrypoint)
+
+Both `src/eventFiles` and `src/scrappers` are copied into separate seed
+directories at **build time**, then copied back into place at **runtime** by the
+entrypoint. This is intentional — the working paths cannot be trusted from the
+image layer:
+
+### `src/eventFiles` — masked by tmpfs
+
+The run command mounts `--tmpfs /app/scraper/src/eventFiles:uid=1000,gid=1000`.
+A tmpfs mount **starts empty and hides the image layer** at that path, so the
+data baked into the image at `src/eventFiles` is invisible at runtime. The seed
+copy at `/app/seed/eventFiles` (Dockerfile) lives at a *non-masked* path, and
+the entrypoint restores it before `npm run map` and `send-to-db` run. Without
+this, the scrapers would run against an empty directory.
+
+### `src/scrappers` — mutated by the healer
+
+The healer edits the spec files at runtime to fix failing tests, and the git
+reporter then pushes everything with `git add -A` up to a
+`healer-auto-fix-<timestamp>` PR branch. Seeding `/app/seed-scrappers` at every
+run's startup guarantees the scrapers are back to the exact baked/committed
+versions before the next run, so:
+
+- the test run (and the healer's verification) always exercises the pristine committed code, and
+- any diff pushed to the PR branch contains *only* what the healer changed, not debris from previous runs.
+
+### Why both Dockerfile and entrypoint copy
+
+- **Dockerfile copy** → snapshots state into a separate, non-masked, read-only location at build time (`/app/seed` and `/app/seed-scrappers`).
+- **Entrypoint copy** → restores from that safe location into the writable/masked working directories, just before use.
+
+This makes each run hermetic: same baseline every time, regardless of tmpfs
+mounts or mutations, even if a container is kept alive across multiple
+entrypoint invocations.
+
 ## Playwright MCP server (opencode)
 
 The `playwright-test` MCP server gives opencode agents live browser control for
