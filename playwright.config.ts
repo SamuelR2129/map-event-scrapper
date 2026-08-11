@@ -18,6 +18,15 @@ export type Fixtures = {
  */
 export default defineConfig({
   testDir: "./src/scrappers",
+  /* Serve the local mock of the Nib Hotel site on the port the scraper
+     expects (5173 = Vite's default). If a real dev server is already
+     running there, it is reused as-is. */
+  webServer: {
+    command: "node scripts/serveMock.js",
+    url: "http://localhost:5173/robots.txt",
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
   /* Run tests in files in parallel */
   fullyParallel: false,
   timeout: process.env.PW_TEST_TIMEOUT ? Number(process.env.PW_TEST_TIMEOUT) : 900_000,

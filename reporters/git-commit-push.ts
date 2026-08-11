@@ -5,12 +5,19 @@ export function commitAndPushAllChanges(outcomes: { file: string; title: string 
     const status = execFileSync("git", ["status", "--porcelain"], { encoding: "utf-8" }).trim();
     if (!status) return;
 
+    let alreadyAuthed = false;
+    let remote: string | undefined;
+
     if (process.env.GITHUB_TOKEN) {
-      const remote = execFileSync("git", ["remote", "get-url", "origin"], { encoding: "utf-8" }).trim();
-      const authedUrl = remote
-        .replace("https://", `https://x-access-token:${process.env.GITHUB_TOKEN}@`)
-        .replace("git@github.com:", `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/`);
-      execFileSync("git", ["remote", "set-url", "origin", authedUrl]);
+      remote = execFileSync("git", ["remote", "get-url", "origin"], { encoding: "utf-8" }).trim();
+      // Avoid re-embedding the token if a previous healer run already left the remote authed.
+      alreadyAuthed = remote.includes("x-access-token:");
+      if (!alreadyAuthed) {
+        const authedUrl = remote
+          .replace("https://", `https://x-access-token:${process.env.GITHUB_TOKEN}@`)
+          .replace("git@github.com:", `https://x-access-token:${process.env.GITHUB_TOKEN}@github.com/`);
+        execFileSync("git", ["remote", "set-url", "origin", authedUrl]);
+      }
     }
 
     const branch = `healer-auto-fix-${Date.now()}`;
@@ -20,6 +27,11 @@ export function commitAndPushAllChanges(outcomes: { file: string; title: string 
     execFileSync("git", ["commit", "-m", message], { stdio: "inherit" });
     execFileSync("git", ["push", "origin", branch], { stdio: "inherit" });
     console.log(`[HEALER] Changes pushed to branch: ${branch}`);
+
+    if (process.env.GITHUB_TOKEN && !alreadyAuthed && remote) {
+      // Restore the original remote so the token never persists in git config.
+      execFileSync("git", ["remote", "set-url", "origin", remote], { stdio: "inherit" });
+    }
 
     execFileSync("curl", [
       "-sSf",
