@@ -56,11 +56,12 @@ test("ScrapeNibHotel", async ({ page, config }) => {
       eventPromoters: string | null;
       priceText: string | null;
       eventLink: string | null;
+      eventDescription: string | null;
     }> = [];
 
     for (const card of cards) {
       // .event-meta span:first-child = full date e.g. "Wednesday 12 August 2026"
-      const dateText = card.querySelector(".event-meta span:nth-child(6)")?.textContent?.trim() ?? "";
+      const dateText = card.querySelector(".event-meta span:first-child")?.textContent?.trim() ?? "";
       if (!dateText) continue;
 
       // .event-meta span:nth-child(2) = "Doors 20:30" (optional, absent on some cards)
@@ -77,8 +78,10 @@ test("ScrapeNibHotel", async ({ page, config }) => {
       const priceText = card.querySelector(".event-footer .event-price")?.textContent?.trim() ?? null;
       // .event-footer a.event-link = event link (same for all events, not a ticket link)
       const eventLink = card.querySelector("a.event-link")?.getAttribute("href") ?? null;
+      // p.event-description = "More about this show" description (present in DOM even when <details> is closed)
+      const eventDescription = card.querySelector("p.event-description")?.textContent?.trim() ?? null;
 
-      results.push({ dateText, doorsText, roomTag, eventName, eventPromoters, priceText, eventLink });
+      results.push({ dateText, doorsText, roomTag, eventName, eventPromoters, priceText, eventLink, eventDescription });
     }
 
     return results;
@@ -140,6 +143,7 @@ test("ScrapeNibHotel", async ({ page, config }) => {
         venueLocation: raw.roomTag ?? undefined,
         ticketCost,
         eventPromoters: raw.eventPromoters ?? undefined,
+        eventDescription: raw.eventDescription ?? undefined,
         source: "nib_hotel",
         localTimeZone: "Australia/Sydney",
         eventLink: raw.eventLink ?? "https://www.nibhotel.com.au/music",
