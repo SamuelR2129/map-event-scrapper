@@ -31,8 +31,8 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
     }
 
     console.log("Mapping " + event.eventName);
-    const knownVenueEvents = findKnownAddressAndCoords(event);
-    const googleParsedEvent = await findMissingAddressAndLngLat(knownVenueEvents);
+    // const knownVenueEvents = findKnownAddressAndCoords(event);
+    const googleParsedEvent = await findMissingAddressAndLngLat(event);
 
     let isAlreadyInPastEvents = false;
 
