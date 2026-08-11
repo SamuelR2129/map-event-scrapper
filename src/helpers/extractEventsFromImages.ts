@@ -174,7 +174,8 @@ export const extractEventData = async (imagePart: {
         continue;
       }
 
-      const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
+      //const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
+      const knownVenueEvent = imgEvent;
 
       const aiCheckedEvent =
         knownVenueEvent.lngLat && knownVenueEvent.venueAddress

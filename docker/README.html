@@ -1,300 +1,405 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>scraper-container — Documentation</title>
-<style>
-  :root {
-    --bg: #0f1117;
-    --bg-alt: #171a23;
-    --bg-code: #1d2130;
-    --border: #2a2f42;
-    --text: #e6e9f2;
-    --text-dim: #9aa3b8;
-    --accent: #5b8cff;
-    --accent-soft: rgba(91, 140, 255, 0.12);
-    --green: #4ade80;
-    --amber: #fbbf24;
-    --red: #f87171;
-    --radius: 10px;
-    --mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scraper-container — Documentation</title>
+    <style>
+      :root {
+        --bg: #0f1117;
+        --bg-alt: #171a23;
+        --bg-code: #1d2130;
+        --border: #2a2f42;
+        --text: #e6e9f2;
+        --text-dim: #9aa3b8;
+        --accent: #5b8cff;
+        --accent-soft: rgba(91, 140, 255, 0.12);
+        --green: #4ade80;
+        --amber: #fbbf24;
+        --red: #f87171;
+        --radius: 10px;
+        --mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+      }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.65;
-    padding: 40px 20px 80px;
-  }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.65;
+        padding: 40px 20px 80px;
+      }
 
-  .container {
-    max-width: 880px;
-    margin: 0 auto;
-  }
+      .container {
+        max-width: 880px;
+        margin: 0 auto;
+      }
 
-  /* Header */
-  header {
-    text-align: center;
-    padding: 48px 24px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: linear-gradient(160deg, rgba(91,140,255,0.10), transparent 60%), var(--bg-alt);
-    margin-bottom: 32px;
-  }
+      /* Header */
+      header {
+        text-align: center;
+        padding: 48px 24px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: linear-gradient(160deg, rgba(91, 140, 255, 0.1), transparent 60%), var(--bg-alt);
+        margin-bottom: 32px;
+      }
 
-  h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 10px;
-  }
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+      }
 
-  .subtitle {
-    color: var(--text-dim);
-    font-size: 1.05rem;
-    max-width: 620px;
-    margin: 0 auto;
-  }
+      .subtitle {
+        color: var(--text-dim);
+        font-size: 1.05rem;
+        max-width: 620px;
+        margin: 0 auto;
+      }
 
-  .tag {
-    display: inline-block;
-    background: var(--accent-soft);
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    font-size: 0.78rem;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 999px;
-    margin-top: 16px;
-  }
+      .tag {
+        display: inline-block;
+        background: var(--accent-soft);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-top: 16px;
+      }
 
-  /* Sections */
-  section {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-bottom: 24px;
-  }
+      /* Sections */
+      section {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px 32px;
+        margin-bottom: 24px;
+      }
 
-  h2 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+      h2 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-  h2::before {
-    content: "";
-    width: 6px;
-    height: 22px;
-    background: var(--accent);
-    border-radius: 3px;
-  }
+      h2::before {
+        content: "";
+        width: 6px;
+        height: 22px;
+        background: var(--accent);
+        border-radius: 3px;
+      }
 
-  h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin: 24px 0 12px;
-  }
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin: 24px 0 12px;
+      }
 
-  p { margin-bottom: 14px; }
-  ul, ol { padding-left: 22px; margin-bottom: 14px; }
-  li { margin-bottom: 8px; }
-  li::marker { color: var(--accent); }
-  strong { color: #fff; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+      p {
+        margin-bottom: 14px;
+      }
+      ul,
+      ol {
+        padding-left: 22px;
+        margin-bottom: 14px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      li::marker {
+        color: var(--accent);
+      }
+      strong {
+        color: #fff;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
 
-  code {
-    font-family: var(--mono);
-    background: var(--bg-code);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 2px 6px;
-    font-size: 0.86em;
-    color: var(--green);
-  }
+      code {
+        font-family: var(--mono);
+        background: var(--bg-code);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 2px 6px;
+        font-size: 0.86em;
+        color: var(--green);
+      }
 
-  pre {
-    background: var(--bg-code);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px 18px;
-    overflow-x: auto;
-    margin: 14px 0 18px;
-  }
+      pre {
+        background: var(--bg-code);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px 18px;
+        overflow-x: auto;
+        margin: 14px 0 18px;
+      }
 
-  pre code {
-    background: none;
-    border: none;
-    padding: 0;
-    color: var(--text);
-    font-size: 0.86rem;
-    line-height: 1.55;
-  }
+      pre code {
+        background: none;
+        border: none;
+        padding: 0;
+        color: var(--text);
+        font-size: 0.86rem;
+        line-height: 1.55;
+      }
 
-  /* Tables */
-  .table-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.92rem;
-  }
-  th {
-    text-align: left;
-    background: var(--bg-code);
-    color: var(--accent);
-    font-weight: 600;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  td {
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    vertical-align: top;
-  }
-  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+      /* Tables */
+      .table-wrap {
+        overflow-x: auto;
+        margin: 14px 0 18px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+      }
+      th {
+        text-align: left;
+        background: var(--bg-code);
+        color: var(--accent);
+        font-weight: 600;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      td {
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        vertical-align: top;
+      }
+      tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
 
-  /* Callouts */
-  .callout {
-    border-left: 4px solid var(--accent);
-    background: var(--accent-soft);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 0.95rem;
-  }
-  .callout.warn { border-left-color: var(--amber); background: rgba(251,191,36,0.08); }
-  .callout.danger { border-left-color: var(--red); background: rgba(248,113,113,0.08); }
-  .callout.success { border-left-color: var(--green); background: rgba(74,222,128,0.07); }
+      /* Callouts */
+      .callout {
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 16px 0;
+        font-size: 0.95rem;
+      }
+      .callout.warn {
+        border-left-color: var(--amber);
+        background: rgba(251, 191, 36, 0.08);
+      }
+      .callout.danger {
+        border-left-color: var(--red);
+        background: rgba(248, 113, 113, 0.08);
+      }
+      .callout.success {
+        border-left-color: var(--green);
+        background: rgba(74, 222, 128, 0.07);
+      }
 
-  .cap-grid {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 14px 0 18px;
-  }
-  .cap-grid .cap-name {
-    background: var(--bg-code);
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--amber);
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    font-weight: 600;
-  }
-  .cap-grid .cap-desc {
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.92rem;
-    color: var(--text-dim);
-  }
-  .cap-grid > div:last-child { border-bottom: none; }
+      .cap-grid {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 0;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 14px 0 18px;
+      }
+      .cap-grid .cap-name {
+        background: var(--bg-code);
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        color: var(--amber);
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 600;
+      }
+      .cap-grid .cap-desc {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.92rem;
+        color: var(--text-dim);
+      }
+      .cap-grid > div:last-child {
+        border-bottom: none;
+      }
 
-  .badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-  .badge.agent { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
-  .badge.ok { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid var(--green); }
-  .badge.no { background: rgba(248,113,113,0.10); color: var(--red); border: 1px solid var(--red); }
+      .badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 999px;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      .badge.agent {
+        background: var(--accent-soft);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+      }
+      .badge.ok {
+        background: rgba(74, 222, 128, 0.12);
+        color: var(--green);
+        border: 1px solid var(--green);
+      }
+      .badge.no {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--red);
+        border: 1px solid var(--red);
+      }
 
-  .nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 32px;
-  }
-  .nav a {
-    font-size: 0.85rem;
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    padding: 6px 14px;
-    border-radius: 999px;
-    color: var(--text-dim);
-  }
-  .nav a:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 32px;
+      }
+      .nav a {
+        font-size: 0.85rem;
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        padding: 6px 14px;
+        border-radius: 999px;
+        color: var(--text-dim);
+      }
+      .nav a:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        text-decoration: none;
+      }
 
-  footer {
-    text-align: center;
-    color: var(--text-dim);
-    font-size: 0.85rem;
-    margin-top: 32px;
-  }
+      footer {
+        text-align: center;
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        margin-top: 32px;
+      }
 
-  @media (max-width: 640px) {
-    body { padding: 20px 12px 60px; }
-    section { padding: 20px 18px; }
-    .cap-grid { grid-template-columns: 1fr; }
-    h1 { font-size: 1.7rem; }
-  }
-</style>
-</head>
-<body>
-<div class="container">
+      @media (max-width: 640px) {
+        body {
+          padding: 20px 12px 60px;
+        }
+        section {
+          padding: 20px 18px;
+        }
+        .cap-grid {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 1.7rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>scraper-container</h1>
+        <p class="subtitle">
+          Runs all Playwright scrapers sequentially in a hardened container using
+          <a href="https://orbstack.dev">Orbstack</a> (Docker-compatible runtime on Mac). Scraped data is sent directly
+          to a production DB via API — no filesystem bridge between host and container.
+        </p>
+        <span class="tag">Docker &nbsp;·&nbsp; Playwright &nbsp;·&nbsp; opencode self-healing</span>
+      </header>
 
-  <header>
-    <h1>scraper-container</h1>
-    <p class="subtitle">Runs all Playwright scrapers sequentially in a hardened container using <a href="https://orbstack.dev">Orbstack</a> (Docker-compatible runtime on Mac). Scraped data is sent directly to a production DB via API — no filesystem bridge between host and container.</p>
-    <span class="tag">Docker &nbsp;·&nbsp; Playwright &nbsp;·&nbsp; opencode self-healing</span>
-  </header>
+      <nav class="nav">
+        <a href="#discussion">Discussion</a>
+        <a href="#prereqs">Prerequisites</a>
+        <a href="#build">Build</a>
+        <a href="#run">Run</a>
+        <a href="#env">Environment</a>
+        <a href="#how">How it works</a>
+        <a href="#seed">Why seed twice</a>
+        <a href="#mcp">Playwright MCP</a>
+        <a href="#security">Security</a>
+        <a href="#size">Image size</a>
+        <a href="#troubleshoot">Troubleshooting</a>
+      </nav>
 
-  <nav class="nav">
-    <a href="#prereqs">Prerequisites</a>
-    <a href="#build">Build</a>
-    <a href="#run">Run</a>
-    <a href="#env">Environment</a>
-    <a href="#how">How it works</a>
-    <a href="#seed">Why seed twice</a>
-    <a href="#mcp">Playwright MCP</a>
-    <a href="#security">Security</a>
-    <a href="#size">Image size</a>
-    <a href="#troubleshoot">Troubleshooting</a>
-  </nav>
+      <!-- Discussion -->
+      <section id="discussion">
+        <h2>Discussion</h2>
 
-  <!-- Prerequisites -->
-  <section id="prereqs">
-    <h2>Prerequisites</h2>
-    <ul>
-      <li><a href="https://orbstack.dev">Orbstack</a> (or a Docker CLI)</li>
-    </ul>
-  </section>
+        <h3>What this project is</h3>
+        <p>
+          <strong>Witchhouse</strong> is a hobby DIY event directory for Newcastle, NSW — a city whose live-music
+          listings are scattered across venue sites, ticketing platforms, and an Instagram feed of weekly lineup
+          posters. This project is the ingestion pipeline behind it.
+        </p>
 
-  <!-- Build -->
-  <section id="build">
-    <h2>Build</h2>
-    <pre><code># From map-event-scrapper/
+        <h3>Issues I've had over the year</h3>
+        <ul>
+          <li>
+            <strong>Selector rot.</strong>
+          </li>
+          <li>
+            <strong>Data trust.</strong>
+          </li>
+          <li>
+            <strong>AI hallucination.</strong>
+          </li>
+          <li>
+            <strong>Security.</strong>
+          </li>
+          <li>
+            <strong>Image bloat.</strong>
+          </li>
+        </ul>
+
+        <h3>Docker sandboxing for agents</h3>
+
+        <h3>Getting data from potentially malicious websites</h3>
+
+        <h3>AI for image parsing and data entry — strengths and weaknesses</h3>
+
+        <h3>Where to next for AI integration</h3>
+
+        <h3>Nib example of playwright agents</h3>
+      </section>
+
+      <!-- Prerequisites -->
+      <section id="prereqs">
+        <h2>Prerequisites</h2>
+        <ul>
+          <li><a href="https://orbstack.dev">Orbstack</a> (or a Docker CLI)</li>
+        </ul>
+      </section>
+
+      <!-- Build -->
+      <section id="build">
+        <h2>Build</h2>
+        <pre><code># From map-event-scrapper/
 docker build -f docker/Dockerfile -t scraper-container .</code></pre>
-  </section>
+      </section>
 
-  <!-- Run -->
-  <section id="run">
-    <h2>Run</h2>
-    <pre><code>docker run --rm --init \
+      <!-- Run -->
+      <section id="run">
+        <h2>Run</h2>
+        <pre><code>docker run --rm --init \
   --env-file .env \
   --cap-drop=ALL \
-  --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER \
-  --cap-add SETUID --cap-add SETGID --cap-add SETPCAP --cap-add NET_BIND_SERVICE \
+  --cap-add DAC_OVERRIDE --cap-add SETUID --cap-add SETGID \
   --security-opt=no-new-privileges:true \
   --pids-limit=256 \
   --tmpfs /tmp:size=1g \
@@ -303,79 +408,120 @@ docker build -f docker/Dockerfile -t scraper-container .</code></pre>
   --tmpfs /app/scraper/playwright-report:uid=1000,gid=1000 \
   --tmpfs /app/scraper/logs:uid=1000,gid=1000 \
   scraper-container</code></pre>
-    <div class="callout warn">
-      The above flags are the hardened baseline (see <a href="#security">Security</a>). If Chromium in an unrelated host environment stops launching, drop <code>--cap-drop=ALL</code> for that run.
-    </div>
-  </section>
+        <div class="callout warn">
+          The above flags are the hardened baseline (see <a href="#security">Security</a>). If Chromium in an unrelated
+          host environment stops launching, drop <code>--cap-drop=ALL</code> for that run.
+        </div>
+      </section>
 
-  <!-- Environment variables -->
-  <section id="env">
-    <h2>Environment variables</h2>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Variable</th><th>Required</th><th>Description</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>PROJECT</code></td>
-            <td>no (baked into image as <code>newcastle</code>)</td>
-            <td>Playwright <code>--project</code> (city filter)</td>
-          </tr>
-          <tr>
-            <td><code>GITHUB_TOKEN</code></td>
-            <td>for healer auto-PR</td>
-            <td>GitHub token with <code>contents:write</code> + <code>pull_requests:write</code> scope</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+      <!-- Environment variables -->
+      <section id="env">
+        <h2>Environment variables</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Variable</th>
+                <th>Required</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>PROJECT</code></td>
+                <td>no (baked into image as <code>newcastle</code>)</td>
+                <td>Playwright <code>--project</code> (city filter)</td>
+              </tr>
+              <tr>
+                <td><code>GITHUB_TOKEN</code></td>
+                <td>for healer auto-PR</td>
+                <td>GitHub token with <code>contents:write</code> + <code>pull_requests:write</code> scope</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-  <!-- How it works -->
-  <section id="how">
-    <h2>How it works</h2>
-    <ol>
-      <li>All scraper spec files run sequentially in a single VM: scrape → scrape → … → map → send to DB</li>
-      <li>Scraper code is baked into the image at build time</li>
-      <li>Secrets (<code>OPENCODE_API_KEY</code>, etc.) are passed at runtime via <code>--env-file</code></li>
-      <li>If a test fails, the <strong>healer</strong> (opencode agent) is invoked to fix it. It retries up to 3 times with backoff — each attempt: fix via opencode, then verify with <code>npx playwright test</code>. Only exits 0 if verification passes.</li>
-      <li>After all tests complete, if any were fixed, <code>commitAndPushAllChanges</code> creates a branch (<code>healer-auto-fix-&lt;timestamp&gt;</code>), commits, pushes, and opens a PR via <code>gh</code>. Requires git credentials in the container (SSH key mount or <code>GITHUB_TOKEN</code> in <code>.env</code>).</li>
-      <li>After completion, results are in the database</li>
-    </ol>
-  </section>
+      <!-- How it works -->
+      <section id="how">
+        <h2>How it works</h2>
+        <ol>
+          <li>All scraper spec files run sequentially in a single VM: scrape → scrape → … → map → send to DB</li>
+          <li>Scraper code is baked into the image at build time</li>
+          <li>Secrets (<code>OPENCODE_API_KEY</code>, etc.) are passed at runtime via <code>--env-file</code></li>
+          <li>
+            If a test fails, the <strong>healer</strong> (opencode agent) is invoked to fix it. It retries up to 3 times
+            with backoff — each attempt: fix via opencode, then verify with <code>npx playwright test</code>. Only exits
+            0 if verification passes.
+          </li>
+          <li>
+            After all tests complete, if any were fixed, <code>commitAndPushAllChanges</code> creates a branch
+            (<code>healer-auto-fix-&lt;timestamp&gt;</code>), commits, pushes, and opens a PR via <code>gh</code>.
+            Requires git credentials in the container (SSH key mount or <code>GITHUB_TOKEN</code> in <code>.env</code>).
+          </li>
+          <li>After completion, results are in the database</li>
+        </ol>
+      </section>
 
-  <!-- Why seed twice -->
-  <section id="seed">
-    <h2>Why event files and scrappers are seeded twice (Dockerfile + entrypoint)</h2>
-    <p>Both <code>src/eventFiles</code> and <code>src/scrappers</code> are copied into separate seed directories at <strong>build time</strong>, then copied back into place at <strong>runtime</strong> by the entrypoint. This is intentional — the working paths cannot be trusted from the image layer.</p>
+      <!-- Why seed twice -->
+      <section id="seed">
+        <h2>Why event files and scrappers are seeded twice (Dockerfile + entrypoint)</h2>
+        <p>
+          Both <code>src/eventFiles</code> and <code>src/scrappers</code> are copied into separate seed directories at
+          <strong>build time</strong>, then copied back into place at <strong>runtime</strong> by the entrypoint. This
+          is intentional — the working paths cannot be trusted from the image layer.
+        </p>
 
-    <h3><code>src/eventFiles</code> — masked by tmpfs</h3>
-    <p>The run command mounts <code>--tmpfs /app/scraper/src/eventFiles:uid=1000,gid=1000</code>. A tmpfs mount <strong>starts empty and hides the image layer</strong> at that path, so the data baked into the image at <code>src/eventFiles</code> is invisible at runtime. The seed copy at <code>/app/seed/eventFiles</code> lives at a <em>non-masked</em> path, and the entrypoint restores it before <code>npm run map</code> and <code>send-to-db</code> run. Without this, the scrapers would run against an empty directory.</p>
+        <h3><code>src/eventFiles</code> — masked by tmpfs</h3>
+        <p>
+          The run command mounts <code>--tmpfs /app/scraper/src/eventFiles:uid=1000,gid=1000</code>. A tmpfs mount
+          <strong>starts empty and hides the image layer</strong> at that path, so the data baked into the image at
+          <code>src/eventFiles</code> is invisible at runtime. The seed copy at <code>/app/seed/eventFiles</code> lives
+          at a <em>non-masked</em> path, and the entrypoint restores it before <code>npm run map</code> and
+          <code>send-to-db</code> run. Without this, the scrapers would run against an empty directory.
+        </p>
 
-    <h3><code>src/scrappers</code> — mutated by the healer</h3>
-    <p>The healer edits the spec files at runtime to fix failing tests, and the git reporter then pushes everything with <code>git add -A</code> up to a <code>healer-auto-fix-&lt;timestamp&gt;</code> PR branch. Seeding <code>/app/seed-scrappers</code> at every run's startup guarantees the scrapers are back to the exact baked/committed versions before the next run, so:</p>
-    <ul>
-      <li>the test run (and the healer's verification) always exercises the pristine committed code, and</li>
-      <li>any diff pushed to the PR branch contains <em>only</em> what the healer changed, not debris from previous runs.</li>
-    </ul>
+        <h3><code>src/scrappers</code> — mutated by the healer</h3>
+        <p>
+          The healer edits the spec files at runtime to fix failing tests, and the git reporter then pushes everything
+          with <code>git add -A</code> up to a <code>healer-auto-fix-&lt;timestamp&gt;</code> PR branch. Seeding
+          <code>/app/seed-scrappers</code> at every run's startup guarantees the scrapers are back to the exact
+          baked/committed versions before the next run, so:
+        </p>
+        <ul>
+          <li>the test run (and the healer's verification) always exercises the pristine committed code, and</li>
+          <li>
+            any diff pushed to the PR branch contains <em>only</em> what the healer changed, not debris from previous
+            runs.
+          </li>
+        </ul>
 
-    <h3>Why both Dockerfile and entrypoint copy</h3>
-    <ul>
-      <li><strong>Dockerfile copy</strong> → snapshots state into a separate, non-masked, read-only location at build time (<code>/app/seed</code> and <code>/app/seed-scrappers</code>).</li>
-      <li><strong>Entrypoint copy</strong> → restores from that safe location into the writable/masked working directories, just before use.</li>
-    </ul>
+        <h3>Why both Dockerfile and entrypoint copy</h3>
+        <ul>
+          <li>
+            <strong>Dockerfile copy</strong> → snapshots state into a separate, non-masked, read-only location at build
+            time (<code>/app/seed</code> and <code>/app/seed-scrappers</code>).
+          </li>
+          <li>
+            <strong>Entrypoint copy</strong> → restores from that safe location into the writable/masked working
+            directories, just before use.
+          </li>
+        </ul>
 
-    <div class="callout success">
-      This makes each run <strong>hermetic</strong>: same baseline every time, regardless of tmpfs mounts or mutations, even if a container is kept alive across multiple entrypoint invocations.
-    </div>
-  </section>
+        <div class="callout success">
+          This makes each run <strong>hermetic</strong>: same baseline every time, regardless of tmpfs mounts or
+          mutations, even if a container is kept alive across multiple entrypoint invocations.
+        </div>
+      </section>
 
-  <!-- Playwright MCP server -->
-  <section id="mcp">
-    <h2>Playwright MCP server (opencode)</h2>
-    <p>The <code>playwright-test</code> MCP server gives opencode agents live browser control for scraper planning, generation, and healing. It is configured in <code>opencode.json</code>:</p>
-    <pre><code>{
+      <!-- Playwright MCP server -->
+      <section id="mcp">
+        <h2>Playwright MCP server (opencode)</h2>
+        <p>
+          The <code>playwright-test</code> MCP server gives opencode agents live browser control for scraper planning,
+          generation, and healing. It is configured in <code>opencode.json</code>:
+        </p>
+        <pre><code>{
   "mcp": {
     "playwright-test": {
       "type": "local",
@@ -385,143 +531,273 @@ docker build -f docker/Dockerfile -t scraper-container .</code></pre>
   }
 }</code></pre>
 
-    <h3>How it launches</h3>
-    <ul>
-      <li><strong>Local stdio server.</strong> On opencode startup, the config above spawns <code>npx playwright run-test-mcp-server</code> as a child process. It must be launchable from the project root (i.e. <code>playwright</code> installed via <code>npm ci</code> and <code>npx</code> on <code>PATH</code>). The server exposes ~30 tools (<code>browser_navigate</code>, <code>browser_snapshot</code>, <code>browser_click</code>, <code>generator_write_test</code>, <code>planner_save_plan</code>, …) to opencode.</li>
-      <li><strong>Namespacing.</strong> Every MCP tool is exposed as <code>playwright-test/&lt;toolName&gt;</code>; agent configs match them with glob patterns like <code>"playwright-test*browser_click"</code>.</li>
-      <li><strong>Main agents get none of them.</strong> The top-level <code>"tools": { "playwright*": false }</code> disables all Playwright tools for the main build/plan agents.</li>
-      <li><strong>Subagents get allowlists.</strong> Each <code>playwright-test-*</code> agent re-enables its own subset of tools.</li>
-    </ul>
+        <h3>How it launches</h3>
+        <ul>
+          <li>
+            <strong>Local stdio server.</strong> On opencode startup, the config above spawns
+            <code>npx playwright run-test-mcp-server</code> as a child process. It must be launchable from the project
+            root (i.e. <code>playwright</code> installed via <code>npm ci</code> and <code>npx</code> on
+            <code>PATH</code>). The server exposes ~30 tools (<code>browser_navigate</code>,
+            <code>browser_snapshot</code>, <code>browser_click</code>, <code>generator_write_test</code>,
+            <code>planner_save_plan</code>, …) to opencode.
+          </li>
+          <li>
+            <strong>Namespacing.</strong> Every MCP tool is exposed as <code>playwright-test/&lt;toolName&gt;</code>;
+            agent configs match them with glob patterns like <code>"playwright-test*browser_click"</code>.
+          </li>
+          <li>
+            <strong>Main agents get none of them.</strong> The top-level
+            <code>"tools": { "playwright*": false }</code> disables all Playwright tools for the main build/plan agents.
+          </li>
+          <li>
+            <strong>Subagents get allowlists.</strong> Each <code>playwright-test-*</code> agent re-enables its own
+            subset of tools.
+          </li>
+        </ul>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Agent</th><th>Browser tools</th><th>Special tools</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="badge agent">planner</span></td>
-            <td>navigate, click, snapshot, hover, evaluate, network, screenshot, …</td>
-            <td><code>planner_setup_page</code>, <code>planner_save_plan</code></td>
-          </tr>
-          <tr>
-            <td><span class="badge agent">generator</span></td>
-            <td>navigate, click, snapshot, evaluate, type, wait, …</td>
-            <td><code>generator_setup_page</code>, <code>generator_read_log</code>, <code>generator_write_test</code></td>
-          </tr>
-          <tr>
-            <td><span class="badge agent">healer</span></td>
-            <td>navigate, evaluate, screenshot, console/log, network, locator, …</td>
-            <td><code>test_list</code> <span class="badge ok">read-only</span> · <code>test_run</code>/<code>test_debug</code> <span class="badge no">disabled</span></td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Agent</th>
+                <th>Browser tools</th>
+                <th>Special tools</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge agent">planner</span></td>
+                <td>navigate, click, snapshot, hover, evaluate, network, screenshot, …</td>
+                <td><code>planner_setup_page</code>, <code>planner_save_plan</code></td>
+              </tr>
+              <tr>
+                <td><span class="badge agent">generator</span></td>
+                <td>navigate, click, snapshot, evaluate, type, wait, …</td>
+                <td>
+                  <code>generator_setup_page</code>, <code>generator_read_log</code>, <code>generator_write_test</code>
+                </td>
+              </tr>
+              <tr>
+                <td><span class="badge agent">healer</span></td>
+                <td>navigate, evaluate, screenshot, console/log, network, locator, …</td>
+                <td>
+                  <code>test_list</code> <span class="badge ok">read-only</span> · <code>test_run</code>/<code
+                    >test_debug</code
+                  >
+                  <span class="badge no">disabled</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout success">
+          <strong>No browser download at runtime.</strong> The docker image ships Chromium via the Playwright base
+          image, so <code>npx playwright run-test-mcp-server</code> starts without a download step. The healer inside
+          the container runs opencode with this same config, giving it browser access to debug failing scrapers.
+        </div>
+      </section>
+
+      <!-- Security -->
+      <section id="security">
+        <h2>Security</h2>
+        <p>
+          The container is intentionally ephemeral (removed after each run) and needs unrestricted outbound internet to
+          scrape gig listings, so egress itself is not firewalled. Hardening focuses on limiting what an attacker gains
+          inside the container and what leaks out:
+        </p>
+
+        <ul>
+          <li>
+            <strong>No secrets in the image.</strong> <code>.env</code> is excluded via <code>.dockerignore</code> and
+            must never be baked in; secrets reach the container only through <code>--env-file</code> at runtime.
+          </li>
+          <li>
+            <strong>Non-root runtime (<code>USER node</code>).</strong> The scraper, playwright, xvfb, and the healer
+            all run as a dedicated non-root user with a writable home (<code>/home/node</code>) for node/git/opencode
+            state.
+          </li>
+          <li>
+            <strong>Dropped capabilities.</strong> <code>--cap-drop=ALL</code> plus a minimal allow-list (<code
+              >DAC_OVERRIDE, SETUID, SETGID</code
+            >), combined with <code>--security-opt=no-new-privileges:true</code>. What each retained capability actually
+            grants (all Linux capability(7) scoped to the container's namespace):
+          </li>
+        </ul>
+
+        <p>
+          <strong>What each retained capability actually grants</strong> (all Linux capability(7) scoped to the
+          container's namespace):
+        </p>
+
+        <div class="cap-grid">
+          <div class="cap-name">DAC_OVERRIDE</div>
+          <div class="cap-desc">
+            Bypass file read/write/execute permission checks; lets the non-root user write regardless of
+            <code>DAC</code> (discretionary access control) permissions, covering git/npm/opencode writes to directories
+            that may not carry exact ownership metadata after image-layer copies.
+          </div>
+          <div class="cap-name">SETUID / SETGID</div>
+          <div class="cap-desc">
+            Allow changing the effective UID/GID of processes and setting setuid/setgid bits; kept for toolchains that
+            re-exec themselves with dropped privileges.
+          </div>
+        </div>
+
+        <div class="callout danger">
+          <strong>Everything else is dropped</strong> — <code>NET_RAW</code> (raw/packet sockets),
+          <code>SYS_ADMIN</code> (mounts, namespaces), <code>SYS_PTRACE</code>, <code>SYS_MODULE</code>,
+          <code>DAC_READ_SEARCH</code>, etc. A compromised scraper process cannot load kernel modules, attach ptrace,
+          create raw sockets for network sniffing, or reconfigure namespaces.
+        </div>
+
+        <ul>
+          <li>
+            <strong>Chromium runs <code>--no-sandbox</code>.</strong> The container lacks <code>SYS_ADMIN</code>/userns,
+            which breaks Chromium's setuid sandbox; Playwright is configured with
+            <code>--no-sandbox --disable-setuid-sandbox</code> as an explicit trade-off.
+          </li>
+          <li>
+            <strong>Process limit.</strong> <code>--pids-limit=256</code> constrains browser/child-process fan-out.
+          </li>
+          <li>
+            <strong>Ephemeral writes.</strong> Writable dirs (<code>/tmp</code>, <code>src/eventFiles</code>,
+            <code>test-results</code>, <code>playwright-report</code>, <code>logs</code>) are tmpfs-backed, so no host
+            state persists. The tmpfs mounts are created <code>uid=1000,gid=1000</code> so the non-root
+            <code>node</code> user (also uid/gid 1000 in the image) can write to them. <code>1000</code> is the uid/gid
+            that the official Node Docker base image assigns to the <code>node</code> user (the first non-root user in
+            Linux, hence the conventional <code>1000</code>). A tmpfs mount starts owned by root, so
+            <code>--tmpfs ...:uid=1000,gid=1000</code> re-owns it to <code>node</code> at mount time; without this the
+            container — which runs as <code>USER node</code> — would get <code>EACCES</code>/<code>ENOENT</code> writing
+            to those directories.
+          </li>
+          <li>
+            <strong>Egress hardening.</strong> An attacker-influenced URL is blocked at the app layer
+            (<code>src/helpers/ssrf.ts</code>: rejects private/loopback/link-local IPs,
+            <code>host.docker.internal</code> and friends, plus DNS-rebinding-style internal resolutions) before any
+            <code>page.goto</code>. For stronger isolation, run the container through an outbound allowlist proxy by
+            setting <code>HTTPS_PROXY</code>/<code>HTTP_PROXY</code> in <code>.env</code> (also wired via
+            <code>--env-file</code>).
+          </li>
+        </ul>
+
+        <p>
+          For runtime egress allowlisting the container already reaches: the scraper target domains,
+          <code>bandcamp.com</code>, <code>api.github.com</code>, the Google AI/Maps/Places API hosts and
+          <code>PRODUCTION_DB_URL</code>.
+        </p>
+      </section>
+
+      <!-- Image size -->
+      <section id="size">
+        <h2>Image size</h2>
+        <p>The built image is ~4.2 GB. Breakdown by layer:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Size</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Playwright base (Chromium + system deps)</td>
+                <td>~2.7 GB</td>
+                <td><code>mcr.microsoft.com/playwright:v1.61.1-noble</code></td>
+              </tr>
+              <tr>
+                <td><code>npm ci</code> — installed dependencies</td>
+                <td>~137 MB</td>
+                <td>Baked into image, includes node_modules</td>
+              </tr>
+              <tr>
+                <td>Opencode CLI</td>
+                <td>~178 MB</td>
+                <td>Linux ARM64 binary for test self-healing</td>
+              </tr>
+              <tr>
+                <td>Source code (excl. host node_modules)</td>
+                <td>~2.1 MB</td>
+                <td>Via <code>.dockerignore</code> — host node_modules excluded</td>
+              </tr>
+              <tr>
+                <td>Seed data backups</td>
+                <td>~1.8 MB</td>
+                <td>Copied at build, restored to tmpfs at runtime</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <strong>Why not smaller?</strong> The Playwright base image ships Chromium, Firefox, and WebKit (~1.2 GB of
+          browser binaries). This is the standard trade-off for a zero-download-at-runtime sandbox.
+        </div>
+
+        <h3>Ripgrep config</h3>
+        <p>
+          The image and entrypoint create <code>~/.config/ripgrep/config</code> (in the node user's <code>$HOME</code>)
+          with <code>--max-columns=10000</code>. This prevents ripgrep's JSON output from exceeding its 65536-byte
+          internal buffer when searching files with very long lines (e.g., minified HTML, WebFetch output).
+        </p>
+      </section>
+
+      <!-- Troubleshooting -->
+      <section id="troubleshoot">
+        <h2>Troubleshooting</h2>
+
+        <h3>Healer fails with <code>UnknownError</code></h3>
+        <p>
+          If the healer crashes immediately with <code>"UnknownError"</code> and <code>"Unexpected server error"</code>,
+          the model ID in <code>opencode.json</code> is likely invalid. OpenCode Zen model IDs use the format
+          <code>deepseek-v4-flash-free</code>, not <code>deepseek/deepseek-v4-flash-free</code>. The slash prefix causes
+          the server to fail before the agent can start.
+        </p>
+
+        <h3><code>--read-only</code> causes cascading failures</h3>
+        <p>Running with <code>--read-only</code> breaks the healer and many tools. Specific symptoms:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Symptom</th>
+                <th>Cause</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Ripgrep JSON record exceeded 65536 bytes</code></td>
+                <td>ripgrep can't write temp files, chokes on long lines</td>
+              </tr>
+              <tr>
+                <td><code>locator.innerText: Unexpected token ""</code></td>
+                <td>healer can't write the fix to read-only <code>src/scrappers</code></td>
+              </tr>
+              <tr>
+                <td><code>ENOENT: mkdir '/app/scraper/test-results'</code></td>
+                <td>Playwright can't create output directory</td>
+              </tr>
+              <tr>
+                <td><code>UnknownError</code> on healer start</td>
+                <td>opencode can't initialize its DB in read-only <code>~/.local/share/opencode</code></td>
+              </tr>
+              <tr>
+                <td><code>Failed to execute statement</code></td>
+                <td>SQLite can't create WAL files</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <strong>Fix:</strong> Don't use <code>--read-only</code>. The container is ephemeral anyway — torn down after
+          each run, so no lasting security benefit.
+        </div>
+      </section>
+
+      <footer>scraper-container · map-event-scrapper · generated documentation</footer>
     </div>
-
-    <div class="callout success">
-      <strong>No browser download at runtime.</strong> The docker image ships Chromium via the Playwright base image, so <code>npx playwright run-test-mcp-server</code> starts without a download step. The healer inside the container runs opencode with this same config, giving it browser access to debug failing scrapers.
-    </div>
-  </section>
-
-  <!-- Security -->
-  <section id="security">
-    <h2>Security</h2>
-    <p>The container is intentionally ephemeral (removed after each run) and needs unrestricted outbound internet to scrape gig listings, so egress itself is not firewalled. Hardening focuses on limiting what an attacker gains inside the container and what leaks out:</p>
-
-    <ul>
-      <li><strong>No secrets in the image.</strong> <code>.env</code> is excluded via <code>.dockerignore</code> and must never be baked in; secrets reach the container only through <code>--env-file</code> at runtime.</li>
-      <li><strong>Non-root runtime (<code>USER node</code>).</strong> The scraper, playwright, xvfb, and the healer all run as a dedicated non-root user with a writable home (<code>/home/node</code>) for node/git/opencode state.</li>
-      <li><strong>Dropped capabilities.</strong> <code>--cap-drop=ALL</code> plus a minimal allow-list (<code>CHOWN, DAC_OVERRIDE, FOWNER, SETUID, SETGID, SETPCAP, NET_BIND_SERVICE</code>), combined with <code>--security-opt=no-new-privileges:true</code>.</li>
-    </ul>
-
-    <p><strong>What each retained capability actually grants</strong> (all Linux capability(7) scoped to the container's namespace):</p>
-
-    <div class="cap-grid">
-      <div class="cap-name">CHOWN</div>
-      <div class="cap-desc">Allow changing file ownership (<code>chown</code>); needed by npm/node when fixing ownership of install artifacts written by root.</div>
-      <div class="cap-name">DAC_OVERRIDE</div>
-      <div class="cap-desc">Bypass file read/write/execute permission checks; the container's entrypoint and tmpfs re-owners rely on it to write where the image stored files as root. Effectively lets the non-root user ignore <code>DAC</code> (discretionary access control) permissions.</div>
-      <div class="cap-name">FOWNER</div>
-      <div class="cap-desc">Bypass permission checks on operations normally requiring the file's owner (e.g. <code>chmod</code> on root-owned files), used during setup scripts.</div>
-      <div class="cap-name">SETUID / SETGID</div>
-      <div class="cap-desc">Allow changing the effective UID/GID of processes and setting setuid/setgid bits; needed to drop from root to the <code>node</code> user and for git's ssh helpers.</div>
-      <div class="cap-name">SETPCAP</div>
-      <div class="cap-desc">Let the entrypoint modify its <em>own</em> capability sets (add/remove capabilities on itself), required to drop further capabilities after starting with the allow-list.</div>
-      <div class="cap-name">NET_BIND_SERVICE</div>
-      <div class="cap-desc">Bind to low ports (&lt;1024); kept so the server can bind privileged ports if ever needed, harmless for scraping.</div>
-    </div>
-
-    <div class="callout danger">
-      <strong>Everything else is dropped</strong> — <code>NET_RAW</code> (raw/packet sockets), <code>SYS_ADMIN</code> (mounts, namespaces), <code>SYS_PTRACE</code>, <code>SYS_MODULE</code>, <code>DAC_READ_SEARCH</code>, etc. A compromised scraper process cannot load kernel modules, attach ptrace, create raw sockets for network sniffing, or reconfigure namespaces.
-    </div>
-
-    <ul>
-      <li><strong>Chromium runs <code>--no-sandbox</code>.</strong> The container lacks <code>SYS_ADMIN</code>/userns, which breaks Chromium's setuid sandbox; Playwright is configured with <code>--no-sandbox --disable-setuid-sandbox</code> as an explicit trade-off.</li>
-      <li><strong>Process limit.</strong> <code>--pids-limit=256</code> constrains browser/child-process fan-out.</li>
-      <li><strong>Ephemeral writes.</strong> Writable dirs (<code>/tmp</code>, <code>src/eventFiles</code>, <code>test-results</code>, <code>playwright-report</code>, <code>logs</code>) are tmpfs-backed, so no host state persists. The tmpfs mounts are created <code>uid=1000,gid=1000</code> so the non-root <code>node</code> user (also uid/gid 1000 in the image) can write to them. <code>1000</code> is the uid/gid that the official Node Docker base image assigns to the <code>node</code> user (the first non-root user in Linux, hence the conventional <code>1000</code>). A tmpfs mount starts owned by root, so <code>--tmpfs ...:uid=1000,gid=1000</code> re-owns it to <code>node</code> at mount time; without this the container — which runs as <code>USER node</code> — would get <code>EACCES</code>/<code>ENOENT</code> writing to those directories.</li>
-      <li><strong>Egress hardening.</strong> An attacker-influenced URL is blocked at the app layer (<code>src/helpers/ssrf.ts</code>: rejects private/loopback/link-local IPs, <code>host.docker.internal</code> and friends, plus DNS-rebinding-style internal resolutions) before any <code>page.goto</code>. For stronger isolation, run the container through an outbound allowlist proxy by setting <code>HTTPS_PROXY</code>/<code>HTTP_PROXY</code> in <code>.env</code> (also wired via <code>--env-file</code>).</li>
-    </ul>
-
-    <p>For runtime egress allowlisting the container already reaches: the scraper target domains, <code>bandcamp.com</code>, <code>api.github.com</code>, the Google AI/Maps/Places API hosts and <code>PRODUCTION_DB_URL</code>.</p>
-  </section>
-
-  <!-- Image size -->
-  <section id="size">
-    <h2>Image size</h2>
-    <p>The built image is ~4.2 GB. Breakdown by layer:</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Layer</th><th>Size</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Playwright base (Chromium + system deps)</td><td>~2.7 GB</td><td><code>mcr.microsoft.com/playwright:v1.61.1-noble</code></td></tr>
-          <tr><td><code>npm ci</code> — installed dependencies</td><td>~137 MB</td><td>Baked into image, includes node_modules</td></tr>
-          <tr><td>Opencode CLI</td><td>~178 MB</td><td>Linux ARM64 binary for test self-healing</td></tr>
-          <tr><td>Source code (excl. host node_modules)</td><td>~2.1 MB</td><td>Via <code>.dockerignore</code> — host node_modules excluded</td></tr>
-          <tr><td>Seed data backups</td><td>~1.8 MB</td><td>Copied at build, restored to tmpfs at runtime</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="callout">
-      <strong>Why not smaller?</strong> The Playwright base image ships Chromium, Firefox, and WebKit (~1.2 GB of browser binaries). This is the standard trade-off for a zero-download-at-runtime sandbox.
-    </div>
-
-    <h3>Ripgrep config</h3>
-    <p>The image and entrypoint create <code>~/.config/ripgrep/config</code> (in the node user's <code>$HOME</code>) with <code>--max-columns=10000</code>. This prevents ripgrep's JSON output from exceeding its 65536-byte internal buffer when searching files with very long lines (e.g., minified HTML, WebFetch output).</p>
-  </section>
-
-  <!-- Troubleshooting -->
-  <section id="troubleshoot">
-    <h2>Troubleshooting</h2>
-
-    <h3>Healer fails with <code>UnknownError</code></h3>
-    <p>If the healer crashes immediately with <code>"UnknownError"</code> and <code>"Unexpected server error"</code>, the model ID in <code>opencode.json</code> is likely invalid. OpenCode Zen model IDs use the format <code>deepseek-v4-flash-free</code>, not <code>deepseek/deepseek-v4-flash-free</code>. The slash prefix causes the server to fail before the agent can start.</p>
-
-    <h3><code>--read-only</code> causes cascading failures</h3>
-    <p>Running with <code>--read-only</code> breaks the healer and many tools. Specific symptoms:</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Symptom</th><th>Cause</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>Ripgrep JSON record exceeded 65536 bytes</code></td><td>ripgrep can't write temp files, chokes on long lines</td></tr>
-          <tr><td><code>locator.innerText: Unexpected token ""</code></td><td>healer can't write the fix to read-only <code>src/scrappers</code></td></tr>
-          <tr><td><code>ENOENT: mkdir '/app/scraper/test-results'</code></td><td>Playwright can't create output directory</td></tr>
-          <tr><td><code>UnknownError</code> on healer start</td><td>opencode can't initialize its DB in read-only <code>~/.local/share/opencode</code></td></tr>
-          <tr><td><code>Failed to execute statement</code></td><td>SQLite can't create WAL files</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="callout warn">
-      <strong>Fix:</strong> Don't use <code>--read-only</code>. The container is ephemeral anyway — torn down after each run, so no lasting security benefit.
-    </div>
-  </section>
-
-  <footer>scraper-container · map-event-scrapper · generated documentation</footer>
-</div>
-</body>
+  </body>
 </html>
