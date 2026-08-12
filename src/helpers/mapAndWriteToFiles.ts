@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { ScrapedEvent } from "../scrappers/types";
 import { findMissingAddressAndLngLat } from "./findAddressAndLngLat";
-import { getEventGenresWithAi } from "./ai/googleAi";
+import { aiCoordinateValidation, getEventGenresWithAi } from "./ai/googleAi";
 import { cityConfig } from "../cityConfig";
 import { randomUUID } from "crypto";
 import { writeToCompleteEventFiles, writeToIncompleteEventFiles } from "./writeToFiles";
@@ -31,8 +31,8 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
     }
 
     console.log("Mapping " + event.eventName);
-    const knownVenueEvents = findKnownAddressAndCoords(event);
-    const googleParsedEvent = await findMissingAddressAndLngLat(knownVenueEvents);
+    // const knownVenueEvents = findKnownAddressAndCoords(event);
+    const googleParsedEvent = await findMissingAddressAndLngLat(event);
 
     let isAlreadyInPastEvents = false;
 
@@ -62,11 +62,7 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
       genres: googleParsedEvent.genres?.length ? googleParsedEvent.genres : await getEventGenresWithAi(event),
     };
 
-    const aiCheckedEvent = eventWithGenres;
-    // const aiCheckedEvent =
-    //   eventWithGenres.source && ["humanitix", "eventbrite"].includes(eventWithGenres.source)
-    //     ? eventWithGenres
-    //     : await aiCoordinateValidation(eventWithGenres);
+    const aiCheckedEvent = await aiCoordinateValidation(eventWithGenres);
 
     completeEvent.push({
       ...aiCheckedEvent,

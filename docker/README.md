@@ -1,5 +1,7 @@
 # scraper-container
 
+> **HTML version:** open [README.html](README.html) (`open README.html` opens it in your default browser)
+
 Runs all Playwright scrapers sequentially in a container using [Orbstack](https://orbstack.dev) (Docker-compatible runtime on Mac).
 
 Scraped data is sent directly to a production DB via API. No filesystem bridge between host and container.
@@ -21,8 +23,7 @@ docker build -f docker/Dockerfile -t scraper-container .
 docker run --rm --init \
   --env-file .env \
   --cap-drop=ALL \
-  --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER \
-  --cap-add SETUID --cap-add SETGID --cap-add SETPCAP --cap-add NET_BIND_SERVICE \
+  --cap-add DAC_OVERRIDE --cap-add SETUID --cap-add SETGID \
   --security-opt=no-new-privileges:true \
   --pids-limit=256 \
   --tmpfs /tmp:size=1g \
@@ -64,7 +65,7 @@ image layer:
 The run command mounts `--tmpfs /app/scraper/src/eventFiles:uid=1000,gid=1000`.
 A tmpfs mount **starts empty and hides the image layer** at that path, so the
 data baked into the image at `src/eventFiles` is invisible at runtime. The seed
-copy at `/app/seed/eventFiles` (Dockerfile) lives at a *non-masked* path, and
+copy at `/app/seed/eventFiles` (Dockerfile) lives at a _non-masked_ path, and
 the entrypoint restores it before `npm run map` and `send-to-db` run. Without
 this, the scrapers would run against an empty directory.
 
@@ -77,7 +78,7 @@ run's startup guarantees the scrapers are back to the exact baked/committed
 versions before the next run, so:
 
 - the test run (and the healer's verification) always exercises the pristine committed code, and
-- any diff pushed to the PR branch contains *only* what the healer changed, not debris from previous runs.
+- any diff pushed to the PR branch contains _only_ what the healer changed, not debris from previous runs.
 
 ### Why both Dockerfile and entrypoint copy
 
@@ -133,30 +134,22 @@ container and what leaks out:
   healer all run as a dedicated non-root user with a writable home
   (`/home/node`) for node/git/opencode state.
 - **Dropped capabilities.** `--cap-drop=ALL` plus a minimal allow-list
-  (`CHOWN,DAC_OVERRIDE,FOWNER,SETUID,SETGID,SETPCAP,NET_BIND_SERVICE`), combined
-  with `--security-opt=no-new-privileges:true`. What each retained capability
+  (`DAC_OVERRIDE,SETUID,SETGID`), combined with
+  `--security-opt=no-new-privileges:true`. What each retained capability
   actually grants (all Linux capability(7) scoped to the container's namespace):
-  - `CHOWN` — allow changing file ownership (`chown`); needed by npm/node when
-    fixing ownership of install artifacts written by root.
-  - `DAC_OVERRIDE` — bypass file read/write/execute permission checks; the
-    container's entrypoint and tmpfs re-owners rely on it to write where the
-    image stored files as root. Effectively lets the non-root user ignore
-    `DAC` (discretionary access control) permissions.
-  - `FOWNER` — bypass permission checks on operations normally requiring the
-    file's owner (e.g. `chmod` on root-owned files), used during setup scripts.
+  - `DAC_OVERRIDE` — bypass file read/write/execute permission checks; lets the
+    non-root user write regardless of `DAC` (discretionary access control)
+    permissions, covering git/npm/opencode writes to directories that may not
+    carry exact ownership metadata after image-layer copies.
   - `SETUID` / `SETGID` — allow changing the effective UID/GID of processes
-    and setting setuid/setgid bits; needed to drop from root to the `node`
-    user and for git's ssh helpers.
-  - `SETPCAP` — let the entrypoint modify its *own* capability sets (add/remove
-    capabilities on itself), required to drop further capabilities after
-    starting with the allow-list.
-  - `NET_BIND_SERVICE` — bind to low ports (<1024); kept so the server can bind
-    privileged ports if ever needed, harmless for scraping.
+    and setting setuid/setgid bits; kept for toolchains that re-exec themselves
+    with dropped privileges.
 
   Everything else — `NET_RAW` (raw/packet sockets), `SYS_ADMIN` (mounts,
   namespaces), `SYS_PTRACE`, `SYS_MODULE`, `DAC_READ_SEARCH`, etc. — is dropped,
   so a compromised scraper process cannot load kernel modules, attach ptrace,
   create raw sockets for network sniffing, or reconfigure namespaces.
+
 - **Chromium runs `--no-sandbox`.** The container lacks `SYS_ADMIN`/userns, which
   breaks Chromium's setuid sandbox; Playwright is configured with
   `--no-sandbox --disable-setuid-sandbox` as an explicit trade-off.
