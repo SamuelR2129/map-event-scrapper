@@ -60,8 +60,8 @@ test("ScrapeNibHotel", async ({ page, config }) => {
     }> = [];
 
     for (const card of cards) {
-      // .event-meta span:first-child = full date e.g. "Wednesday 12 August 2026"
-      const dateText = page.locator(".event-meta span:nth-child(6)")?.textContent ?? "";
+      // .event-meta span:nth-child(6) = full date e.g. "Wednesday 12 August 2026"
+      const dateText = card.querySelector(".event-meta span:nth-child(6)")?.textContent?.trim() ?? "";
       if (!dateText) continue;
 
       // .event-meta span:nth-child(2) = "Doors 20:30" (optional, absent on some cards)
