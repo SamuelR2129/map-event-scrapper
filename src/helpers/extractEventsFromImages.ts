@@ -176,10 +176,12 @@ export const extractEventData = async (imagePart: {
 
       const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
 
-      const aiCheckedEvent =
-        knownVenueEvent.lngLat && knownVenueEvent.venueAddress
-          ? knownVenueEvent
-          : await aiCoordinateValidation(knownVenueEvent);
+      // const aiCheckedEvent =
+      //   knownVenueEvent.lngLat && knownVenueEvent.venueAddress
+      //     ? knownVenueEvent
+      //     : await aiCoordinateValidation(knownVenueEvent);
+
+      const aiCheckedEvent = knownVenueEvent;
 
       const eventDateTime = australianDateTimeMapper(day);
 
@@ -213,4 +215,5 @@ export const extractEventData = async (imagePart: {
 
   writeToCompleteEventFiles(completeEvent, config);
   writeToIncompleteEventFiles(incompleteEvent, config);
+  process.exit(0);
 })();

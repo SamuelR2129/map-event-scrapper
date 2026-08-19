@@ -51,128 +51,139 @@ test("Scrape humanitix", async ({ page, config }) => {
   for (let i = 0; i < eventCount; i++) {
     let event: ScrapedEvent = { source: "humanitix", localTimeZone: "Australia/Sydney" };
 
-    page.on("dialog", async (dialog) => {
-      await dialog.accept();
-    });
-
     const eventUrl = await eventLinks.nth(i).getAttribute("href");
     if (!eventUrl) {
       console.error("No href found for event link, skipping");
       continue;
     }
-    await page.goto(eventUrl, { waitUntil: "domcontentloaded" });
 
-    await page.waitForLoadState("domcontentloaded");
+    // Scrape each event in its own tab so the shared listing page is never
+    // navigated. Event links point at the events.humanitix.com subdomain and
+    // some event/ticket pages redirect or close themselves (external ticketing,
+    // htmx popups), which would otherwise tear down the shared `page` and abort
+    // the whole run with "Target page, context or browser has been closed".
+    const eventDetailPage = await page.context().newPage();
 
-    const titleElement = page.locator("h1").first();
+    try {
+      eventDetailPage.on("dialog", async (dialog) => {
+        await dialog.accept();
+      });
 
-    const eventName = await titleElement.innerText();
+      await eventDetailPage.goto(eventUrl, { waitUntil: "domcontentloaded" });
 
-    if (eventFiles.past.find((e) => e.eventName?.toLowerCase() === eventName.toLowerCase())) {
-      console.log("In db already " + eventName);
+      await eventDetailPage.waitForLoadState("domcontentloaded");
 
-      await page.goto(`${websiteUrl}`, { waitUntil: "domcontentloaded" });
-      continue;
-    }
+      const titleElement = eventDetailPage.locator("h1").first();
 
-    console.log(eventName, "start");
+      const eventName = await titleElement.innerText();
 
-    event.eventName = eventName;
-
-    const heroImage = page.locator('img[alt*="Banner"]').first();
-
-    if (await heroImage.isVisible()) {
-      event.eventBannerImage = (await heroImage.getAttribute("src")) ?? undefined;
-    } else {
-      console.error("hero banner image not found");
-    }
-
-    const timeElement = page.locator("time");
-
-    const datetime = await timeElement.first().getAttribute("datetime");
-
-    if (datetime) {
-      const dateTimeObject = DateTime.fromISO(datetime);
-
-      event.eventDateTime = dateTimeObject.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toUTC().toString();
-
-      event.eventStartTime = dateTimeObject.toLocaleString(DateTime.TIME_24_SIMPLE);
-    }
-
-    const venueNameElement = page.locator(".detail.location .detail-text .f-label-3").first();
-
-    if (await venueNameElement.isVisible()) {
-      event.venueName = (await venueNameElement.textContent())?.trim();
-    }
-
-    const ticketLinkNode = page.getByTestId("get-tickets-btn").first();
-
-    event.ticketLink = (await ticketLinkNode.getAttribute("href")) ?? undefined;
-
-    const descriptionNode = page.locator(".EventModuleRichText .RichContent").first();
-
-    if (await descriptionNode.isVisible()) {
-      event.eventDescription = (await descriptionNode.textContent()) ?? undefined;
-    }
-
-    //Address has multiple nodes, some with only the short address
-    const addressElements = page.locator("address");
-    const count = await addressElements.count();
-
-    for (let i = 0; i < count; i++) {
-      const el = addressElements.nth(i);
-      const isVisible = await el.isVisible();
-
-      if (!isVisible) continue;
-
-      const text = (await el.textContent())?.trim() ?? "";
-
-      //checks for postcode
-      if (/\b\d{4}\b/.test(text)) {
-        event.venueAddress = text;
-        break;
+      if (eventFiles.past.find((e) => e.eventName?.toLowerCase() === eventName.toLowerCase())) {
+        console.log("In db already " + eventName);
+        continue;
       }
-    }
 
-    const mapImageElement = page.locator(".MapImage img").first();
+      console.log(eventName, "start");
 
-    if (await mapImageElement.isVisible()) {
-      const url = new URL((await mapImageElement.getAttribute("src")) ?? "");
-      const center = url.searchParams.get("center");
-      const latLng = center?.split(",").map((coord) => coord.trim());
+      event.eventName = eventName;
 
-      if (latLng) {
-        event.lngLat = [Number(latLng[1]), Number(latLng[0])];
+      const heroImage = eventDetailPage.locator('img[alt*="Banner"]').first();
+
+      if (await heroImage.isVisible()) {
+        event.eventBannerImage = (await heroImage.getAttribute("src")) ?? undefined;
+      } else {
+        console.error("hero banner image not found");
       }
-    }
 
-    const hostNameElement = page.locator(".hostname a").first();
+      const timeElement = eventDetailPage.locator("time");
 
-    if (await hostNameElement.isVisible()) {
-      event.eventPromoters = (await hostNameElement.textContent())?.trim();
-    }
+      const datetime = await timeElement.first().getAttribute("datetime");
 
-    event.eventLink = page.url();
+      if (datetime) {
+        const dateTimeObject = DateTime.fromISO(datetime);
 
-    if (event.ticketLink) {
-      await page.goto(event.ticketLink.toString(), { waitUntil: "domcontentloaded" });
+        event.eventDateTime = dateTimeObject.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toUTC().toString();
 
-      const ticketCostNode = await page.locator(".price-label").first();
-
-      if (await ticketCostNode.isVisible()) {
-        event.ticketCost = await ticketCostNode.innerText();
+        event.eventStartTime = dateTimeObject.toLocaleString(DateTime.TIME_24_SIMPLE);
       }
+
+      const venueNameElement = eventDetailPage.locator(".detail.location .detail-text .f-label-3").first();
+
+      if (await venueNameElement.isVisible()) {
+        event.venueName = (await venueNameElement.textContent())?.trim();
+      }
+
+      const ticketLinkNode = eventDetailPage.getByTestId("get-tickets-btn").first();
+
+      event.ticketLink = (await ticketLinkNode.getAttribute("href")) ?? undefined;
+
+      const descriptionNode = eventDetailPage.locator(".EventModuleRichText .RichContent").first();
+
+      if (await descriptionNode.isVisible()) {
+        event.eventDescription = (await descriptionNode.textContent()) ?? undefined;
+      }
+
+      //Address has multiple nodes, some with only the short address
+      const addressElements = eventDetailPage.locator("address");
+      const count = await addressElements.count();
+
+      for (let j = 0; j < count; j++) {
+        const el = addressElements.nth(j);
+        const isVisible = await el.isVisible();
+
+        if (!isVisible) continue;
+
+        const text = (await el.textContent())?.trim() ?? "";
+
+        //checks for postcode
+        if (/\b\d{4}\b/.test(text)) {
+          event.venueAddress = text;
+          break;
+        }
+      }
+
+      const mapImageElement = eventDetailPage.locator(".MapImage img").first();
+
+      if (await mapImageElement.isVisible()) {
+        const url = new URL((await mapImageElement.getAttribute("src")) ?? "");
+        const center = url.searchParams.get("center");
+        const latLng = center?.split(",").map((coord) => coord.trim());
+
+        if (latLng) {
+          event.lngLat = [Number(latLng[1]), Number(latLng[0])];
+        }
+      }
+
+      const hostNameElement = eventDetailPage.locator(".hostname a").first();
+
+      if (await hostNameElement.isVisible()) {
+        event.eventPromoters = (await hostNameElement.textContent())?.trim();
+      }
+
+      event.eventLink = eventDetailPage.url();
+
+      if (event.ticketLink) {
+        await eventDetailPage.goto(event.ticketLink.toString(), { waitUntil: "domcontentloaded" });
+
+        const ticketCostNode = eventDetailPage.locator(".price-label").first();
+
+        if (await ticketCostNode.isVisible()) {
+          event.ticketCost = await ticketCostNode.innerText();
+        }
+      }
+
+      event.id = randomUUID();
+
+      event.localTimeZone = "Australia/Sydney";
+
+      console.log(eventName, "end");
+
+      events = events.length ? [...events, event] : [event];
+    } catch (err) {
+      // A single event page closing/redirecting should not abort the whole run.
+      console.error("Skipping event due to error:", eventUrl, err);
+    } finally {
+      await eventDetailPage.close().catch(() => {});
     }
-
-    event.id = randomUUID();
-
-    event.localTimeZone = "Australia/Sydney";
-
-    console.log(eventName, "end");
-
-    events = events.length ? [...events, event] : [event];
-
-    await page.goto(`${websiteUrl}`, { waitUntil: "domcontentloaded" });
   }
 
   await sanitizeAndWriteToStagingFile(events, "Humanitix", config);
