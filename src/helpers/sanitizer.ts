@@ -126,5 +126,6 @@ export function sanitizeEvents(event: ScrapedEvent): ScrapedEvent {
     eventBannerImage: sanitizeUrl(event.eventBannerImage),
     source: event.source,
     localTimeZone: event.localTimeZone,
+    upVotes: Math.floor(Math.random() * 21),
   };
 }

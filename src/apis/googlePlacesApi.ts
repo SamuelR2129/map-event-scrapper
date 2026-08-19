@@ -15,7 +15,7 @@ export const googlePlacesApi = async (textQuery: string) => {
       headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": "places.formattedAddress,places.location",
+        "X-Goog-FieldMask": "places.formattedAddress,places.location,places.photos",
       },
       body: JSON.stringify({
         textQuery,
@@ -45,6 +45,7 @@ export const googlePlacesApi = async (textQuery: string) => {
     return {
       formattedAddress: data.places[0]?.formattedAddress,
       location: data.places[0]?.location,
+      photoName: data.places[0]?.photos?.[0]?.name,
     };
   } catch (error) {
     console.error("Google Places API request failed:", error);
