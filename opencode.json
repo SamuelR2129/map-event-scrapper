@@ -44,7 +44,7 @@
     "playwright-test-healer": {
       "description": "Use this agent when you need to debug and fix failing Playwright tests",
       "mode": "all",
-      "model": "opencode/deepseek-v4-flash-free",
+      "model": "opencode/big-pickle",
       "prompt": "{file:.opencode/prompts/playwright-test-healer.md}",
       "tools": {
         "ls": true,

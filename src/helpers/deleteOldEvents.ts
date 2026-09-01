@@ -19,15 +19,12 @@ export const deleteOldEvents = (cityName: string) => {
 
   const lastCompleteEvent: ScrapedEvent = completeEvents[completeEvents.length - 1];
 
-  console.log("Removing events on complete from ", lastCompleteEvent?.eventDateTime);
-
   const writeToPastEvents = lastCompleteEvent?.eventDateTime && new Date(lastCompleteEvent.eventDateTime) < new Date();
 
-  console.log(
-    `Last eventDateTime in completed file - ${lastCompleteEvent?.eventDateTime}, Will write completed events to past events? - ${writeToPastEvents}`,
-  );
-
   if (writeToPastEvents) {
+    console.log(
+      `Last eventDateTime in completed file - ${lastCompleteEvent?.eventDateTime}, Will write completed events to past events? - ${writeToPastEvents}`,
+    );
     writeWithFallback(
       getEventFilePath(cityName, "past-events.json"),
       JSON.stringify([...pastEvents, ...completeEvents]),
@@ -35,6 +32,8 @@ export const deleteOldEvents = (cityName: string) => {
     );
   }
   if (lastCompleteEvent) {
+    console.log("Removing events on complete from ", lastCompleteEvent?.eventDateTime);
+
     writeWithFallback(
       getEventFilePath(cityName, "complete-events.json"),
       JSON.stringify([]),

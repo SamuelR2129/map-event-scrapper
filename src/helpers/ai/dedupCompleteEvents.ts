@@ -42,71 +42,68 @@ export type DedupResult = {
 };
 
 export const aiDedupCompleteEvents = async (events: ScrapedEvent[]): Promise<DedupResult> => {
-  const whListIndexes = new Set<number>();
-  const nonWhList: ScrapedEvent[] = [];
-
-  for (let i = 0; i < events.length; i++) {
-    if (events[i].source === "whList") {
-      whListIndexes.add(i);
-    } else {
-      nonWhList.push(events[i]);
-    }
-  }
-
-  if (whListIndexes.size === 0) {
-    return { dedupedEvents: events, removedEvents: [] };
+  if (events.length === 0) {
+    return { dedupedEvents: [], removedEvents: [] };
   }
 
   const removedIndexes = new Set<number>();
 
-  for (const whIdx of whListIndexes) {
-    const whEvent = events[whIdx];
-    let matched = false;
+  for (let i = 0; i < events.length; i++) {
+    if (removedIndexes.has(i)) continue;
 
-    for (const other of nonWhList) {
-      if (!sameDate(whEvent.eventDateTime, other.eventDateTime)) continue;
+    for (let j = i + 1; j < events.length; j++) {
+      if (removedIndexes.has(j)) continue;
 
-      const coordsClose = coordsMatch(whEvent.lngLat, other.lngLat, 0.001);
+      const eventA = events[i];
+      const eventB = events[j];
 
-      if (coordsClose && addressMatches(whEvent.venueAddress, other.venueAddress)) {
-        matched = true;
-        break;
-      }
+      if (!sameDate(eventA.eventDateTime, eventB.eventDateTime)) continue;
 
-      const coordsFuzzy = coordsMatch(whEvent.lngLat, other.lngLat, 0.005);
+      const coordsClose = coordsMatch(eventA.lngLat, eventB.lngLat, 0.001);
 
-      if (coordsFuzzy || addressMatches(whEvent.venueAddress, other.venueAddress)) {
-        const prompt = [
-          {
-            text: `Are these two events the same event at the same venue on the same date?
+      let isSameEvent = false;
 
-              Event A (source: ${whEvent.source}):
-              - Name: "${whEvent.eventName}"
-              - Venue: "${whEvent.venueName}"
-              - Address: "${whEvent.venueAddress}"
-              - Date: "${whEvent.eventDateTime}"
-              - Coordinates: [${whEvent.lngLat}]
+      if (coordsClose && addressMatches(eventA.venueAddress, eventB.venueAddress)) {
+        isSameEvent = true;
+      } else {
+        const coordsFuzzy = coordsMatch(eventA.lngLat, eventB.lngLat, 0.005);
 
-              Event B (source: ${other.source}):
-              - Name: "${other.eventName}"
-              - Venue: "${other.venueName}"
-              - Address: "${other.venueAddress}"
-              - Date: "${other.eventDateTime}"
-              - Coordinates: [${other.lngLat}]`,
-          },
-        ];
+        if (coordsFuzzy || addressMatches(eventA.venueAddress, eventB.venueAddress)) {
+          const prompt = [
+            {
+              text: `Are these two events the same event at the same venue on the same date?
 
-        const aiRes = await googleGenClient<DedupResponse>(prompt, dedupSchema);
+              Event A (source: ${eventA.source}):
+              - Name: "${eventA.eventName}"
+              - Venue: "${eventA.venueName}"
+              - Address: "${eventA.venueAddress}"
+              - Date: "${eventA.eventDateTime}"
+              - Coordinates: [${eventA.lngLat}]
 
-        if (aiRes?.isSameEvent) {
-          matched = true;
-          break;
+              Event B (source: ${eventB.source}):
+              - Name: "${eventB.eventName}"
+              - Venue: "${eventB.venueName}"
+              - Address: "${eventB.venueAddress}"
+              - Date: "${eventB.eventDateTime}"
+              - Coordinates: [${eventB.lngLat}]`,
+            },
+          ];
+
+          const aiRes = await googleGenClient<DedupResponse>(prompt, dedupSchema);
+          isSameEvent = aiRes?.isSameEvent === true;
         }
       }
-    }
 
-    if (matched) {
-      removedIndexes.add(whIdx);
+      if (isSameEvent) {
+        const aIsWhList = eventA.source === "whList";
+        const bIsWhList = eventB.source === "whList";
+
+        if (aIsWhList !== bIsWhList) {
+          removedIndexes.add(aIsWhList ? i : j);
+        } else {
+          removedIndexes.add(j);
+        }
+      }
     }
   }
 

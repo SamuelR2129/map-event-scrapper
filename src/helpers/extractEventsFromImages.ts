@@ -13,6 +13,7 @@ import { deleteOldEvents } from "./deleteOldEvents";
 import { getBrowser } from "./getBrowser";
 import { getBandCampMediaIds } from "./getBandCampMediaIds";
 import { aiGenerateEventDescription } from "./ai/aiGenerateEventDescription";
+import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
 
 type EventResponse = {
   events: {
@@ -176,10 +177,12 @@ export const extractEventData = async (imagePart: {
 
       const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
 
-      const aiCheckedEvent =
-        knownVenueEvent.lngLat && knownVenueEvent.venueAddress
-          ? knownVenueEvent
-          : await aiCoordinateValidation(knownVenueEvent);
+      // const aiCheckedEvent =
+      //   knownVenueEvent.lngLat && knownVenueEvent.venueAddress
+      //     ? knownVenueEvent
+      //     : await aiCoordinateValidation(knownVenueEvent);
+
+      const aiCheckedEvent = knownVenueEvent;
 
       const eventDateTime = australianDateTimeMapper(day);
 
@@ -211,6 +214,9 @@ export const extractEventData = async (imagePart: {
 
   await page.close();
 
-  writeToCompleteEventFiles(completeEvent, config);
+  const { dedupedEvents } = await aiDedupCompleteEvents(completeEvent);
+
+  writeToCompleteEventFiles(dedupedEvents, config);
   writeToIncompleteEventFiles(incompleteEvent, config);
+  process.exit(0);
 })();
