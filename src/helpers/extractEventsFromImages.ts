@@ -13,7 +13,7 @@ import { deleteOldEvents } from "./deleteOldEvents";
 import { getBrowser } from "./getBrowser";
 import { getBandCampMediaIds } from "./getBandCampMediaIds";
 import { aiGenerateEventDescription } from "./ai/aiGenerateEventDescription";
-import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
+import { enrichEventFromGooglePlaces } from "./findAddressAndLngLat";
 
 type EventResponse = {
   events: {
@@ -163,9 +163,12 @@ export const extractEventData = async (imagePart: {
   for (const day of ["wednesday", "thursday", "friday", "saturday", "sunday"]) {
     const imageFilePath = fs.globSync(path.join(eventFilesDir, "weeklyPhotos", `${day}*.png`))[0];
 
-    const imagePart = fileToGenerativePart(imageFilePath, "image/png");
+    const imagePart = imageFilePath && fileToGenerativePart(imageFilePath, "image/png");
 
-    if (!imagePart) continue;
+    if (!imagePart) {
+      console.log(`No image for ${day}`);
+      continue;
+    }
 
     const data = await extractEventData(imagePart);
 
@@ -176,6 +179,8 @@ export const extractEventData = async (imagePart: {
       }
 
       const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
+
+      const { eventBannerImage } = await enrichEventFromGooglePlaces(knownVenueEvent);
 
       // const aiCheckedEvent =
       //   knownVenueEvent.lngLat && knownVenueEvent.venueAddress
@@ -208,15 +213,14 @@ export const extractEventData = async (imagePart: {
         source: "whList",
         bandCampMediaIds: bandCampMediaIds?.[0],
         eventDescription: aiDescription,
+        eventBannerImage,
       });
     }
   }
 
   await page.close();
 
-  const { dedupedEvents } = await aiDedupCompleteEvents(completeEvent);
-
-  writeToCompleteEventFiles(dedupedEvents, config);
-  writeToIncompleteEventFiles(incompleteEvent, config);
+  const removedEvents = await writeToCompleteEventFiles(completeEvent, config);
+  writeToIncompleteEventFiles([...incompleteEvent, ...removedEvents], config);
   process.exit(0);
 })();

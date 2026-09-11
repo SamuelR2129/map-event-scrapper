@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { CityConfig } from "../cityConfig";
 import { ScrapedEvent } from "../scrappers/types";
+import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
 
 export const eventFilesDir = path.join(__dirname, "..", "eventFiles");
 
@@ -41,16 +42,20 @@ export const writeToIncompleteEventFiles = (incompleteEvents: ScrapedEvent[], co
   );
 };
 
-export const writeToCompleteEventFiles = (completeEvents: ScrapedEvent[], config: CityConfig) => {
+export const writeToCompleteEventFiles = async (completeEvents: ScrapedEvent[], config: CityConfig) => {
   const { city, eventFiles } = config;
 
   const mergedEvents = eventFiles.complete.length ? [...eventFiles.complete, ...completeEvents] : completeEvents;
 
+  const { dedupedEvents, removedEvents } = await aiDedupCompleteEvents(mergedEvents);
+
   writeWithFallback(
     getEventFilePath(city.cityName, "complete-events.json"),
-    JSON.stringify(mergedEvents),
-    `${completeEvents.length} events added to complete-events.`,
+    JSON.stringify(dedupedEvents),
+    `${dedupedEvents.length} events in complete-events (deduped against existing).`,
   );
+
+  return removedEvents;
 };
 
 export const writeToPastEventFiles = (events: ScrapedEvent[], config: CityConfig) => {
