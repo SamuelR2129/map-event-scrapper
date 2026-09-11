@@ -84,13 +84,9 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
     completeEvent = musicEvents;
   }
 
-  if (completeEvent.length > 0) {
-    const { dedupedEvents, removedEvents } = await aiDedupCompleteEvents(completeEvent);
-    incompleteEvent.push(...removedEvents);
-    completeEvent = dedupedEvents;
-  }
+  const removedExisting = await writeToCompleteEventFiles(completeEvent, config);
+  incompleteEvent.push(...removedExisting);
 
-  writeToCompleteEventFiles(completeEvent, config);
   writeToIncompleteEventFiles(incompleteEvent, config);
   process.exit(0);
 })();

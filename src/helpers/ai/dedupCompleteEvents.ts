@@ -63,12 +63,12 @@ export const aiDedupCompleteEvents = async (events: ScrapedEvent[]): Promise<Ded
 
       let isSameEvent = false;
 
-      if (coordsClose && addressMatches(eventA.venueAddress, eventB.venueAddress)) {
+      if (coordsClose || addressMatches(eventA.venueAddress, eventB.venueAddress)) {
         isSameEvent = true;
       } else {
         const coordsFuzzy = coordsMatch(eventA.lngLat, eventB.lngLat, 0.005);
 
-        if (coordsFuzzy || addressMatches(eventA.venueAddress, eventB.venueAddress)) {
+        if (coordsFuzzy) {
           const prompt = [
             {
               text: `Are these two events the same event at the same venue on the same date?

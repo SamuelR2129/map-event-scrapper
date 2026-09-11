@@ -191,7 +191,7 @@ test("ScrapOztix", async ({ page, config }) => {
     const nextPageButton = page.locator('[aria-label="Next page"]');
 
     if (await nextPageButton.isVisible()) {
-      await nextPageButton.click();
+      await page.goto(`${pageUrl}&page=${pageNumber}`);
     } else {
       morePages = false;
     }
