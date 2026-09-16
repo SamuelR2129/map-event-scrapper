@@ -50,9 +50,11 @@ test("Scrape eventbrite", async ({ page, config }) => {
   while (morePages) {
     await page.waitForLoadState();
 
-    const listLocator = page.locator('[class*="SearchResultPanelContentEventCardList-module__eventList"] > li');
+    const listLocator = page
+      .locator('[class*="SearchResultPanelContentEventCardList-module__eventList"] > li')
+      .filter({ has: page.locator("h3") });
 
-    const count = (await listLocator.count()) - 1;
+    const count = await listLocator.count();
 
     for (let i = 0; i < count; i++) {
       let event: ScrapedEvent = { source: "eventbrite", localTimeZone: "Australia/Sydney" };
