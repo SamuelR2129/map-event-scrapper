@@ -48,18 +48,28 @@ test("Scrape humanitix", async ({ page, config }) => {
 
   const eventCount = await eventLinks.count();
 
+  // Collect all event URLs upfront so we don't have to re-query the DOM
+  // after navigating back to the listing page later in the loop (the
+  // "Show More" expansion is lost once you navigate away and back).
+  const eventUrls: string[] = [];
+
   for (let i = 0; i < eventCount; i++) {
+    const href = await eventLinks.nth(i).getAttribute("href");
+    if (href) {
+      eventUrls.push(href);
+    } else {
+      console.error("No href found for event link, skipping");
+    }
+  }
+
+  for (let i = 0; i < eventUrls.length; i++) {
     let event: ScrapedEvent = { source: "humanitix", localTimeZone: "Australia/Sydney" };
 
     page.on("dialog", async (dialog) => {
       await dialog.accept();
     });
 
-    const eventUrl = await eventLinks.nth(i).getAttribute("href");
-    if (!eventUrl) {
-      console.error("No href found for event link, skipping");
-      continue;
-    }
+    const eventUrl = eventUrls[i];
     await page.goto(eventUrl, { waitUntil: "domcontentloaded" });
 
     await page.waitForLoadState("domcontentloaded");
@@ -71,7 +81,6 @@ test("Scrape humanitix", async ({ page, config }) => {
     if (eventFiles.past.find((e) => e.eventName?.toLowerCase() === eventName.toLowerCase())) {
       console.log("In db already " + eventName);
 
-      await page.goto(`${websiteUrl}`, { waitUntil: "domcontentloaded" });
       continue;
     }
 
@@ -171,8 +180,6 @@ test("Scrape humanitix", async ({ page, config }) => {
     console.log(eventName, "end");
 
     events = events.length ? [...events, event] : [event];
-
-    await page.goto(`${websiteUrl}`, { waitUntil: "domcontentloaded" });
   }
 
   await sanitizeAndWriteToStagingFile(events, "Humanitix", config);
