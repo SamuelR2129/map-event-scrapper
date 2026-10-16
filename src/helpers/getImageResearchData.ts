@@ -2,21 +2,36 @@ import { googleGenClient } from "../apis/geminiAiApi";
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
+import { DateTime } from "luxon";
 import { ScrapedEvent } from "../scrappers/types";
-import { aiCoordinateValidation } from "./ai/googleAi";
 import { randomUUID } from "crypto";
-import { cityConfig } from "../cityConfig";
-import { writeToIncompleteEventFiles, writeToPastEventFiles } from "./writeToFiles";
-import { australianDateTimeMapper } from "./australianDateTimeMapper";
-import { findKnownAddressAndCoords } from "./findKnownAddressAndCoords";
+import {
+  getResearchFileName,
+  readProcessedImages,
+  readResearchData,
+  writeProcessedImages,
+  writeResearchData,
+} from "./writeToFiles";
+import { eventsExtractionPrompt, eventsExtractionSchema } from "./extractEventsFromImages";
 
-const DAYS_OF_WEEK = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
+const DAYS_OF_WEEK = ["wednesday", "thursday", "friday", "saturday", "sunday"] as const;
 
 type DayOfWeek = (typeof DAYS_OF_WEEK)[number];
+
+type WeekdayNumbers = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
+const DAY_MAP: Record<DayOfWeek, WeekdayNumbers> = {
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6,
+  sunday: 7,
+};
 
 type ImageFile = {
   filePath: string;
   day: DayOfWeek;
+  birthtime: Date;
 };
 
 type EventResponse = {
@@ -52,8 +67,50 @@ function getWeeklyImagesFromDownloads(year: number): ImageFile[] {
     // birthtime = "Date Added" on macOS
     if (stat.birthtime.getFullYear() !== year) return [];
 
-    return [{ filePath, day }];
+    return [{ filePath, day, birthtime: stat.birthtime }];
   });
+}
+
+/**
+ * Resolves the event date for an image-research photo: the target day of the week
+ * within the ISO week (Mon-Sun) of the date the image was saved.
+ *
+ * Uses the file's local calendar date (birthtime / "Date Added") as the anchor, so the
+ * machine timezone never shifts the week.
+ *
+ * @param day - Day of the week named in the image filename (e.g. 'friday')
+ * @param birthtime - When the image was saved
+ * @returns UTC ISO string for that day (2am Sydney) of the image's week
+ */
+export function getImageEventDateTime(day: DayOfWeek, birthtime: Date): string {
+  const weekday = DAY_MAP[day];
+  if (!weekday) {
+    throw new Error(`Invalid day for image research: ${day}. Must be a valid day of the week.`);
+  }
+
+  const anchor = DateTime.fromObject(
+    {
+      year: birthtime.getFullYear(),
+      month: birthtime.getMonth() + 1,
+      day: birthtime.getDate(),
+    },
+    { zone: "Australia/Sydney" },
+  );
+
+  const target = anchor.set({
+    weekday,
+    hour: 2,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+  });
+
+  const iso = target.toUTC().toISO();
+  if (!iso) {
+    throw new Error(`Failed to convert date to ISO string for day: ${day}`);
+  }
+
+  return iso;
 }
 
 function fileToGenerativePart(
@@ -79,96 +136,14 @@ function fileToGenerativePart(
 export const extractEventData = async (imagePart: {
   inlineData: { data: string; mimeType: string };
 }): Promise<EventResponse> => {
-  const schema = {
-    type: "object",
-    properties: {
-      events: {
-        type: "array",
-        description: "A list of all unique events shown in the image.",
-        items: {
-          type: "object",
-          properties: {
-            eventName: {
-              type: "string",
-              description: "The name of the artist or event.",
-            },
-            venueName: {
-              type: "string",
-              description: "The venue where the event is being held.",
-            },
-            venueAddress: {
-              type: "string",
-              description: "The full physical address of the venue.",
-            },
-            lngLat: {
-              type: "array",
-              description: "Geographic coordinates in [Longitude, Latitude] format.",
-              minItems: 2,
-              maxItems: 2,
-              items: { type: "number" },
-            },
-            ticketCost: {
-              type: "string",
-              description: "The cost of the ticket (e.g., '20.00').",
-            },
-            genres: {
-              type: "string",
-              description: "A list of all genres or descriptors, separated by a comma, uppercased like Techno, House.",
-            },
-          },
-          required: ["eventName", "venueName", "venueAddress", "genres"],
-        },
-      },
-    },
-    required: ["events"],
-  };
-
   const prompt = [
     {
-      text: `
-        Analyze the provided image.
-
-        Context:
-            1. Location: These events are taking place in Newcastle, NSW, Australia.
-            2. Missing Data: The image lists venue names but not their addresses or coordinates. You must use your internal knowledge to identify the correct venue in Newcastle, NSW, and provide the address and [Longitude, Latitude].
-
-        Instructions:
-            1. Extract all events listed under the selected tab.
-            2. For 'ticketCost', if the price is listed (e.g. "Clarendon Hotel - $15"), extract it. If it says "FREE" in the genres, set cost to "0.00". If unknown, leave it as undefined.
-            3. For 'lngLat', provide the precise coordinates for the specific venue.
-            4. Genres are the colored ovals such as ROCK or TECHNO.
-            5. Strictly follow this JSON schema for the output:
-            {
-                "type": "object",
-                "properties": {
-                    "events": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "eventName": { "type": "string" },
-                                "venueName": { "type": "string" },
-                                "venueAddress": { "type": "string", "description": "Full address including postcode" },
-                                "lngLat": {
-                                    "type": "array",
-                                    "items": { "type": "number" },
-                                    "minItems": 2,
-                                    "maxItems": 2
-                                },
-                                "ticketCost": { "type": "string" },
-                                "genres": { "type": "string", "description": "Comma-separated, uppercased like Techno, House." }
-                            },
-                            "required": ["eventName", "venueName", "venueAddress", "lngLat", "genres"]
-                        }
-                    }
-                }
-            }
-      `,
+      text: eventsExtractionPrompt,
     },
     imagePart,
   ];
 
-  const aiRes = await googleGenClient<EventResponse>(prompt, schema);
+  const aiRes = await googleGenClient<EventResponse>(prompt, eventsExtractionSchema);
   if (!aiRes) {
     throw new Error("No response returned by AI API");
   }
@@ -177,57 +152,70 @@ export const extractEventData = async (imagePart: {
   return aiRes;
 };
 
-(async () => {
-  const completeEvents: ScrapedEvent[] = [];
-  const incompleteEvents: ScrapedEvent[] = [];
+if (require.main === module) {
+  (async () => {
+    const fileName = getResearchFileName();
+    const existing = readResearchData(fileName);
+    const globalProcessed = new Set(readProcessedImages());
 
-  const config = await cityConfig("newcastle");
-  const imageFiles = getWeeklyImagesFromDownloads(2026);
+    const completeEvents: ScrapedEvent[] = [...existing.events];
+    const processedToday: string[] = [...existing.processedImages];
 
-  if (imageFiles.length === 0) {
-    console.warn("No matching weekly images found in Downloads for 2026.");
-    return;
-  }
+    const allImageFiles = getWeeklyImagesFromDownloads(2026);
+    const imageFiles = allImageFiles.filter(({ filePath }) => !globalProcessed.has(filePath));
 
-  console.log(`Found ${imageFiles.length} image(s) to process.`);
+    if (imageFiles.length === 0) {
+      console.warn(
+        `No new weekly images to process (${allImageFiles.length} found, all already processed).`,
+      );
+      return;
+    }
 
-  for (const { filePath, day } of imageFiles) {
-    console.log(`Processing: ${filePath} (${day})`);
+    const skipped = allImageFiles.length - imageFiles.length;
+    console.log(
+      `Found ${allImageFiles.length} image(s); processing ${imageFiles.length}, skipping ${skipped}.`,
+    );
 
-    const imagePart = fileToGenerativePart(filePath, "image/png");
-    if (!imagePart) continue;
+    let failed = 0;
+    let processedThisRun = 0;
 
-    const data = await extractEventData(imagePart);
+    for (const { filePath, day, birthtime } of imageFiles) {
+      console.log(`Processing: ${filePath} (${day})`);
 
-    for (const imgEvent of data.events) {
-      if (!imgEvent.lngLat) {
-        incompleteEvents.push(imgEvent);
+      try {
+        const imagePart = fileToGenerativePart(filePath, "image/png");
+        if (!imagePart) throw new Error("Could not read image");
+
+        const data = await extractEventData(imagePart);
+        const eventDateTime = getImageEventDateTime(day, birthtime);
+
+        for (const imgEvent of data.events) {
+          completeEvents.push({
+            ...imgEvent,
+            id: randomUUID(),
+            userName: "sam",
+            userEmail: "sam@hotmail.com",
+            localTimeZone: "Australia/Sydney",
+            eventDateTime,
+            source: "whList",
+          });
+        }
+
+        processedToday.push(filePath);
+        globalProcessed.add(filePath);
+        processedThisRun++;
+      } catch (err) {
+        failed++;
+        console.error(`Failed to process ${filePath}:`, (err as Error).message);
         continue;
       }
 
-      const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
-
-      const aiCheckedEvent =
-        knownVenueEvent.lngLat && knownVenueEvent.venueAddress
-          ? knownVenueEvent
-          : await aiCoordinateValidation(knownVenueEvent);
-
-      const eventDateTime = australianDateTimeMapper(day);
-
-      completeEvents.push({
-        ...aiCheckedEvent,
-        id: randomUUID(),
-        userName: "sam",
-        userEmail: "sam@hotmail.com",
-        localTimeZone: "Australia/Sydney",
-        eventDateTime,
-        source: "whList",
-      });
+      writeResearchData(fileName, { processedImages: processedToday, events: completeEvents });
+      writeProcessedImages([...globalProcessed]);
     }
-  }
 
-  console.log(`Complete: ${completeEvents.length} | Incomplete: ${incompleteEvents.length}`);
-
-  writeToPastEventFiles(completeEvents, config);
-  writeToIncompleteEventFiles(incompleteEvents, config);
-})();
+    console.log(
+      `Done. ${processedThisRun} processed this run, ${failed} failed, ${skipped} already processed. ${completeEvents.length} events in researchData/${fileName}.`,
+    );
+  })();
+}

@@ -6,6 +6,8 @@ import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
 
 export const eventFilesDir = path.join(__dirname, "..", "eventFiles");
 
+export const researchDataDir = path.join(__dirname, "..", "..", "researchData");
+
 export const getEventFilePath = (cityName: string, fileName: string) =>
   path.join(eventFilesDir, cityName, fileName);
 
@@ -67,5 +69,60 @@ export const writeToPastEventFiles = (events: ScrapedEvent[], config: CityConfig
     getEventFilePath(city.cityName, "past-events.json"),
     JSON.stringify(mergedEvents),
     `${events.length} events added to past-events.`,
+  );
+};
+
+export type ResearchData = {
+  processedImages: string[];
+  events: ScrapedEvent[];
+};
+
+export const getResearchFileName = (date = new Date()) => {
+  const stamp = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0"),
+  ].join("-");
+  return `events-${stamp}.json`;
+};
+
+export const getResearchFilePath = (fileName: string) => path.join(researchDataDir, fileName);
+
+export const processedImagesPath = path.join(researchDataDir, "processed-images.json");
+
+export const readResearchData = (fileName: string): ResearchData => {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(getResearchFilePath(fileName), "utf8"));
+    return {
+      processedImages: Array.isArray(parsed.processedImages) ? parsed.processedImages : [],
+      events: Array.isArray(parsed.events) ? parsed.events : [],
+    };
+  } catch {
+    return { processedImages: [], events: [] };
+  }
+};
+
+export const writeResearchData = (fileName: string, data: ResearchData) => {
+  writeWithFallback(
+    getResearchFilePath(fileName),
+    JSON.stringify(data, null, 2),
+    `${data.events.length} events written to researchData/${fileName}.`,
+  );
+};
+
+export const readProcessedImages = (): string[] => {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(processedImagesPath, "utf8"));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+export const writeProcessedImages = (imagePaths: string[]) => {
+  writeWithFallback(
+    processedImagesPath,
+    JSON.stringify(imagePaths, null, 2),
+    `${imagePaths.length} processed image(s) recorded.`,
   );
 };

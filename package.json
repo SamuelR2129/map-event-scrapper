@@ -6,6 +6,7 @@
   "scripts": {
     "map": "ts-node ./src/helpers/mapAndWriteToFiles.ts",
     "images": "ts-node ./src/helpers/extractEventsFromImages.ts",
+    "research": "ts-node ./src/helpers/getImageResearchData.ts",
     "send-to-db": "ts-node ./src/apis/sendCompleteEventsToDb.ts",
     "scrape": "npx playwright test --grep-invert witchhouseNewcastle",
     "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results"

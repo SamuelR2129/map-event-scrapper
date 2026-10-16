@@ -42,61 +42,53 @@ function fileToGenerativePart(filePath: string, mimeType: string) {
   }
 }
 
-export const extractEventData = async (imagePart: {
-  inlineData: {
-    data: string;
-    mimeType: string;
-  };
-}) => {
-  const schema = {
-    type: "object",
-    properties: {
-      events: {
-        type: "array",
-        description: "A list of all unique events shown in the image.",
-        items: {
-          type: "object",
-          properties: {
-            eventName: {
-              type: "string",
-              description: "The name of the artist or event.",
-            },
-            venueName: {
-              type: "string",
-              description: "The venue where the event is being held.",
-            },
-            venueAddress: {
-              type: "string",
-              description: "The full physical address of the venue.",
-            },
-            lngLat: {
-              type: "array",
-              description: "Geographic coordinates in [Longitude, Latitude] format.",
-              minItems: 2,
-              maxItems: 2,
-              items: {
-                type: "number",
-              },
-            },
-            ticketCost: {
-              type: "string",
-              description: "The cost of the ticket (e.g., '20.00').",
-            },
-            genres: {
-              type: "string",
-              description: "A list of all genres or descriptors, seperated by a comma, uppercased liked Techno, House.",
+export const eventsExtractionSchema = {
+  type: "object",
+  properties: {
+    events: {
+      type: "array",
+      description: "A list of all unique events shown in the image.",
+      items: {
+        type: "object",
+        properties: {
+          eventName: {
+            type: "string",
+            description: "The name of the artist or event.",
+          },
+          venueName: {
+            type: "string",
+            description: "The venue where the event is being held.",
+          },
+          venueAddress: {
+            type: "string",
+            description: "The full physical address of the venue.",
+          },
+          lngLat: {
+            type: "array",
+            description: "Geographic coordinates in [Longitude, Latitude] format.",
+            minItems: 2,
+            maxItems: 2,
+            items: {
+              type: "number",
             },
           },
-          required: ["eventName", "venueName", "venueAddress", "genres"],
+          ticketCost: {
+            type: "string",
+            description: "The cost of the ticket (e.g., '20.00').",
+          },
+          genres: {
+            type: "string",
+            description: "A list of all genres or descriptors, seperated by a comma, uppercased liked Techno, House.",
+          },
         },
+        required: ["eventName", "venueName", "venueAddress", "genres"],
       },
     },
-    required: ["events"],
-  };
+  },
+  required: ["events"],
+};
 
-  const prompt = [
-    {
-      text: `
+export const eventsExtractionPrompt = `
         Analyze the provided image.
 
         Context:
@@ -135,12 +127,22 @@ export const extractEventData = async (imagePart: {
                     }
                 }
             }
-    `,
+    `;
+
+export const extractEventData = async (imagePart: {
+  inlineData: {
+    data: string;
+    mimeType: string;
+  };
+}) => {
+  const prompt = [
+    {
+      text: eventsExtractionPrompt,
     },
     imagePart,
   ];
 
-  const aiRes = await googleGenClient<EventResponse>(prompt, schema);
+  const aiRes = await googleGenClient<EventResponse>(prompt, eventsExtractionSchema);
   if (!aiRes) {
     console.error("aiRes", aiRes);
     throw Error("aiRes is null, no response.text returned by ai api");
@@ -150,75 +152,79 @@ export const extractEventData = async (imagePart: {
   return aiRes;
 };
 
-(async () => {
-  let completeEvent: ScrapedEvent[] = [];
-  let incompleteEvent: ScrapedEvent[] = [];
+//need main module so that if i run get image research data, it doesnt also run this script
+if (require.main === module) {
+  (async () => {
+    let completeEvent: ScrapedEvent[] = [];
+    let incompleteEvent: ScrapedEvent[] = [];
 
-  const config = await cityConfig("newcastle");
-  deleteOldEvents(config.city.cityName);
+    const config = await cityConfig("newcastle");
+    deleteOldEvents(config.city.cityName);
 
-  const browser = await getBrowser();
-  const page = await browser.newPage();
+    const browser = await getBrowser();
+    const page = await browser.newPage();
 
-  for (const day of ["wednesday", "thursday", "friday", "saturday", "sunday"]) {
-    const imageFilePath = fs.globSync(path.join(eventFilesDir, "weeklyPhotos", `${day}*.png`))[0];
+    for (const day of ["wednesday", "thursday", "friday", "saturday", "sunday"]) {
+      const imageFilePath = fs.globSync(path.join(eventFilesDir, "weeklyPhotos", `${day}*.png`))[0];
 
+      const imagePart = fileToGenerativePart(imageFilePath, "image/png");
     const imagePart = imageFilePath && fileToGenerativePart(imageFilePath, "image/png");
 
+      if (!imagePart) continue;
     if (!imagePart) {
       console.log(`No image for ${day}`);
       continue;
     }
 
-    const data = await extractEventData(imagePart);
+      const data = await extractEventData(imagePart);
 
-    for (const imgEvent of data.events) {
-      if (!imgEvent.lngLat) {
-        incompleteEvent.push(imgEvent);
-        continue;
-      }
+      for (const imgEvent of data.events) {
+        if (!imgEvent.lngLat) {
+          incompleteEvent.push(imgEvent);
+          continue;
+        }
 
       const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
 
       const { eventBannerImage } = await enrichEventFromGooglePlaces(knownVenueEvent);
 
-      // const aiCheckedEvent =
-      //   knownVenueEvent.lngLat && knownVenueEvent.venueAddress
-      //     ? knownVenueEvent
-      //     : await aiCoordinateValidation(knownVenueEvent);
+        // const aiCheckedEvent =
+        //   knownVenueEvent.lngLat && knownVenueEvent.venueAddress
+        //     ? knownVenueEvent
+        //     : await aiCoordinateValidation(knownVenueEvent);
 
-      const aiCheckedEvent = knownVenueEvent;
+        const aiCheckedEvent = knownVenueEvent;
 
-      const eventDateTime = australianDateTimeMapper(day);
+        const eventDateTime = australianDateTimeMapper(day);
 
-      const bandCampMediaIds = aiCheckedEvent?.eventName
-        ? await getBandCampMediaIds(page, "whList", aiCheckedEvent.eventName, aiCheckedEvent.genres)
-        : undefined;
+        const bandCampMediaIds = aiCheckedEvent?.eventName
+          ? await getBandCampMediaIds(page, "whList", aiCheckedEvent.eventName, aiCheckedEvent.genres)
+          : undefined;
 
-      const aiDescription = await aiGenerateEventDescription(imgEvent);
+        const aiDescription = await aiGenerateEventDescription(imgEvent);
 
-      const mappedGenres = aiCheckedEvent?.genres
-        ?.split(", ")
-        .filter((genre) => genre !== "WITCHHOUSE SELECT")
-        .toString();
+        const mappedGenres = aiCheckedEvent?.genres
+          ?.split(", ")
+          .filter((genre) => genre !== "WITCHHOUSE SELECT")
+          .toString();
 
-      completeEvent.push({
-        ...aiCheckedEvent,
-        genres: mappedGenres,
-        id: randomUUID(),
-        userName: "sam",
-        userEmail: "sam@hotmail.com",
-        localTimeZone: "Australia/Sydney",
-        eventDateTime,
-        source: "whList",
-        bandCampMediaIds: bandCampMediaIds?.[0],
-        eventDescription: aiDescription,
-        eventBannerImage,
+        completeEvent.push({
+          ...aiCheckedEvent,
+          genres: mappedGenres,
+          id: randomUUID(),
+          userName: "sam",
+          userEmail: "sam@hotmail.com",
+          localTimeZone: "Australia/Sydney",
+          eventDateTime,
+          source: "whList",
+          bandCampMediaIds: bandCampMediaIds?.[0],
+          eventDescription: aiDescription,
+          eventBannerImage,
       });
+      }
     }
-  }
 
-  await page.close();
+    await page.close();
 
   const removedEvents = await writeToCompleteEventFiles(completeEvent, config);
   writeToIncompleteEventFiles([...incompleteEvent, ...removedEvents], config);
