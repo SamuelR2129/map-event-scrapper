@@ -9,7 +9,8 @@
     "research": "ts-node ./src/helpers/getImageResearchData.ts",
     "send-to-db": "ts-node ./src/apis/sendCompleteEventsToDb.ts",
     "scrape": "npx playwright test --grep-invert witchhouseNewcastle",
-    "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results"
+    "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results",
+    "test:unit": "npx playwright test --config=playwright.unit.config.ts"
   },
   "keywords": [],
   "author": "",

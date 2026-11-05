@@ -13,6 +13,7 @@ import {
   writeResearchData,
 } from "./writeToFiles";
 import { eventsExtractionPrompt, eventsExtractionSchema } from "./extractEventsFromImages";
+import { normalisePromoterAndVenue } from "./promoters";
 
 const DAYS_OF_WEEK = ["wednesday", "thursday", "friday", "saturday", "sunday"] as const;
 
@@ -38,6 +39,7 @@ type EventResponse = {
   events: {
     eventName: string;
     venueName: string;
+    eventPromoters?: string;
     venueAddress: string;
     eventDateTime: string;
     lngLat: [number, number];
@@ -189,7 +191,9 @@ if (require.main === module) {
         const data = await extractEventData(imagePart);
         const eventDateTime = getImageEventDateTime(day, birthtime);
 
-        for (const imgEvent of data.events) {
+        for (const rawEvent of data.events) {
+          const imgEvent = { ...rawEvent, ...normalisePromoterAndVenue(rawEvent) };
+
           completeEvents.push({
             ...imgEvent,
             id: randomUUID(),

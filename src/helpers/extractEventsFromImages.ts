@@ -12,11 +12,13 @@ import { getBrowser } from "./getBrowser";
 import { getBandCampMediaIds } from "./getBandCampMediaIds";
 import { aiGenerateEventDescription } from "./ai/aiGenerateEventDescription";
 import { enrichEventFromGooglePlaces } from "./findAddressAndLngLat";
+import { normalisePromoterAndVenue } from "./promoters";
 
 type EventResponse = {
   events: {
     eventName: string;
     venueName: string;
+    eventPromoters?: string;
     venueAddress: string;
     eventDateTime: string;
     lngLat: [number, number];
@@ -57,6 +59,11 @@ export const eventsExtractionSchema = {
             type: "string",
             description: "The venue where the event is being held.",
           },
+          eventPromoters: {
+            type: "string",
+            description:
+              "The night, collective or promoter named before the venue on the meta line, e.g. 'Bad Behaviour' or '2gruvy2hard'. Omit when absent.",
+          },
           venueAddress: {
             type: "string",
             description: "The full physical address of the venue.",
@@ -91,14 +98,19 @@ export const eventsExtractionPrompt = `
 
         Context:
             1. Location: These events are taking place in Newcastle, NSW, Australia.
-            3. Missing Data: The image lists venue names but not their addresses or coordinates. You must use your internal knowledge to identify the correct venue in Newcastle, NSW, and provide the address and [Longitude, Latitude].
+            2. Missing Data: The image lists venue names but not their addresses or coordinates. You must use your internal knowledge to identify the correct venue in Newcastle, NSW, and provide the address and [Longitude, Latitude].
+            3. Layout: Each event is two lines. The headline is the lineup (e.g. "Katchafire, Mike Love") or, when there is no lineup, a night/party name (e.g. "Gaga Night"). The meta line below it is "[Promoter -] Venue [- $Price]" (e.g. "Bad Behaviour - Lass O'Gowrie - $32", "Danny's Pizza - $15", "The Oak").
 
         Instructions:
             1. Extract all events listed under the selected tab.
-            2. For 'ticketCost', if the price is listed (e.g. "Clarendon Hotel - $15"), extract it. If it says "FREE" in the genres, set cost to "0.00". If unknown, leave it as an undefined.
-            4. For 'lngLat', provide the precise coordinates for the specific venue.
-            5. Genres are the colored ovals such as ROCK or TECHNO
-            6. Strictly follow this JSON schema for the output:
+            2. For 'ticketCost', if the price is listed, extract it. If it says "FREE" in the genres, set cost to "0.00". If unknown, leave it undefined.
+            3. For 'lngLat', provide the precise coordinates for the specific venue.
+            4. Genres are the colored ovals such as ROCK or TECHNO.
+            5. Meta line parsing: segments are separated by " - " (space, hyphen, space), so hyphenated names such as "Maru Hi-Fi", "The Lock-Up" and "2Gruvy2Hard" are a single segment. Ignore a trailing price segment. If two segments remain, the FIRST is the promoter and the SECOND is the venue. If one segment remains, it is the venue.
+            6. 'eventPromoters' is the night, collective or promoter named before the venue on the meta line (e.g. "Bad Behaviour", "2gruvy2hard"). Omit it when the meta line has no promoter segment.
+            7. A night or party name in the headline (e.g. "Gaga Night", "Bad Behaviour") is the 'eventName', not the promoter. Only the meta line yields a promoter.
+            8. 'venueName' must be a real Newcastle venue. NEVER put a promoter, a night name or "Unknown" in 'venueName'.
+            9. Strictly follow this JSON schema for the output:
             {
                 "type": "object",
                 "properties": {
@@ -109,6 +121,7 @@ export const eventsExtractionPrompt = `
                             "properties": {
                             "eventName": { "type": "string" },
                             "venueName": { "type": "string" },
+                            "eventPromoters": { "type": "string", "description": "The night, collective or promoter named before the venue on the meta line, e.g. 'Bad Behaviour' or '2gruvy2hard'. Omit when absent." },
                             "venueAddress": { "type": "string", "description": "Full address including postcode" },
                             "date": { "type": "string", "description": "DD/MM format" },
                             "lngLat": {
@@ -174,7 +187,9 @@ if (require.main === module) {
 
       const data = await extractEventData(imagePart);
 
-      for (const imgEvent of data.events) {
+      for (const rawEvent of data.events) {
+        const imgEvent = { ...rawEvent, ...normalisePromoterAndVenue(rawEvent) };
+
         if (!imgEvent.lngLat) {
           incompleteEvent.push(imgEvent);
           continue;
