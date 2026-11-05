@@ -3,12 +3,10 @@ import * as fs from "node:fs";
 import path from "path";
 import { googleGenClient } from "../apis/geminiAiApi";
 import { ScrapedEvent } from "../scrappers/types";
-import { aiCoordinateValidation } from "./ai/googleAi";
 import { randomUUID } from "crypto";
 import { cityConfig } from "../cityConfig";
 import { writeToCompleteEventFiles, writeToIncompleteEventFiles, eventFilesDir } from "./writeToFiles";
 import { australianDateTimeMapper } from "./australianDateTimeMapper";
-import { findKnownAddressAndCoords } from "./findKnownAddressAndCoords";
 import { deleteOldEvents } from "./deleteOldEvents";
 import { getBrowser } from "./getBrowser";
 import { getBandCampMediaIds } from "./getBandCampMediaIds";
@@ -182,16 +180,9 @@ if (require.main === module) {
           continue;
         }
 
-        const knownVenueEvent = findKnownAddressAndCoords(imgEvent);
+        const { eventBannerImage } = await enrichEventFromGooglePlaces(imgEvent);
 
-        const { eventBannerImage } = await enrichEventFromGooglePlaces(knownVenueEvent);
-
-        // const aiCheckedEvent =
-        //   knownVenueEvent.lngLat && knownVenueEvent.venueAddress
-        //     ? knownVenueEvent
-        //     : await aiCoordinateValidation(knownVenueEvent);
-
-        const aiCheckedEvent = knownVenueEvent;
+        const aiCheckedEvent = imgEvent;
 
         const eventDateTime = australianDateTimeMapper(day);
 

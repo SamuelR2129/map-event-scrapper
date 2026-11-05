@@ -31,6 +31,14 @@ export function writeWithFallback(filePath: string, data: string, successMsg: st
   }
 }
 
+/**
+ * Clear an event file, always leaving a valid empty JSON array (`[]`) behind.
+ * Never write an empty string, or the file becomes invalid JSON and can't be re-imported.
+ */
+export const clearEventFile = (cityName: string, fileName: string, successMsg: string) => {
+  writeWithFallback(getEventFilePath(cityName, fileName), JSON.stringify([]), successMsg);
+};
+
 export const writeToIncompleteEventFiles = (incompleteEvents: ScrapedEvent[], config: CityConfig) => {
   const { city, eventFiles } = config;
   const mergedEvents = eventFiles.incomplete.length

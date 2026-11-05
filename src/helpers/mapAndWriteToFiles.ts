@@ -5,7 +5,6 @@ import { getEventGenresWithAi } from "./ai/googleAi";
 import { cityConfig } from "../cityConfig";
 import { randomUUID } from "crypto";
 import { writeToCompleteEventFiles, writeToIncompleteEventFiles } from "./writeToFiles";
-import { findKnownAddressAndCoords } from "./findKnownAddressAndCoords";
 import { aiRemoveNonMusicEvents } from "./ai/removeNonMusicEvents";
 import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
 import { inspectEventCopy } from "./ai/promptInjectionDetector";
@@ -31,8 +30,7 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
     }
 
     console.log("Mapping " + event.eventName);
-    const knownVenueEvents = findKnownAddressAndCoords(event);
-    const googleParsedEvent = await findMissingAddressAndLngLat(knownVenueEvents);
+    const googleParsedEvent = await findMissingAddressAndLngLat(event);
 
     let isAlreadyInPastEvents = false;
 

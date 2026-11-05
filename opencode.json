@@ -5,6 +5,16 @@
       "type": "local",
       "command": ["npx", "playwright", "run-test-mcp-server"],
       "enabled": true
+    },
+    "figma": {
+      "type": "remote",
+      "url": "https://mcp.figma.com/mcp",
+      "enabled": true
+    },
+    "postman": {
+      "type": "remote",
+      "url": "https://mcp.postman.com/minimal",
+      "enabled": false
     }
   },
   "tools": {
