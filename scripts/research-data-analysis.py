@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Reproducible analysis of researchData/events-*.json.
+Reproducible analysis of researchData/events.json.
 
-Reads the weekly poster extraction, normalises it, dedupes to the
+Reads the merged weekly poster extraction, normalises it, dedupes to the
 (act, venue, ISO week) listing grain, and prints a markdown report to stdout.
 
 Usage:
@@ -19,7 +19,7 @@ import sys
 from zoneinfo import ZoneInfo
 
 SYD = ZoneInfo("Australia/Sydney")
-DEFAULT_PATH = "researchData/events-2026-10-17.json"
+DEFAULT_PATH = "researchData/events.json"
 
 WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
@@ -834,8 +834,7 @@ def main():
     for v, c in collections.Counter(r["venue"] for r in tagged).most_common(6):
         w(f"| {v} | {c} |")
     w("")
-    w("Lass O'Gowrie Hotel leads clearly. Ode, Groove Street and King Street Hotel follow with 2")
-    w("each. The `Unknown` bills are:")
+    w("Lass O'Gowrie Hotel leads clearly; the remaining venues are one-offs. The `Unknown` bills are:")
     w("")
     unk_tagged = sorted([r for r in tagged if r["venue"] == "Unknown"], key=lambda r: r["date"])
     for r in unk_tagged:
@@ -939,7 +938,11 @@ def main():
     hs = sum(1 for r in metal_listings if r["venue"] == "Hamilton Station Hotel")
     w(f"- **Heavy music is a Hamilton Station scene.** {hs} of {len(metal_listings)} listings "
       f"({pct(hs, len(metal_listings))}%) are there; King Street Hotel follows with 14.")
-    w(f"- **The tag mix is METAL 37, HEAVY 19, HARDCORE 19.** A listing can carry more than one.")
+    metal_tag_mix = collections.Counter(
+        g for r in metal_listings for g in r["genres"] if g in metal_tags
+    )
+    mix_txt = ", ".join(f"{g} {metal_tag_mix[g]}" for g in ("METAL", "HEAVY", "HARDCORE"))
+    w(f"- **The tag mix is {mix_txt}.** A listing can carry more than one.")
     w(f"- **It is a local-support scene.** {once} of {len(metal_acts)} named acts "
       f"({pct(once, len(metal_acts))}%) appear only once, and just seven acts reach four or more")
     w("  venue-weeks.")

@@ -17,7 +17,7 @@ import { normalisePromoterAndVenue } from "./promoters";
 
 const DAYS_OF_WEEK = ["wednesday", "thursday", "friday", "saturday", "sunday"] as const;
 
-type DayOfWeek = (typeof DAYS_OF_WEEK)[number];
+export type DayOfWeek = (typeof DAYS_OF_WEEK)[number];
 
 type WeekdayNumbers = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -29,7 +29,7 @@ const DAY_MAP: Record<DayOfWeek, WeekdayNumbers> = {
   sunday: 7,
 };
 
-type ImageFile = {
+export type ImageFile = {
   filePath: string;
   day: DayOfWeek;
   birthtime: Date;
@@ -53,7 +53,7 @@ function getDayFromFilename(filename: string): DayOfWeek | undefined {
   return DAYS_OF_WEEK.find((day) => lower.includes(day));
 }
 
-function getWeeklyImagesFromDownloads(year: number): ImageFile[] {
+export function getWeeklyImagesFromDownloads(year: number): ImageFile[] {
   const downloadsDir = path.join(os.homedir(), "Downloads");
   const files = fs.readdirSync(downloadsDir);
 
@@ -74,15 +74,15 @@ function getWeeklyImagesFromDownloads(year: number): ImageFile[] {
 }
 
 /**
- * Resolves the event date for an image-research photo: the target day of the week
- * within the ISO week (Mon-Sun) of the date the image was saved.
+- Resolves the event date for an image-research photo: the target day of the week
+- within the ISO week (Mon-Sun) of the date the image was saved.
  *
- * Uses the file's local calendar date (birthtime / "Date Added") as the anchor, so the
- * machine timezone never shifts the week.
+- Uses the file's local calendar date (birthtime / "Date Added") as the anchor, so the
+- machine timezone never shifts the week.
  *
- * @param day - Day of the week named in the image filename (e.g. 'friday')
- * @param birthtime - When the image was saved
- * @returns UTC ISO string for that day (2am Sydney) of the image's week
+- @param day Day of the week named in the image filename (e.g. 'friday')
+- @param birthtime When the image was saved
+- @returns UTC ISO string for that day (2am Sydney) of the image's week
  */
 export function getImageEventDateTime(day: DayOfWeek, birthtime: Date): string {
   const weekday = DAY_MAP[day];
@@ -167,16 +167,12 @@ if (require.main === module) {
     const imageFiles = allImageFiles.filter(({ filePath }) => !globalProcessed.has(filePath));
 
     if (imageFiles.length === 0) {
-      console.warn(
-        `No new weekly images to process (${allImageFiles.length} found, all already processed).`,
-      );
+      console.warn(`No new weekly images to process (${allImageFiles.length} found, all already processed).`);
       return;
     }
 
     const skipped = allImageFiles.length - imageFiles.length;
-    console.log(
-      `Found ${allImageFiles.length} image(s); processing ${imageFiles.length}, skipping ${skipped}.`,
-    );
+    console.log(`Found ${allImageFiles.length} image(s); processing ${imageFiles.length}, skipping ${skipped}.`);
 
     let failed = 0;
     let processedThisRun = 0;

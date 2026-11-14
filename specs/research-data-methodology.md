@@ -4,6 +4,24 @@ Date: 2026-10-23
 Input: `researchData/events-2026-10-17.json`, `researchData/processed-images.json`
 Deliverable: this document. No charts, no image assets, no code changes.
 
+> **File consolidation — 2026-11-14.** The per-date event dumps (`events-2026-10-17.json`,
+> `events-2026-11-05.json`, `events-2026-11-13.json`, `events-2026-11-14.json`) were merged into
+> `researchData/events.json` and then removed. This document remains the historical investigation of
+> the 17 Oct dump; use `researchData/events.json` for current numbers.
+
+> **Corpus refresh — 2026-11-13.** This document is the investigation of the 17 Oct 2026 dump, and
+> the per-section figures below still describe that pass. The corpus has since grown to **1,778 rows
+> from 266 images** with `researchData/events-2026-11-13.json`; the refreshed listing-grain numbers
+> live in [`research-data-analysis.md`](./research-data-analysis.md). What changed:
+>
+> - **1,260 listings** at (act, venue, ISO week) from 1,778 rows; 958 act+venue pairs; **28**
+>   residencies (was 27), covering 22.3% of listings.
+> - **143 venue spellings → 78 venues** (was 140 → 75); 53 genre atoms.
+> - **Nine weeks are missing, not six.** W43–W45 are a lost extraction batch — 16 posters marked
+>   processed with zero events in `events-2026-11-05.json` — not a capture gap like June.
+> - Free / paid / unknown is **63.7% / 26.0% / 10.2%**; the paid median is still $25.
+> - Listing grain by weekday: Sat 354 · Fri 344 · Sun 267 · Thu 178 · Wed 117.
+
 > **Revised numbers:** `specs/research-data-analysis.md` supersedes several raw-row estimates
 > below (listings, recurring series, one-off rate). See its "Corrections to earlier raw-row
 > estimates" section before quoting anything from this document.
@@ -11,8 +29,9 @@ Deliverable: this document. No charts, no image assets, no code changes.
 > **Update 2026-10-23 — fields removed.** `lngLat` (1,693 rows) and `venueAddress` (all 1,743 rows,
 > since every row has a `venueName`) have since been deleted from `events-2026-10-17.json`. The
 > coordinate findings below describe the data as analysed, and are the reason those fields were
-> dropped. Note that `src/helpers/getImageResearchData.ts` will reintroduce both fields on the next
-> `npm run research` unless the extraction schema or the writer is changed.
+> dropped. `src/helpers/getImageResearchData.ts` did reintroduce both fields on the next
+> `npm run research`: every row in `events-2026-11-13.json` carries `venueAddress` and `lngLat`
+> again, so the 35 new rows were stripped of both before being added to the analysis corpus.
 
 The question was "how do we get informative data and infographics out of this dump".
 This is the investigation behind that answer: what the file contains, what it can be trusted for,

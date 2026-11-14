@@ -8,8 +8,7 @@ export const eventFilesDir = path.join(__dirname, "..", "eventFiles");
 
 export const researchDataDir = path.join(__dirname, "..", "..", "researchData");
 
-export const getEventFilePath = (cityName: string, fileName: string) =>
-  path.join(eventFilesDir, cityName, fileName);
+export const getEventFilePath = (cityName: string, fileName: string) => path.join(eventFilesDir, cityName, fileName);
 
 export function writeWithFallback(filePath: string, data: string, successMsg: string) {
   const dir = path.dirname(filePath);
@@ -32,8 +31,8 @@ export function writeWithFallback(filePath: string, data: string, successMsg: st
 }
 
 /**
- * Clear an event file, always leaving a valid empty JSON array (`[]`) behind.
- * Never write an empty string, or the file becomes invalid JSON and can't be re-imported.
+- Clear an event file, always leaving a valid empty JSON array (`[]`) behind.
+- Never write an empty string, or the file becomes invalid JSON and can't be re-imported.
  */
 export const clearEventFile = (cityName: string, fileName: string, successMsg: string) => {
   writeWithFallback(getEventFilePath(cityName, fileName), JSON.stringify([]), successMsg);
@@ -41,6 +40,7 @@ export const clearEventFile = (cityName: string, fileName: string, successMsg: s
 
 export const writeToIncompleteEventFiles = (incompleteEvents: ScrapedEvent[], config: CityConfig) => {
   const { city, eventFiles } = config;
+
   const mergedEvents = eventFiles.incomplete.length
     ? [...eventFiles.incomplete, ...incompleteEvents]
     : incompleteEvents;
@@ -101,9 +101,11 @@ export const processedImagesPath = path.join(researchDataDir, "processed-images.
 export const readResearchData = (fileName: string): ResearchData => {
   try {
     const parsed = JSON.parse(fs.readFileSync(getResearchFilePath(fileName), "utf8"));
+    const allEvents: ScrapedEvent[] = Array.isArray(parsed.events) ? parsed.events : [];
+
     return {
       processedImages: Array.isArray(parsed.processedImages) ? parsed.processedImages : [],
-      events: Array.isArray(parsed.events) ? parsed.events : [],
+      events: allEvents,
     };
   } catch {
     return { processedImages: [], events: [] };
