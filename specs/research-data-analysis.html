@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Research data analysis of the Newcastle weekly poster corpus.">
+<title>Research data analysis — what the posters actually show</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f3f0e7;
+  --surface: #fffdf8;
+  --surface-2: #eae4d5;
+  --text: #1c2a2e;
+  --muted: #5d696d;
+  --border: #d7d0bf;
+  --accent: #0f766e;
+  --accent-soft: #d8efeb;
+  --accent-2: #a14f08;
+  --shadow: 0 12px 40px rgba(28, 42, 46, .08);
+  --radius: 16px;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1518;
+    --surface: #172126;
+    --surface-2: #1f2d33;
+    --text: #e8eef1;
+    --muted: #a6b3ba;
+    --border: #2c3b43;
+    --accent: #5eead4;
+    --accent-soft: #123b38;
+    --accent-2: #fbbf24;
+    --shadow: 0 12px 40px rgba(0, 0, 0, .35);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, .10), transparent 38%),
+    radial-gradient(circle at top right, rgba(161, 79, 8, .08), transparent 34%),
+    var(--bg);
+  font-family: var(--sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, .toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hero {
+  padding: 4.5rem 1.5rem 2.75rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(15, 118, 110, .10), rgba(161, 79, 8, .06));
+}
+.hero-inner { max-width: 1180px; margin: 0 auto; }
+.eyebrow {
+  margin: 0 0 .6rem;
+  color: var(--accent);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+.hero h1 span { display: block; margin-top: .35rem; color: var(--muted); font-weight: 500; font-size: .62em; letter-spacing: -.02em; }
+.dek { max-width: 62ch; margin: 1rem 0 0; color: var(--muted); font-size: 1.08rem; }
+.hero-links { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin: 1.25rem 0 0; font-size: .92rem; }
+.hero-links a { font-weight: 650; text-decoration: none; }
+.hero-links a:hover { text-decoration: underline; }
+.layout {
+  display: grid;
+  grid-template-columns: 265px minmax(0, 1fr);
+  gap: 2.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+.toc { position: sticky; top: 1.25rem; align-self: start; max-height: calc(100vh - 2.5rem); overflow: auto; }
+.toc-inner {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.toc-title {
+  margin: 0 0 .65rem;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.toc ul { margin: 0; padding: 0; list-style: none; font-size: .88rem; line-height: 1.4; }
+.toc li { margin: .1rem 0; }
+.toc a { display: block; padding: .22rem .4rem; border-radius: 7px; color: var(--muted); text-decoration: none; }
+.toc a:hover, .toc a.active { color: var(--accent); background: var(--accent-soft); }
+.toc .toc-h3 { padding-left: .85rem; font-size: .82rem; }
+.toc .toc-top a { color: var(--accent-2); font-weight: 700; }
+.content { min-width: 0; max-width: 920px; }
+.content h2 {
+  margin: 3rem 0 1rem;
+  padding-top: .6rem;
+  border-top: 1px solid var(--border);
+  font-size: 1.7rem;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+  scroll-margin-top: 1.5rem;
+}
+.content h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.content h3 {
+  margin: 2rem 0 .75rem;
+  color: var(--accent-2);
+  font-size: 1.18rem;
+  letter-spacing: -.01em;
+  scroll-margin-top: 1.5rem;
+}
+.content h4.minor-heading {
+  margin: 2rem 0 .6rem;
+  color: var(--accent-2);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.content p, .content li { max-width: 74ch; }
+.content p { margin: 0 0 1rem; }
+.content strong { font-weight: 750; }
+.content em { color: var(--muted); }
+.content ul, .content ol { margin: 0 0 1.2rem; padding-left: 1.4rem; }
+.content li { margin: .35rem 0; }
+.content blockquote {
+  max-width: 74ch;
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--accent-soft);
+}
+.content blockquote p { margin: 0; }
+.content hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border); }
+.content code {
+  padding: .12em .34em;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-family: var(--mono);
+  font-size: .88em;
+}
+.content pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  box-shadow: var(--shadow);
+  line-height: 1.5;
+}
+.content pre code { padding: 0; border: 0; background: none; font-size: .86rem; }
+.table-wrap {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+thead th {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 750;
+  text-align: left;
+  white-space: nowrap;
+}
+th, td { padding: .62rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface-2) 45%, var(--surface)); }
+tbody tr:hover { background: var(--accent-soft); }
+tbody tr:last-child td { border-bottom: 0; }
+.align-right { text-align: right; font-variant-numeric: tabular-nums; }
+.align-center { text-align: center; }
+.page-footer {
+  max-width: 920px;
+  margin: 3rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .88rem;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 1.5rem; padding-top: 1.25rem; }
+  .toc { position: static; max-height: none; }
+  .toc-inner { max-height: 18rem; overflow: auto; }
+  .content { max-width: none; }
+  .hero { padding-top: 3rem; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 2.5rem 1rem 2rem; }
+  .layout { padding: 1rem 1rem 3rem; }
+  .content h2 { font-size: 1.45rem; }
+  table { font-size: .85rem; }
+  th, td { padding: .48rem .55rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@media print {
+  body { background: #fff; color: #000; }
+  .hero { padding: 0 0 1rem; border: 0; background: none; }
+  .hero h1 { font-size: 2rem; }
+  .layout { display: block; max-width: none; padding: 0; }
+  .toc, .hero-links { display: none; }
+  .content { max-width: none; }
+  .table-wrap, pre { box-shadow: none; border: 1px solid #bbb; }
+  a { color: #000; text-decoration: none; }
+  h2, h3 { break-after: avoid; }
+  table, pre, blockquote { break-inside: avoid; }
+}
+</style>
+</head>
+<body id="top">
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Newcastle weekly poster corpus</p>
+    <h1>Research data analysis<span>what the posters actually show</span></h1>
+    <p class="dek">1,245 listings from 266 images · refreshed 14 November 2026</p>
+    <p class="hero-links"><a href="#direct-answers">Jump to the analysis</a><a href="research-data-analysis.md">Markdown source</a></p>
+  </div>
+</header>
+<div class="layout">
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-inner">
+      <p class="toc-title">Contents</p>
+      <ul><li class="toc-top"><a href="#top">Top</a></li><li><a href="#direct-answers">Direct answers</a></li><li><a href="#definitions-used">Definitions used</a></li><li><a href="#snapshot">Snapshot</a></li><li><a href="#1-rhythm-a-thursday-sunday-scene">1. Rhythm: a Thursday–Sunday scene</a></li><li><a href="#2-coverage-six-missing-weeks-and-one-catch-up-spike">2. Coverage: six missing weeks and one catch-up spike</a></li><li><a href="#3-concentration-five-venues-are-half-the-scene">3. Concentration: five venues are half the scene</a></li><li><a href="#4-genre-is-venue-shaped-not-scene-shaped">4. Genre is venue-shaped, not scene-shaped</a></li><li><a href="#5-price-two-thirds-free-paid-concentrated-in-three-rooms">5. Price: two-thirds free, paid concentrated in three rooms</a></li><li><a href="#6-bills-and-names-a-long-tail-with-a-small-permanent-core">6. Bills and names: a long tail with a small permanent core</a></li><li><a href="#7-residencies-27-recurring-bills-115-artist-venue-runs">7. Residencies: 27 recurring bills, 115 artist-venue runs</a></li><li><a href="#8-data-quality-scorecard">8. Data quality scorecard</a></li><li><a href="#9-most-featured-acts-live-acts-vs-djs">9. Most-featured acts: live acts vs DJs</a></li><li><a href="#10-most-featured-genre-excluding-free-and-dance">10. Most-featured genre excluding FREE and DANCE</a></li><li><a href="#11-witchhouse-select-a-brand-tag-not-a-genre">11. Witchhouse Select: a brand tag, not a genre</a></li><li><a href="#12-metal-heavy-hardcore-top-10-artists">12. Metal / heavy / hardcore: top 10 artists</a></li><li><a href="#13-promoters">13. Promoters</a></li><li><a href="#corrections-to-earlier-raw-row-estimates">Corrections to earlier raw-row estimates</a></li><li><a href="#what-this-analysis-supports">What this analysis supports</a></li><li><a href="#summary">Summary</a></li><li class="toc-h3"><a href="#witchhouse-select-tables">Witchhouse Select tables</a></li></ul>
+    </div>
+  </nav>
+  <main class="content">
+<p>Source: <code>researchData/events.json</code> — the single merged, de-duplicated corpus (1,245 events from 266 images)</p>
+<p>Window: 2026-01-07 → 2026-11-15, across 39 ISO weeks with data</p>
+<p>Grain used throughout: <strong>1,245 listings</strong> (bill + venue + ISO week). The four per-date dumps were consolidated into <code>researchData/events.json</code> and removed on 2026-11-14.</p>
+<p>Reproduce: <code>python3 scripts/research-data-analysis.py researchData/events.json</code></p>
+<p>Last refreshed: 2026-11-14 — refreshed against the consolidated single-file corpus</p>
+<p>Method, caveats and the investigation behind the cleaning: <a href="./research-data-methodology.md"><code>research-data-methodology.md</code></a></p>
+<blockquote><p><strong>Promoter pass — 2026-11-14.</strong> The poster re-extraction added promoter/venue findings. All four event dumps were merged and de-duplicated into <strong><code>researchData/events.json</code></strong>: <strong>1,245 events</strong>, of which <strong>161</strong> carry a promoter, and the per-date dumps were then removed. Promoter rankings are in <a href="#13-promoters">§13</a>. Every section below now uses the consolidated file.</p></blockquote>
+<h2 id="direct-answers">Direct answers</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Question</th><th scope="col">Answer</th></tr></thead><tbody><tr><td>Most-featured live act (band/soloist)</td><td><strong>Rhodes</strong> — 20 bills across 8 venues and 18 weeks (§9)</td></tr><tr><td>Most-featured DJ</td><td><strong>PC Dysco</strong> — 11 bills, all at The Oak (§9)</td></tr><tr><td>Most-featured genre excluding FREE and DANCE</td><td><strong>ROCK</strong> — 238 listings (19.1%); still first among paid listings at 60 (18.0%) (§10)</td></tr><tr><td>Venue with the most <code>WITCHHOUSE SELECT</code> listings</td><td><strong>Lass O'Gowrie Hotel</strong> — 10 of 37 (§11)</td></tr><tr><td>Most-featured metal/heavy/hardcore act</td><td><strong>Disco (7 venue-weeks), Fat Monica (6)</strong> (§12)</td></tr></tbody></table></div>
+<p>Breeze and Bellicanta's are excluded from the act ranking: 19 of Breeze's 26 bills come from the event title <code>Jazz Night: Breeze</code>, and all 14 of Bellicanta's bills are one weekly solo residency at Theydy's. Both measure a residency listing rather than band bookings. Raw billed strings (1,783) are not the same as named acts (1,631) — see §9 for the difference.</p>
+<hr>
+<h2 id="definitions-used">Definitions used</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><strong>Row</strong></td><td>One event as extracted from one poster image; 1,245 after merging and de-duplication.</td></tr><tr><td><strong>Listing</strong></td><td>A unique bill/event title + venue + ISO week. Same bill/venue in different weeks is <strong>not</strong> a duplicate.</td></tr><tr><td><strong>Series</strong></td><td>The same bill/event title + venue appearing in 2+ weeks. A <strong>residency</strong> is 3+ weeks.</td></tr><tr><td><strong>Artist residency</strong></td><td>The same individual artist + venue appearing in 3+ distinct weeks (act-level table in §7).</td></tr><tr><td><strong>Free</strong></td><td>Price parsed as <code>0</code> or the <code>FREE</code> tag was present.</td></tr><tr><td><strong>Unknown price</strong></td><td>Anything unparseable (<code>"undefined"</code>, <code>""</code>, <code>"N/A"</code>, <code>"Unknown"</code>, …) — never coerced to 0.</td></tr><tr><td><strong>Day</strong></td><td>The day tab the listing came from (Wed–Sun), not the event's calendar date.</td></tr></tbody></table></div>
+<p>All timestamps were converted to <code>Australia/Sydney</code> before grouping. <code>venueName</code> was canonicalised from 115 raw spellings to 84 venues. <code>lngLat</code> and <code>venueAddress</code> are present in the merged file but are not used here, so this analysis makes <strong>no geographic claims</strong>.</p>
+<hr>
+<h2 id="snapshot">Snapshot</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Metric</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Rows in merged file</td><td>1,245</td></tr><tr><td>Listings after same-week dedupe</td><td><strong>1,245</strong> (0 rows collapsed — the file is already de-duplicated)</td></tr><tr><td>Distinct bill+venue pairs</td><td>961</td></tr><tr><td>Canonical venues</td><td>84 (from 115 spellings)</td></tr><tr><td>Active weeks</td><td>39 of 45 in range — 6 missing</td></tr><tr><td>Listings per active week</td><td>median 33 (range 1–64)</td></tr><tr><td>Free / paid / unknown</td><td><strong>63.0% / 26.7% / 10.3%</strong></td></tr><tr><td>Median paid price</td><td><strong>$25</strong> (p25 $15, p75 $39)</td></tr><tr><td>Names billed exactly once</td><td><strong>76.0%</strong></td></tr><tr><td>Recurring series (3+ weeks)</td><td>27, covering 22.0% of listings</td></tr></tbody></table></div>
+<hr>
+<h2 id="1-rhythm-a-thursday-sunday-scene">1. Rhythm: a Thursday–Sunday scene</h2>
+<pre><code>Sat  ████████████████████████████████████  355  28.5%
+Fri  ██████████████████████████████████    339  27.2%
+Sun  ██████████████████████████            262  21.0%
+Thu  █████████████████                     173  13.9%
+Wed  ████████████                          116   9.3%</code></pre>
+<div class="table-wrap"><table><thead><tr><th scope="col">Day</th><th scope="col" class="align-right">Listings</th><th scope="col" class="align-right">Share</th><th scope="col" class="align-right">Free</th><th scope="col" class="align-right">Paid</th><th scope="col" class="align-right">Unknown</th><th scope="col">Median paid (n)</th></tr></thead><tbody><tr><td>Wed</td><td class="align-right">116</td><td class="align-right">9.3%</td><td class="align-right">105</td><td class="align-right">7</td><td class="align-right">4</td><td>$40 (7)</td></tr><tr><td>Thu</td><td class="align-right">173</td><td class="align-right">13.9%</td><td class="align-right">114</td><td class="align-right">52</td><td class="align-right">7</td><td>$10 (52)</td></tr><tr><td>Fri</td><td class="align-right">339</td><td class="align-right">27.2%</td><td class="align-right">189</td><td class="align-right">102</td><td class="align-right">48</td><td>$25 (102)</td></tr><tr><td>Sat</td><td class="align-right">355</td><td class="align-right">28.5%</td><td class="align-right">172</td><td class="align-right">141</td><td class="align-right">42</td><td>$25 (141)</td></tr><tr><td>Sun</td><td class="align-right">262</td><td class="align-right">21.0%</td><td class="align-right">204</td><td class="align-right">31</td><td class="align-right">27</td><td>$33 (31)</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>91% of listings sit on Thursday–Sunday.</strong> Wednesday is a minor night.</li><li><strong>Saturday and Friday are effectively tied</strong> (355 vs 339). At listing grain the weekend is balanced.</li><li><strong>Sunday is the free night</strong>: 77.9% free versus 48.5% on Saturday. It is the third-busiest night, not a wind-down.</li><li><strong>Saturday carries most of the paid market</strong> (141 paid listings, 42% of all paid listings).</li><li>Wednesday's $40 median rests on <strong>7 paid listings</strong> — not a number to quote.</li></ul>
+<hr>
+<h2 id="2-coverage-six-missing-weeks-and-one-catch-up-spike">2. Coverage: six missing weeks and one catch-up spike</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Active weeks</td><td>39</td></tr><tr><td>Missing weeks inside range</td><td><strong>6</strong> — 2026-W18, W23, W24, W25, W26, W39</td></tr><tr><td>Median listings per active week</td><td>33 (mean 32)</td></tr><tr><td>Median distinct venues per week</td><td>16</td></tr><tr><td>Busiest week</td><td>2026-W38, 64 listings</td></tr><tr><td>Quietest week</td><td>2026-W45, 1 listing (partial); 2026-W41, 23 for a full week</td></tr></tbody></table></div>
+<p><code>W23–W26</code> is the whole of June. There are <strong>no source images</strong> for June either, so this is a capture gap, not a collapse in the scene. <code>W18</code> (early May) and <code>W39</code> (late September) are also missing. <code>W38</code> at 64 listings is a catch-up batch (about 2× median), not a festival week.</p>
+<p><code>W43–W45</code> are thin rather than empty: the late re-extraction recovered 4, 6 and 1 listings for those weeks. W46 is the 11 Nov drop. Treat those tail weeks as partial coverage, not a real decline.</p>
+<p><strong>Implication:</strong> any month-over-month or "scene growth" trend from this data is an artefact. Weekly volume is usable only to describe poster coverage.</p>
+<hr>
+<h2 id="3-concentration-five-venues-are-half-the-scene">3. Concentration: five venues are half the scene</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Canonical venues</td><td>84</td></tr><tr><td>Venues needed for 50% of listings</td><td><strong>5</strong></td></tr><tr><td>Venues needed for 80%</td><td><strong>12</strong></td></tr><tr><td>Top 10 share</td><td><strong>76.5%</strong></td></tr><tr><td>HHI</td><td>755 → equivalent to ~13 equal-sized venues</td></tr><tr><td>Gini</td><td>0.799</td></tr><tr><td>Venues with a single listing</td><td>41</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Venue</th><th scope="col" class="align-right">Listings</th><th scope="col" class="align-right">Share</th><th scope="col" class="align-right">Weeks active</th><th scope="col" class="align-right">Free</th><th scope="col" class="align-right">Paid</th><th scope="col" class="align-right">Unknown</th><th scope="col" class="align-right">Median paid</th><th scope="col">Top night</th></tr></thead><tbody><tr><td class="align-right">1</td><td>Lass O'Gowrie Hotel</td><td class="align-right">182</td><td class="align-right">14.7%</td><td class="align-right">39</td><td class="align-right">112</td><td class="align-right">57</td><td class="align-right">13</td><td class="align-right">$25</td><td>Sat</td></tr><tr><td class="align-right">2</td><td>Hamilton Station Hotel</td><td class="align-right">165</td><td class="align-right">13.3%</td><td class="align-right">38</td><td class="align-right">93</td><td class="align-right">62</td><td class="align-right">10</td><td class="align-right">$25</td><td>Fri</td></tr><tr><td class="align-right">3</td><td>Maru Hi-Fi</td><td class="align-right">127</td><td class="align-right">10.3%</td><td class="align-right">36</td><td class="align-right">127</td><td class="align-right">0</td><td class="align-right">0</td><td class="align-right">—</td><td>Thu</td></tr><tr><td class="align-right">4</td><td>The Oak</td><td class="align-right">98</td><td class="align-right">7.9%</td><td class="align-right">36</td><td class="align-right">90</td><td class="align-right">1</td><td class="align-right">7</td><td class="align-right">$15</td><td>Fri</td></tr><tr><td class="align-right">5</td><td>King Street Hotel</td><td class="align-right">81</td><td class="align-right">6.5%</td><td class="align-right">36</td><td class="align-right">13</td><td class="align-right">57</td><td class="align-right">11</td><td class="align-right">$45</td><td>Fri</td></tr><tr><td class="align-right">6</td><td>Bernies Bar</td><td class="align-right">73</td><td class="align-right">5.9%</td><td class="align-right">36</td><td class="align-right">61</td><td class="align-right">5</td><td class="align-right">7</td><td class="align-right">$10</td><td>Fri</td></tr><tr><td class="align-right">7</td><td>The Ori</td><td class="align-right">68</td><td class="align-right">5.5%</td><td class="align-right">27</td><td class="align-right">66</td><td class="align-right">0</td><td class="align-right">2</td><td class="align-right">—</td><td>Fri</td></tr><tr><td class="align-right">8</td><td>Stag &amp; Hunter Hotel</td><td class="align-right">66</td><td class="align-right">5.3%</td><td class="align-right">34</td><td class="align-right">22</td><td class="align-right">34</td><td class="align-right">10</td><td class="align-right">$34</td><td>Fri</td></tr><tr><td class="align-right">9</td><td>The Beauford Hotel</td><td class="align-right">45</td><td class="align-right">3.6%</td><td class="align-right">34</td><td class="align-right">19</td><td class="align-right">0</td><td class="align-right">26</td><td class="align-right">—</td><td>Fri</td></tr><tr><td class="align-right">10</td><td>Croatian Club</td><td class="align-right">40</td><td class="align-right">3.2%</td><td class="align-right">24</td><td class="align-right">13</td><td class="align-right">24</td><td class="align-right">3</td><td class="align-right">$15</td><td>Sat</td></tr><tr><td class="align-right">11</td><td>The Underground</td><td class="align-right">35</td><td class="align-right">2.8%</td><td class="align-right">33</td><td class="align-right">2</td><td class="align-right">33</td><td class="align-right">0</td><td class="align-right">$10</td><td>Thu</td></tr><tr><td class="align-right">12</td><td>Queens Wharf Hotel</td><td class="align-right">35</td><td class="align-right">2.8%</td><td class="align-right">35</td><td class="align-right">35</td><td class="align-right">0</td><td class="align-right">0</td><td class="align-right">—</td><td>Sun</td></tr><tr><td class="align-right">13</td><td>Gallipoli House</td><td class="align-right">28</td><td class="align-right">2.3%</td><td class="align-right">15</td><td class="align-right">2</td><td class="align-right">3</td><td class="align-right">23</td><td class="align-right">$12</td><td>Sat</td></tr><tr><td class="align-right">14</td><td>Charlies Rooftop</td><td class="align-right">22</td><td class="align-right">1.8%</td><td class="align-right">21</td><td class="align-right">20</td><td class="align-right">2</td><td class="align-right">0</td><td class="align-right">$27</td><td>Sun</td></tr><tr><td class="align-right">15</td><td>Theydy's</td><td class="align-right">16</td><td class="align-right">1.3%</td><td class="align-right">15</td><td class="align-right">14</td><td class="align-right">2</td><td class="align-right">0</td><td class="align-right">$12</td><td>Wed</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li>The top three venues alone produce <strong>38.3%</strong> of all listings, and the top five cross half (52.8%).</li><li>They are also the most <em>intensive</em>: Lass O'Gowrie averages <strong>4.7 listings per active week</strong>, Hamilton Station 4.3, Maru Hi-Fi 3.5. Most venues average 1–2.</li><li>The long tail is thin but real: 41 of 84 venues appear exactly once in ten months.</li><li><code>Top 10 = 76.5%</code> is measured against the 1,236 listings at named venues. Nine rows carry the literal venue <code>Unknown</code>; they are excluded from the ranking and the denominator.</li></ul>
+<hr>
+<h2 id="4-genre-is-venue-shaped-not-scene-shaped">4. Genre is venue-shaped, not scene-shaped</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Listings with a genre</td><td>1,223 (98.2%)</td></tr><tr><td>Distinct genre atoms</td><td>51</td></tr><tr><td>Genres per tagged listing</td><td>1.36 (33.9% multi-genre)</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Genre</th><th scope="col" class="align-right">Listings</th><th scope="col" class="align-right">Share of tagged</th></tr></thead><tbody><tr><td class="align-right">1</td><td>ROCK</td><td class="align-right">238</td><td class="align-right">19.5%</td></tr><tr><td class="align-right">2</td><td>DANCE</td><td class="align-right">172</td><td class="align-right">14.1%</td></tr><tr><td class="align-right">3</td><td>JAZZ</td><td class="align-right">137</td><td class="align-right">11.2%</td></tr><tr><td class="align-right">4</td><td>VINYL</td><td class="align-right">130</td><td class="align-right">10.6%</td></tr><tr><td class="align-right">5</td><td>INDIE</td><td class="align-right">129</td><td class="align-right">10.5%</td></tr><tr><td class="align-right">6</td><td>PUNK</td><td class="align-right">107</td><td class="align-right">8.7%</td></tr><tr><td class="align-right">7</td><td>ACOUSTIC</td><td class="align-right">103</td><td class="align-right">8.4%</td></tr><tr><td class="align-right">8</td><td>LGBTQIA+</td><td class="align-right">81</td><td class="align-right">6.6%</td></tr><tr><td class="align-right">9</td><td>ALT</td><td class="align-right">62</td><td class="align-right">5.1%</td></tr><tr><td class="align-right">10</td><td>TECHNO</td><td class="align-right">51</td><td class="align-right">4.2%</td></tr><tr><td class="align-right">11</td><td>BLUES</td><td class="align-right">42</td><td class="align-right">3.4%</td></tr><tr><td class="align-right">12</td><td>HOUSE</td><td class="align-right">41</td><td class="align-right">3.4%</td></tr><tr><td class="align-right">13</td><td>COUNTRY</td><td class="align-right">39</td><td class="align-right">3.2%</td></tr><tr><td class="align-right">14</td><td>METAL</td><td class="align-right">37</td><td class="align-right">3.0%</td></tr><tr><td class="align-right">15</td><td>DJ</td><td class="align-right">37</td><td class="align-right">3.0%</td></tr></tbody></table></div>
+<p><strong>Venue specialisation</strong> (share of that venue's tagged listings in its top genre):</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Venue</th><th scope="col">Top genre</th><th scope="col" class="align-right">Share</th></tr></thead><tbody><tr><td>Bernies Bar</td><td>DANCE / LGBTQIA+</td><td class="align-right">100.0%</td></tr><tr><td>The Underground</td><td>JAZZ</td><td class="align-right">100.0%</td></tr><tr><td>Queens Wharf Hotel</td><td>DANCE</td><td class="align-right">94.3%</td></tr><tr><td>The Beauford Hotel</td><td>ROCK</td><td class="align-right">73.3%</td></tr><tr><td>The Oak</td><td>VINYL</td><td class="align-right">56.7%</td></tr><tr><td>Maru Hi-Fi</td><td>VINYL</td><td class="align-right">51.3%</td></tr><tr><td>Hamilton Station Hotel</td><td>ROCK</td><td class="align-right">39.0%</td></tr><tr><td>The Ori</td><td>ACOUSTIC</td><td class="align-right">38.5%</td></tr></tbody></table></div>
+<h4 class="minor-heading">Pairings are mostly one venue's signature, not a scene-wide blend:</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col">Pair</th><th scope="col" class="align-right">Listings</th><th scope="col">Concentration</th></tr></thead><tbody><tr><td>DANCE + LGBTQIA+</td><td class="align-right">81</td><td>90.1% at Bernies Bar</td></tr><tr><td>INDIE + ROCK</td><td class="align-right">44</td><td>spread across 9 venues</td></tr><tr><td>PUNK + ROCK</td><td class="align-right">35</td><td>spread across 12 venues</td></tr><tr><td>HOUSE + TECHNO</td><td class="align-right">21</td><td>85.7% at Lass O'Gowrie</td></tr><tr><td>ROCK + VINYL</td><td class="align-right">17</td><td>100% at The Oak</td></tr><tr><td>DANCE + TECHNO</td><td class="align-right">15</td><td>100% at Gallipoli House</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li>Rock leads the raw count, but <strong>venue identity explains more than the scene-wide mix</strong>: Bernies is a dance/LGBTQIA+ room, The Underground is jazz, Maru and The Oak are vinyl, The Beauford is rock.</li><li>Only <strong>INDIE+ROCK</strong> and <strong>PUNK+ROCK</strong> behave as genuinely scene-wide combinations.</li><li>A single "what does Newcastle sound like" breakdown would average across rooms that barely overlap. The venue × genre split is the more informative view.</li></ul>
+<hr>
+<h2 id="5-price-two-thirds-free-paid-concentrated-in-three-rooms">5. Price: two-thirds free, paid concentrated in three rooms</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Free</td><td>784 (63.0%)</td></tr><tr><td>Paid</td><td>333 (26.7%)</td></tr><tr><td>Unknown</td><td>128 (10.3%)</td></tr><tr><td>Paid median</td><td>$25 (p25 $15, p75 $39)</td></tr><tr><td>Paid mean</td><td>$31.43</td></tr><tr><td>Paid range</td><td>$5–$124</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Price band</th><th scope="col" class="align-right">Paid listings</th><th scope="col" class="align-right">Share</th></tr></thead><tbody><tr><td>&lt; $10</td><td class="align-right">5</td><td class="align-right">1.5%</td></tr><tr><td>$10–19</td><td class="align-right">97</td><td class="align-right">29.1%</td></tr><tr><td>$20–29</td><td class="align-right">85</td><td class="align-right">25.5%</td></tr><tr><td>$30–39</td><td class="align-right">64</td><td class="align-right">19.2%</td></tr><tr><td>$40–59</td><td class="align-right">46</td><td class="align-right">13.8%</td></tr><tr><td>$60+</td><td class="align-right">36</td><td class="align-right">10.8%</td></tr></tbody></table></div>
+<h4 class="minor-heading">Free share by genre</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col">Genre</th><th scope="col" class="align-right">Listings</th><th scope="col" class="align-right">Free</th><th scope="col" class="align-right">Free share</th></tr></thead><tbody><tr><td>ROCK</td><td class="align-right">238</td><td class="align-right">135</td><td class="align-right">56.7%</td></tr><tr><td>DANCE</td><td class="align-right">172</td><td class="align-right">121</td><td class="align-right">70.3%</td></tr><tr><td>JAZZ</td><td class="align-right">137</td><td class="align-right">101</td><td class="align-right">73.7%</td></tr><tr><td>VINYL</td><td class="align-right">130</td><td class="align-right">126</td><td class="align-right"><strong>96.9%</strong></td></tr><tr><td>INDIE</td><td class="align-right">129</td><td class="align-right">72</td><td class="align-right">55.8%</td></tr><tr><td>PUNK</td><td class="align-right">107</td><td class="align-right">55</td><td class="align-right"><strong>51.4%</strong></td></tr><tr><td>ACOUSTIC</td><td class="align-right">103</td><td class="align-right">86</td><td class="align-right">83.5%</td></tr><tr><td>LGBTQIA+</td><td class="align-right">81</td><td class="align-right">62</td><td class="align-right">76.5%</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>63% of listings are free.</strong> The paid market is not spread evenly: King Street Hotel ($45 median, 57 paid listings), Stag &amp; Hunter ($34, 34), Hamilton Station ($25, 62), Lass O'Gowrie ($25, 57), Croatian Club ($15, 24) and The Underground ($10, 33) account for most paid entries.</li><li><strong>Entire rooms are free</strong>: Maru Hi-Fi (127/127), Queens Wharf (35/35), The Ori (66 of 68), The Oak (90 of 98).</li><li><strong>Vinyl and acoustic are the free end</strong> (96.9% and 83.5%); <strong>punk and rock are the paid end</strong> (51.4% and 56.7% free).</li><li><strong>$60+ is a real tier</strong> — 36 paid listings (10.8% of paid), so the distribution has a long right tail rather than clustering under $30.</li><li><strong>128 prices (10.3%) are unknown</strong> and are excluded from every paid statistic. The paid median is therefore a median of <em>known</em> prices, not of the whole scene.</li></ul>
+<hr>
+<h2 id="6-bills-and-names-a-long-tail-with-a-small-permanent-core">6. Bills and names: a long tail with a small permanent core</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Distinct billed names</td><td>1,783</td></tr><tr><td>Billed exactly once</td><td><strong>1,355 (76.0%)</strong></td></tr><tr><td>Billed 2–3 times</td><td>294 (16.5%)</td></tr><tr><td>Billed 4–9 times</td><td>119 (6.7%)</td></tr><tr><td>Billed 10+ times</td><td>15 (0.8%)</td></tr><tr><td>Median acts per listing</td><td>1</td></tr></tbody></table></div>
+<p>These are raw bill strings; after removing programme titles, merging spelling variants and dropping the two residency acts, §9 counts 1,631 named acts.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Acts on bill</th><th scope="col" class="align-right">Listings</th></tr></thead><tbody><tr><td>1</td><td class="align-right">637</td></tr><tr><td>2</td><td class="align-right">156</td></tr><tr><td>3</td><td class="align-right">217</td></tr><tr><td>4</td><td class="align-right">100</td></tr><tr><td>5</td><td class="align-right">47</td></tr><tr><td>6–9</td><td class="align-right">67</td></tr><tr><td>10+</td><td class="align-right">21</td></tr></tbody></table></div>
+<h4 class="minor-heading">Most-billed entries</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Name</th><th scope="col" class="align-right">Listings</th><th scope="col" class="align-right">Venues</th><th scope="col" class="align-right">Weeks</th></tr></thead><tbody><tr><td class="align-right">1</td><td>Wharf Life</td><td class="align-right">35</td><td class="align-right">1</td><td class="align-right">35</td></tr><tr><td class="align-right">2</td><td>Jazz Night</td><td class="align-right">35</td><td class="align-right">2</td><td class="align-right">30</td></tr><tr><td class="align-right">3</td><td>BYO Vinyl Night</td><td class="align-right">34</td><td class="align-right">1</td><td class="align-right">34</td></tr><tr><td class="align-right">4</td><td>Open Decks</td><td class="align-right">33</td><td class="align-right">2</td><td class="align-right">33</td></tr><tr><td class="align-right">5</td><td>Rhodes</td><td class="align-right">20</td><td class="align-right">8</td><td class="align-right">18</td></tr><tr><td class="align-right">6</td><td>Jazz Night: Breeze</td><td class="align-right">19</td><td class="align-right">1</td><td class="align-right">19</td></tr><tr><td class="align-right">7</td><td>Rose White</td><td class="align-right">16</td><td class="align-right">8</td><td class="align-right">16</td></tr><tr><td class="align-right">8</td><td>Sunday Club</td><td class="align-right">16</td><td class="align-right">1</td><td class="align-right">16</td></tr><tr><td class="align-right">9</td><td>Lvl 1 District Saturdays</td><td class="align-right">15</td><td class="align-right">1</td><td class="align-right">15</td></tr><tr><td class="align-right">10</td><td>Bellicanta's</td><td class="align-right">14</td><td class="align-right">1</td><td class="align-right">14</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>The long tail dominates:</strong> three-quarters of billed names appear once in ten months.</li><li><strong>Half the listings are single-act bills</strong> (637 of 1,245); the median bill has one name. Three-act bills are the second mode (217), then four (100).</li><li><strong>Two different populations sit in the same column.</strong> Wharf Life (35 listings, 1 venue), BYO Vinyl Night (34, 1) and Open Decks (33, 2) are weekly fixtures — the second Open Decks venue is a single Bar Romeo listing, not a second residency. Rhodes (20 listings across <strong>8 venues</strong>), Rose White (16 across <strong>8</strong>), Gauze (9 across <strong>8</strong>) and Trophy Wyfe (11 across <strong>6</strong>) are touring acts. The first group is programming; the second is a booking circuit.</li><li><strong>Caveat:</strong> <code>eventName</code> mixes artists and named nights ("Jazz Night", "Open Decks", "Sunday Club"), so this table ranks <em>bill entries</em>, not artist identities. There is no artist ID in the data.</li></ul>
+<hr>
+<h2 id="7-residencies-27-recurring-bills-115-artist-venue-runs">7. Residencies: 27 recurring bills, 115 artist-venue runs</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Series length</th><th scope="col" class="align-right">Series</th></tr></thead><tbody><tr><td>1 week only</td><td class="align-right">897</td></tr><tr><td>2 weeks</td><td class="align-right">37</td></tr><tr><td>3+ weeks</td><td class="align-right"><strong>27</strong></td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Distinct bill+venue pairs</td><td>961</td></tr><tr><td>Series reappearing in 2+ weeks</td><td>64</td></tr><tr><td>Residencies (3+ weeks)</td><td>27</td></tr><tr><td>Listings belonging to a residency</td><td>274 (22.0%)</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Series</th><th scope="col">Venue</th><th scope="col" class="align-right">Weeks</th><th scope="col">Night</th></tr></thead><tbody><tr><td>Wharf Life</td><td>Queens Wharf Hotel</td><td class="align-right">35</td><td>Sun</td></tr><tr><td>BYO Vinyl Night</td><td>Maru Hi-Fi</td><td class="align-right">34</td><td>Thu</td></tr><tr><td>Open Decks</td><td>Lass O'Gowrie Hotel</td><td class="align-right">32</td><td>Wed</td></tr><tr><td>Jazz Night</td><td>The Underground</td><td class="align-right">20</td><td>Thu</td></tr><tr><td>Jazz Night: Breeze</td><td>Lass O'Gowrie Hotel</td><td class="align-right">19</td><td>Thu</td></tr><tr><td>Sunday Club</td><td>Charlies Rooftop</td><td class="align-right">16</td><td>Sun</td></tr><tr><td>Jazz Night</td><td>Lass O'Gowrie Hotel</td><td class="align-right">15</td><td>Thu</td></tr><tr><td>Lvl 1 District Saturdays</td><td>Gallipoli House</td><td class="align-right">15</td><td>Sat</td></tr><tr><td>Bellicanta's</td><td>Theydy's</td><td class="align-right">14</td><td>Wed</td></tr><tr><td>Vinyl Night</td><td>Maru Hi-Fi</td><td class="align-right">11</td><td>Sun</td></tr></tbody></table></div>
+<p><strong>Top artist residencies at a venue</strong> (act-level; 3+ distinct weeks)</p>
+<p>Programme titles are excluded. <code>Jazz Night: Breeze</code> credits Breeze; Bellicanta's is excluded. <strong>115</strong> artist-venue series reach 3+ weeks. <em>Total</em> is the number of distinct weeks the artist appeared at that venue; <em>Genre</em> is their most common tag there.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Artist</th><th scope="col">Venue</th><th scope="col" class="align-right">Total</th><th scope="col">Genre</th></tr></thead><tbody><tr><td>Breeze</td><td>Lass O'Gowrie Hotel</td><td class="align-right">19</td><td>JAZZ</td></tr><tr><td>PC Dysco</td><td>The Oak</td><td class="align-right">11</td><td>VINYL</td></tr><tr><td>Rick A Mortis</td><td>The Oak</td><td class="align-right">9</td><td>VINYL</td></tr><tr><td>Rose White</td><td>Lass O'Gowrie Hotel</td><td class="align-right">9</td><td>ALT</td></tr><tr><td>Bardvarkk</td><td>Lass O'Gowrie Hotel</td><td class="align-right">8</td><td>PUNK</td></tr><tr><td>Beam</td><td>Lass O'Gowrie Hotel</td><td class="align-right">7</td><td>TECHNO</td></tr><tr><td>Black Tiger</td><td>The Oak</td><td class="align-right">7</td><td>VINYL</td></tr><tr><td>LauraPanic</td><td>Hamilton Station Hotel</td><td class="align-right">7</td><td>PUNK</td></tr><tr><td>Anunnaki</td><td>The Beauford Hotel</td><td class="align-right">6</td><td>ROCK</td></tr><tr><td>DJ Qyto</td><td>Lass O'Gowrie Hotel</td><td class="align-right">6</td><td>DANCE</td></tr><tr><td>Lello</td><td>Lass O'Gowrie Hotel</td><td class="align-right">6</td><td>TECHNO</td></tr><tr><td>Michael Dowell</td><td>Lass O'Gowrie Hotel</td><td class="align-right">6</td><td>TECHNO</td></tr><tr><td>Rhodes</td><td>Lass O'Gowrie Hotel</td><td class="align-right">6</td><td>ROCK</td></tr><tr><td>S.M.D</td><td>Croatian Club</td><td class="align-right">6</td><td>PUNK</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>The scene is a stable weekly grid plus a large one-off layer.</strong> 897 of 961 bill+venue pairs appear in only one week, yet 27 series account for almost a quarter of all listings.</li><li><strong>Three series run essentially every week:</strong> Wharf Life (35 of 39), BYO Vinyl Night (34) and Open Decks (32). Jazz Night adds two sequential runs — 20 weeks at The Underground and 15 at Lass O'Gowrie — appearing in 30 distinct weeks under the same name.</li><li><strong>The same name can be two different runs.</strong> "Jazz Night" at Lass O'Gowrie (W02–W16) and at The Underground (W03–W46) are sequential venue-specific series, not one touring night.</li><li><strong>Artist-level residencies are led by Breeze</strong> (19 weeks at Lass O'Gowrie). PC Dysco's 11 weeks at The Oak is the next longest; the rest of the table are 9 weeks or fewer.</li><li>The Wednesday and Sunday nights in the list are what keep those low-volume days alive.</li></ul>
+<hr>
+<h2 id="8-data-quality-scorecard">8. Data quality scorecard</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Check</th><th scope="col">Result</th></tr></thead><tbody><tr><td>Rows collapsed in dedupe</td><td>0 (0.0%) — the input file is already de-duplicated</td></tr><tr><td>Duplicate groups with conflicting genres</td><td>0</td></tr><tr><td>Duplicate groups with conflicting prices</td><td>0</td></tr><tr><td>Venue spellings merged</td><td>115 → 84</td></tr><tr><td>Price unusable</td><td>128 (10.3%)</td></tr><tr><td>Genre missing</td><td>22 (1.8%)</td></tr><tr><td>Weeks missing inside range</td><td>6</td></tr><tr><td>Single-listing venues</td><td>41</td></tr><tr><td>Venue literally <code>Unknown</code></td><td>9</td></tr></tbody></table></div>
+<ul><li><strong>Genre missing is 22, not 11:</strong> rows with no genre at all, plus rows whose only tag was <code>FREE</code> — lifted out as a price flag, leaving no genre behind.</li><li><strong>The 10% unknown price rate is the main analysis risk.</strong> It is not random: The Beauford has 26 unknown prices out of 45, so its free-vs-paid split is mostly inference.</li><li><strong>Duplicate removal happened upstream.</strong> The merged file already collapsed ids, date+event groups, venue clusters and near-identical bills, so this pass sees no same-week duplicates or conflicts. See <code>scripts/merge-research-data.py</code> and <code>scripts/dedupe-events.py</code>.</li></ul>
+<hr>
+<h2 id="9-most-featured-acts-live-acts-vs-djs">9. Most-featured acts: live acts vs DJs</h2>
+<p>There is <strong>no artist-type field</strong> in the data, so this split is derived: each billed name is classified by the genres it appears under (electronic/techno/house/DJ/vinyl → DJ; rock/punk/jazz/ acoustic/indie → live act), with manual overrides where the genre mix is misleading. Names that are programme titles (<code>Wharf Life</code>, <code>Open Decks</code>, <code>BYO Vinyl Night</code>, <code>Jazz Night</code>, Bernies theme nights) are excluded; <code>Jazz Night: &lt;act&gt;</code> is credited to the act after the colon.</p>
+<p><strong>Breeze and Bellicanta's are excluded from the ranking.</strong> 19 of Breeze's 26 bills come from the recurring event title <code>Jazz Night: Breeze</code>, and Bellicanta's 14 bills are a single weekly solo residency at Theydy's. Both counts measure a residency listing rather than band bookings. Breeze's remaining 7 standalone jazz bills fall outside the top 10; Bellicanta's has no bills outside the residency.</p>
+<p>After removing programme titles, spelling variants and the two excluded acts: <strong>1,631 named acts</strong> — 1,123 live acts, 444 DJs, 64 unclassified.</p>
+<h4 class="minor-heading">Live acts (bands &amp; soloists) — top 10 by bill appearances</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Act</th><th scope="col" class="align-right">Bills</th><th scope="col" class="align-right">Venues</th><th scope="col" class="align-right">Weeks</th><th scope="col">Top genres</th></tr></thead><tbody><tr><td class="align-right">1</td><td>Rhodes</td><td class="align-right">20</td><td class="align-right">8</td><td class="align-right">18</td><td>ROCK, INDIE, FUNK</td></tr><tr><td class="align-right">2</td><td>S.M.D</td><td class="align-right">16</td><td class="align-right">6</td><td class="align-right">14</td><td>PUNK, ROCK, BLUES</td></tr><tr><td class="align-right">3</td><td>Bardvarkk</td><td class="align-right">13</td><td class="align-right">3</td><td class="align-right">12</td><td>PUNK, ROCK, ALT</td></tr><tr><td class="align-right">4</td><td>Charlie Farmer</td><td class="align-right">11</td><td class="align-right">8</td><td class="align-right">10</td><td>ROCK, ALT, INDIE</td></tr><tr><td class="align-right">5</td><td>Trophy Wyfe</td><td class="align-right">11</td><td class="align-right">6</td><td class="align-right">10</td><td>ROCK, PUNK, INDIE</td></tr><tr><td class="align-right">6</td><td>LauraPanic</td><td class="align-right">10</td><td class="align-right">3</td><td class="align-right">9</td><td>PUNK, ROCK, ALT</td></tr><tr><td class="align-right">7</td><td>Adam Miller</td><td class="align-right">9</td><td class="align-right">5</td><td class="align-right">9</td><td>ACOUSTIC, JAZZ</td></tr><tr><td class="align-right">8</td><td>Aunty Alan</td><td class="align-right">9</td><td class="align-right">6</td><td class="align-right">8</td><td>ACOUSTIC, ROCK, ALT</td></tr><tr><td class="align-right">9</td><td>Cormac Grant</td><td class="align-right">9</td><td class="align-right">5</td><td class="align-right">9</td><td>ACOUSTIC, INDIE, ALT</td></tr><tr><td class="align-right">10</td><td>Gauze</td><td class="align-right">9</td><td class="align-right">8</td><td class="align-right">8</td><td>PUNK, ROCK, ALT</td></tr></tbody></table></div>
+<h4 class="minor-heading">DJs — top 10 by bill appearances</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Act</th><th scope="col" class="align-right">Bills</th><th scope="col" class="align-right">Venues</th><th scope="col" class="align-right">Weeks</th><th scope="col">Top genres</th></tr></thead><tbody><tr><td class="align-right">1</td><td>PC Dysco</td><td class="align-right">11</td><td class="align-right">1</td><td class="align-right">11</td><td>VINYL, ROCK, INDIE</td></tr><tr><td class="align-right">2</td><td>Beam</td><td class="align-right">9</td><td class="align-right">3</td><td class="align-right">9</td><td>HOUSE, TECHNO, BASS</td></tr><tr><td class="align-right">3</td><td>DJ Qyto</td><td class="align-right">9</td><td class="align-right">4</td><td class="align-right">9</td><td>TECHNO, HOUSE, AFROBEATS</td></tr><tr><td class="align-right">4</td><td>Rick A Mortis</td><td class="align-right">9</td><td class="align-right">1</td><td class="align-right">9</td><td>VINYL, ALT, COUNTRY</td></tr><tr><td class="align-right">5</td><td>Black Tiger</td><td class="align-right">8</td><td class="align-right">1</td><td class="align-right">7</td><td>VINYL, ALT, JAZZ</td></tr><tr><td class="align-right">6</td><td>High Pass</td><td class="align-right">8</td><td class="align-right">5</td><td class="align-right">8</td><td>TECHNO, ALT, ELECTRONIC</td></tr><tr><td class="align-right">7</td><td>Lello</td><td class="align-right">8</td><td class="align-right">3</td><td class="align-right">8</td><td>HOUSE, TECHNO, BASS</td></tr><tr><td class="align-right">8</td><td>DJ Gunggek</td><td class="align-right">7</td><td class="align-right">4</td><td class="align-right">7</td><td>HOUSE, ELECTRONIC, TECHNO</td></tr><tr><td class="align-right">9</td><td>Homebody</td><td class="align-right">7</td><td class="align-right">4</td><td class="align-right">6</td><td>ELECTRONIC, HOUSE, BREAKS</td></tr><tr><td class="align-right">10</td><td>JYC</td><td class="align-right">7</td><td class="align-right">4</td><td class="align-right">6</td><td>HOUSE, VINYL, TECHNO</td></tr></tbody></table></div>
+<p>Unclassified (genre profile gives no clear signal): Rose White (16), The Pins (3), Tyson O'Brien (2), Stacie Fields (2), Chris G (2)</p>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>Rhodes is the most-featured live act</strong> — 20 bills across 8 venues and 18 weeks. Gauze (9 bills across 8 venues) and Charlie Farmer (11 across 8) are similarly itinerant, the signature of a support-circuit band rather than a resident.</li><li><strong>Volume is not the same as headlining.</strong> Bardvarkk and Trophy Wyfe reach 13 and 11 bills but appear entirely in support slots (0 solo bills), while Adam Miller's 9 bills are all solo sets.</li><li><strong>Solo acts look different from bands.</strong> Adam Miller plays 9 solo bills across 5 venues; Rhodes plays 20 bills across 8 venues as a band. Neither pattern is a single-room residency.</li><li><strong>No DJ exceeds 11 bills</strong>, and three of the top five DJs are vinyl selectors tied to The Oak (PC Dysco, Rick A Mortis, Black Tiger). Their definition as "DJ" is a judgement call: they are billed alongside bands, often last, and may be reading the room between sets rather than headlining.</li><li><strong>The biggest DJ programming is event-branded, not artist-branded.</strong> <code>Wharf Life</code> (35 weeks) and <code>Open Decks</code> (32) are excluded as programme titles; no named DJ comes close to those runs. DJ culture here is a night, not a roster.</li><li><strong>Rose White is the one material omission</strong>: 16 bills across 8 venues, mixing electronic, punk and alt line-ups. There is no defensible way to call them band or DJ from this data, so they are reported as unclassified rather than forced into a bucket.</li></ul>
+<hr>
+<h2 id="10-most-featured-genre-excluding-free-and-dance">10. Most-featured genre excluding FREE and DANCE</h2>
+<p><code>FREE</code> is a price flag in this dataset, not a genre atom, so it never enters the genre counts. Excluding <code>DANCE</code>:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Genre</th><th scope="col" class="align-right">Listings</th><th scope="col" class="align-right">Share of all 1,245</th></tr></thead><tbody><tr><td class="align-right">1</td><td><strong>ROCK</strong></td><td class="align-right">238</td><td class="align-right"><strong>19.1%</strong></td></tr><tr><td class="align-right">2</td><td>JAZZ</td><td class="align-right">137</td><td class="align-right">11.0%</td></tr><tr><td class="align-right">3</td><td>VINYL</td><td class="align-right">130</td><td class="align-right">10.4%</td></tr><tr><td class="align-right">4</td><td>INDIE</td><td class="align-right">129</td><td class="align-right">10.4%</td></tr><tr><td class="align-right">5</td><td>PUNK</td><td class="align-right">107</td><td class="align-right">8.6%</td></tr><tr><td class="align-right">6</td><td>ACOUSTIC</td><td class="align-right">103</td><td class="align-right">8.3%</td></tr><tr><td class="align-right">7</td><td>LGBTQIA+</td><td class="align-right">81</td><td class="align-right">6.5%</td></tr><tr><td class="align-right">8</td><td>ALT</td><td class="align-right">62</td><td class="align-right">5.0%</td></tr></tbody></table></div>
+<p>If "not free" is read literally as <strong>paid listings only</strong> (price &gt; 0), the ranking changes at the top of the tail but not the winner:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Genre</th><th scope="col" class="align-right">Paid listings</th><th scope="col" class="align-right">Share of 333</th></tr></thead><tbody><tr><td class="align-right">1</td><td><strong>ROCK</strong></td><td class="align-right">60</td><td class="align-right"><strong>18.0%</strong></td></tr><tr><td class="align-right">2</td><td>PUNK</td><td class="align-right">43</td><td class="align-right">12.9%</td></tr><tr><td class="align-right">3</td><td>INDIE</td><td class="align-right">35</td><td class="align-right">10.5%</td></tr><tr><td class="align-right">4</td><td>JAZZ</td><td class="align-right">35</td><td class="align-right">10.5%</td></tr><tr><td class="align-right">5</td><td>HOUSE</td><td class="align-right">31</td><td class="align-right">9.3%</td></tr><tr><td class="align-right">6</td><td>TECHNO</td><td class="align-right">30</td><td class="align-right">9.0%</td></tr><tr><td class="align-right">7</td><td>METAL</td><td class="align-right">26</td><td class="align-right">7.8%</td></tr><tr><td class="align-right">8</td><td>ALT</td><td class="align-right">25</td><td class="align-right">7.5%</td></tr></tbody></table></div>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>ROCK is the answer either way</strong> — 238 listings overall (19.1%), and 60 of 333 paid listings (18.0%).</li><li><strong>Removing free events promotes PUNK and METAL and demotes VINYL and ACOUSTIC.</strong> Vinyl is 96.9% free and acoustic 83.5%, so they almost vanish from a paid-only view (VINYL falls out of the top eight entirely); punk (51.4% free) and metal move up.</li><li><strong>DANCE was the second-largest atom overall (172 listings), so excluding it is what makes rock look dominant.</strong> Rock leads on its own merits, but the gap is 238 vs 137 once dance is removed — not the 238 vs 172 it would be with dance included.</li></ul>
+<hr>
+<h2 id="11-witchhouse-select-a-brand-tag-not-a-genre">11. Witchhouse Select: a brand tag, not a genre</h2>
+<p><code>WITCHHOUSE SELECT</code> appears in <strong>37</strong> raw rows, but it is not one of the genre atoms: normalisation drops it as a brand tag. At listing grain it covers <strong>37</strong> listings (3.0%). It is attached to jazz, punk, house and festival listings alike, which is why it is treated as branding rather than a genre.</p>
+<h4 class="minor-heading">Venues</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col">Venue</th><th scope="col" class="align-right">Listings</th></tr></thead><tbody><tr><td>Lass O'Gowrie Hotel</td><td class="align-right">10</td></tr><tr><td>Unknown</td><td class="align-right">3</td></tr><tr><td>King Street Hotel</td><td class="align-right">2</td></tr><tr><td>The Prince</td><td class="align-right">1</td></tr><tr><td>Impulse Response</td><td class="align-right">1</td></tr><tr><td>Maru Hi-Fi</td><td class="align-right">1</td></tr></tbody></table></div>
+<p>Lass O'Gowrie Hotel leads clearly; the remaining venues are one-offs. The <code>Unknown</code> bills are:</p>
+<ul><li>2026-01-31 — Jaie Gon, Precious Metal, Shuvcheck, Assembler Code</li><li>2026-04-26 — Reptant, Cqllum, Oliver, Ross Mvnro</li><li>2026-05-15 — 2Gruvy2Hard</li></ul>
+<h4 class="minor-heading">Artists with the most <code>WITCHHOUSE SELECT</code> bills</h4>
+<p>Artists with 2+ tagged bills. Counts are lower bounds because the tag is not recorded consistently.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Artist</th><th scope="col" class="align-right">Total</th><th scope="col" class="align-right">Venues</th></tr></thead><tbody><tr><td>DJ Gunggek</td><td class="align-right">5</td><td class="align-right">5</td></tr><tr><td>Kev Sev</td><td class="align-right">4</td><td class="align-right">3</td></tr><tr><td>High Pass</td><td class="align-right">3</td><td class="align-right">3</td></tr><tr><td>Krisp</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td>Michael Dowell</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td>Mozz</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td>Rose White</td><td class="align-right">3</td><td class="align-right">3</td></tr><tr><td>Assembler Code</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Charlie Farmer</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Chow Chow Disco</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>DJ Qyto</td><td class="align-right">2</td><td class="align-right">1</td></tr><tr><td>Forward Fox</td><td class="align-right">2</td><td class="align-right">1</td></tr><tr><td>Red C</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Shuvcheck</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Spaenk</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Weldo</td><td class="align-right">2</td><td class="align-right">2</td></tr></tbody></table></div>
+<hr>
+<h2 id="12-metal-heavy-hardcore-top-10-artists">12. Metal / heavy / hardcore: top 10 artists</h2>
+<p>Filter: listings tagged <strong>METAL</strong>, <strong>HEAVY</strong> or <strong>HARDCORE</strong> — <strong>72</strong> listings (5.8%), 206 named acts. Acts are counted once per venue per week, so duplicate posters for the same night do not double-count.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Act</th><th scope="col" class="align-right">Venue-weeks</th><th scope="col" class="align-right">Venues</th></tr></thead><tbody><tr><td class="align-right">1</td><td>Disco</td><td class="align-right">7</td><td class="align-right">2</td></tr><tr><td class="align-right">2</td><td>Fat Monica</td><td class="align-right">6</td><td class="align-right">3</td></tr><tr><td class="align-right">3</td><td>Deathfeeder</td><td class="align-right">5</td><td class="align-right">2</td></tr><tr><td class="align-right">4</td><td>Exyle</td><td class="align-right">5</td><td class="align-right">3</td></tr><tr><td class="align-right">5</td><td>Fatal Excuse</td><td class="align-right">4</td><td class="align-right">1</td></tr><tr><td class="align-right">6</td><td>Latest God</td><td class="align-right">4</td><td class="align-right">2</td></tr><tr><td class="align-right">7</td><td>Feign</td><td class="align-right">3</td><td class="align-right">3</td></tr><tr><td class="align-right">8</td><td>Phantom</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td class="align-right">9</td><td>Torment</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td class="align-right">10</td><td>Virescent</td><td class="align-right">3</td><td class="align-right">2</td></tr></tbody></table></div>
+<p>7 acts tie on 3 venue-weeks, so ranks 8–10 are alphabetical representatives of that tie.</p>
+<ul><li><strong>Heavy music is a Hamilton Station scene.</strong> 41 of 72 listings (56.9%) are there; King Street Hotel follows with 14.</li><li><strong>The tag mix is METAL 37, HEAVY 18, HARDCORE 19.</strong> A listing can carry more than one.</li><li><strong>It is a local-support scene.</strong> 172 of 206 named acts (83.5%) appear only once, and just seven acts reach four or more venue-weeks.</li><li><strong>Name merges:</strong> <code>Disco</code> includes <code>DISCO</code> and <code>D.I.S.C.O</code>; <code>Deathfeeder</code> includes <code>DeathFeeder</code> and <code>Death Feeder</code>.</li><li><strong>Feign</strong> has four bill strings but three venue-weeks: the 16 Jan Lass O'Gowrie poster is duplicated.</li></ul>
+<hr>
+<h2 id="13-promoters">13. Promoters</h2>
+<p>Basis: <code>researchData/events.json</code>, the single merged file produced from every <code>events-*.json</code> dump. Duplicates are collapsed by id, then by <code>(eventDateTime, eventName)</code>, then clustered by venue so spelling drift and leaked promoter prefixes do not create separate events (<code>Grindhouse - Croatian Club Side Room</code> / <code>Croatian Club</code> / <code>Croatian Wickham Sports Club</code> are one row; so are <code>The Oak</code> / <code>The Oak Hotel</code> and <code>Ori Hotel</code> / <code>The Oriental Hotel</code>). A final pass collapses the same bill on the same night at the same venue when the names differ only by a truncated tail or one misspelled word; it also folds the same bill at the same venue a day or two apart, and a one-off bill that appears exactly twice a week apart, while leaving weekly residencies alone. Result: <strong>1,245 events</strong>, of which <strong>161</strong> carry an <code>eventPromoters</code> value across <strong>121</strong> distinct strings (splitting multi-promoter rows on commas). Before the 2026-11-14 poster pass only <strong>4</strong> rows had a promoter.</p>
+<p><code>New Annual</code> (6) and <code>Great Southern Nights</code> (11) lead the raw counts but are excluded from the table: they are festival/council program brands rather than independent promoters. Removing them leaves:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col" class="align-right">#</th><th scope="col">Promoter</th><th scope="col" class="align-right">Events</th></tr></thead><tbody><tr><td class="align-right">1</td><td>Kova Events</td><td class="align-right">10</td></tr><tr><td class="align-right">2</td><td>Odyssey</td><td class="align-right">5</td></tr><tr><td class="align-right">2</td><td>Bad Behaviour</td><td class="align-right">5</td></tr><tr><td class="align-right">4</td><td>C.T.</td><td class="align-right">4</td></tr><tr><td class="align-right">5</td><td>Groove Street</td><td class="align-right">3</td></tr><tr><td class="align-right">5</td><td>2Gruvy2Hard</td><td class="align-right">3</td></tr><tr><td class="align-right">5</td><td>New Brain Communications</td><td class="align-right">3</td></tr><tr><td class="align-right">5</td><td>Destroy All Lines</td><td class="align-right">3</td></tr><tr><td class="align-right">5</td><td>Ode</td><td class="align-right">3</td></tr><tr><td class="align-right">5</td><td>Powder Your Nose</td><td class="align-right">3</td></tr></tbody></table></div>
+<p>Six promoters tie at 3 events. Seventeen promoters follow on 2 events, including Made On Sunday, Sirocco, Grindhouse, Grindhead Records, The Ori, Yours &amp; Owls and Thanks For Coming.</p>
+<h4 class="minor-heading">Findings</h4>
+<ul><li><strong>Promoter disclosure is the exception, not the rule:</strong> 161 of 1,245 events (12.9%). Most posters do not name a promoter at all, so these counts are a floor, not a ranking of who runs the most gigs.</li><li><strong>Concentration is low.</strong> The largest independent promoter has 10 events across ten months, and only after folding <code>Kova</code> into <code>Kova Events</code>; the next is 5. This is a venue-led scene, consistent with §3 (five venues = half of all listings), not a promoter-led one.</li><li><strong><code>Kova</code> and <code>Kova Events</code> are the same operator.</strong> The canonical alias lives in the applier and the merge script; <code>C.T</code> and <code>C.T.</code> are folded to <code>C.T.</code> (4 events).</li><li><strong>De-duplication moves the promoter counts.</strong> Collapsing the three 16 Oct Grindhouse rows removed two duplicate credits, and merging the three <code>Dr Sure's Unusual Practice</code> rows did the same for New Brain Communications (4 → 3).</li><li>Some values are venues or event brands rather than promoters (<code>The Ori</code>, <code>Maru Hi-Fi</code>, <code>Full Send Friday</code>), so read the list as "who is credited on the poster".</li></ul>
+<p>Re-run: <code>npm run recheck</code> (re-extract) → <code>npm run apply-recheck</code> (fold findings in) → <code>python3 scripts/merge-research-data.py path/to/new-dumps/*.json &gt; researchData/events.json</code> → <code>python3 scripts/dedupe-events.py researchData/events.json --out researchData/events.json</code>. The per-date dumps were consolidated into <code>researchData/events.json</code> and removed on 2026-11-14.</p>
+<hr>
+<h2 id="corrections-to-earlier-raw-row-estimates">Corrections to earlier raw-row estimates</h2>
+<blockquote><p>The table below documents the first analysis pass on the 17 Oct dump. The current consolidated corpus is <strong>1,245 listings</strong>; the Snapshot and §1–§12 carry the refreshed figures.</p></blockquote>
+<p>The first pass worked on raw rows. At listing grain, several figures move:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Metric</th><th scope="col" class="align-right">Raw rows</th><th scope="col" class="align-right">Listing grain</th></tr></thead><tbody><tr><td>Listings</td><td class="align-right">1,275</td><td class="align-right"><strong>1,260</strong></td></tr><tr><td>Act+venue pairs</td><td class="align-right">980</td><td class="align-right"><strong>958</strong></td></tr><tr><td>Recurring series</td><td class="align-right">364</td><td class="align-right"><strong>77 (2+ weeks), 28 (3+ weeks)</strong></td></tr><tr><td>Names billed once</td><td class="align-right">822 of 1,744 (47%)</td><td class="align-right"><strong>1,287 of 1,738 (74%)</strong></td></tr><tr><td>Free share of priced</td><td class="align-right">70.5%</td><td class="align-right"><strong>71.0%</strong></td></tr></tbody></table></div>
+<ul><li><strong>Listings fell by 15</strong> because canonicalising 143 venue spellings to 78 made some rows collapse that had previously been distinct.</li><li><strong>"364 recurring series" was inflated.</strong> That count was repeated <code>(name, venue)</code> pairs <em>including same-week duplicates</em>. Real recurrence is 77 series, of which 28 are residencies.</li><li><strong>The one-off rate rose from 47% to 74%</strong> because within-week duplicates were artificially increasing repeat counts.</li><li><strong>The free share is stable</strong> (~71% of priced listings), which is the most reassuring number here.</li></ul>
+<hr>
+<h2 id="what-this-analysis-supports">What this analysis supports</h2>
+<h4 class="minor-heading">Supported:</h4>
+<ul><li>Share of listings by day tab, venue, genre and price bracket.</li><li>Venue concentration and relative intensity (listings per active week).</li><li>Venue-level programming identity (genre specialisation, free vs paid character).</li><li>Price distribution among known prices, and the free/paid/unknown split.</li><li>Residency structure and the size of the one-off layer.</li><li>Billing depth and the long-tail/repeat split among bill entries.</li><li>A live-act vs DJ split, with the caveat that it is inferred from genre and manually overridden for ambiguous names (Rose White, 16 bills, is left unclassified).</li></ul>
+<h4 class="minor-heading">Not supported:</h4>
+<ul><li>Absolute event counts ("1,245 events happened") — the unit is a listing, not an event.</li><li>Any calendar claim ("what's on this Friday") — the timestamp is the day tab and save week.</li><li>Month-over-month trends — six weeks are missing, including all of June plus W18 and W39, and W43–W45 are only partially covered.</li><li>Geography, distance or neighbourhood analysis — coordinates are present but not used as reliable location data here.</li><li>Artist identity or "top artist" claims — <code>eventName</code> mixes artists and named nights, with no ID. The bands-vs-DJs ranking in section 9 is the closest defensible reading, and it is heuristic.</li><li>Weekly capacity or attendance — the data records advertising, not ticket sales.</li></ul>
+<hr>
+<h2 id="summary">Summary</h2>
+<ol><li><strong>The usable unit is a listing, not a row.</strong> The four dumps held 1,941 rows; merging and de-duplication left 1,245 events, which equal 1,245 listings at (bill, venue, ISO week) — 35.9% of the raw rows were duplicate or near-duplicate.</li><li><strong>It is a Thursday–Sunday scene.</strong> 91% of listings sit on those four days; Saturday and Friday are tied (355 vs 339), and Sunday is a strong third (262) rather than a quiet night.</li><li><strong>Five venues are half the scene.</strong> Lass O'Gowrie (182), Hamilton Station (165), Maru Hi-Fi (127), The Oak (98) and King Street (81) produce 52.8% of listings; 5 venues reach 50% and 12 reach 80%, with the top ten accounting for 76.5%.</li><li><strong>Genre is a property of the room, not the city.</strong> Bernies is 100% dance/LGBTQIA+, The Underground 100% jazz, The Oak 57% vinyl, The Beauford 73% rock. Only indie+rock and punk+rock appear across many venues.</li><li><strong>Nearly two-thirds of listings are free (63%).</strong> Where money is charged, it concentrates in King Street ($45 median), Stag &amp; Hunter ($34), Hamilton Station ($25) and Lass O'Gowrie ($25). Vinyl and acoustic are the free end; punk and rock the paid end.</li><li><strong>Bills are short and names are mostly one-off.</strong> Half of all listings are single-act, and 76.0% of the 1,783 raw billed strings appear exactly once; only 15 appear 10+ times.</li><li><strong>A small permanent core carries the scene.</strong> 27 residencies cover 22.0% of listings, led by Wharf Life (35 weeks), BYO Vinyl Night (34) and Open Decks (32); the other 897 bill+venue pairs appear once.</li><li><strong>The data is honest about its gaps.</strong> Six weeks are missing (all of June plus W18 and W39), W43–W45 are only partially covered, 10.3% of prices are unparseable, and W38 is a catch-up spike — so this supports a portrait of the scene, not a time series, and not any geographic or calendar-specific claim.</li><li><strong>The most-featured live act is Rhodes (20 bills across 8 venues and 18 weeks)</strong>, followed by S.M.D (16) and Bardvarkk (13). Breeze and Bellicanta's were excluded because their counts come from residency listings (<code>Jazz Night: Breeze</code> and the weekly Bellicanta's show), not band bookings.</li><li><strong>The most-featured DJ is PC Dysco (11 bills, all at The Oak)</strong>, followed by Beam, DJ Qyto and Rick A Mortis (9 each). No named DJ exceeds 11 bills because the biggest dance programming is event-branded (<code>Wharf Life</code>, <code>Open Decks</code>).</li><li><strong>Excluding FREE and DANCE, ROCK is the leading genre</strong> — 238 listings (19.1%), and still first among paid listings at 60 (18.0%); PUNK is second on paid listings (43).</li><li><strong><code>WITCHHOUSE SELECT</code> is a brand tag, not a genre.</strong> It appears in 37 raw rows / 37 listings (3.0%), most often at Lass O'Gowrie Hotel (10); DJ Gunggek leads the tagged bills with 5, then Kev Sev with 4.</li><li><strong>Heavy music is concentrated at Hamilton Station.</strong> 41 of 72 metal/heavy/hardcore listings (57%) are there; Disco leads the artists with 7 venue-weeks and Fat Monica has 6, while 83.5% of the 206 acts appear only once.</li><li><strong>Promoters are disclosed on only 12.9% of events.</strong> After merging and de-duplicating the four dumps into 1,245 events (the per-date dumps were then removed), 161 carry a promoter; excluding the <code>New Annual</code> and <code>Great Southern Nights</code> program brands, <strong>Kova Events leads with 10</strong> (after folding in the <code>Kova</code> variant), then Odyssey and Bad Behaviour with 5 each, and <strong>C.T. with 4</strong> after folding <code>C.T</code> / <code>C.T.</code> together (§13).</li></ol>
+<h3 id="witchhouse-select-tables">Witchhouse Select tables</h3>
+<h4 class="minor-heading">Venues with the most <code>WITCHHOUSE SELECT</code> listings</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col">Venue</th><th scope="col" class="align-right">Listings</th></tr></thead><tbody><tr><td>Lass O'Gowrie Hotel</td><td class="align-right">10</td></tr><tr><td>Unknown</td><td class="align-right">3</td></tr><tr><td>King Street Hotel</td><td class="align-right">2</td></tr><tr><td>The Prince</td><td class="align-right">1</td></tr><tr><td>Impulse Response</td><td class="align-right">1</td></tr><tr><td>Maru Hi-Fi</td><td class="align-right">1</td></tr></tbody></table></div>
+<h4 class="minor-heading">Artists with the most <code>WITCHHOUSE SELECT</code> bills</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col">Artist</th><th scope="col" class="align-right">Total</th><th scope="col" class="align-right">Venues</th></tr></thead><tbody><tr><td>DJ Gunggek</td><td class="align-right">5</td><td class="align-right">5</td></tr><tr><td>Kev Sev</td><td class="align-right">4</td><td class="align-right">3</td></tr><tr><td>High Pass</td><td class="align-right">3</td><td class="align-right">3</td></tr><tr><td>Krisp</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td>Michael Dowell</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td>Mozz</td><td class="align-right">3</td><td class="align-right">2</td></tr><tr><td>Rose White</td><td class="align-right">3</td><td class="align-right">3</td></tr><tr><td>Assembler Code</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Charlie Farmer</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Chow Chow Disco</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>DJ Qyto</td><td class="align-right">2</td><td class="align-right">1</td></tr><tr><td>Forward Fox</td><td class="align-right">2</td><td class="align-right">1</td></tr><tr><td>Red C</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Shuvcheck</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Spaenk</td><td class="align-right">2</td><td class="align-right">2</td></tr><tr><td>Weldo</td><td class="align-right">2</td><td class="align-right">2</td></tr></tbody></table></div>
+<p>Full detail, including the three <code>Unknown</code> bills, is in §11.</p>
+    <footer class="page-footer">
+      <p>Generated from <code>specs/research-data-analysis.md</code> · <a href="research-data-analysis.md">Markdown source</a> · <a href="#top">Back to top</a></p>
+    </footer>
+  </main>
+</div>
+<script>
+  const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+  const sections = links
+    .map((link) => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+  if ('IntersectionObserver' in window && sections.length) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const id = '#' + entry.target.id;
+        for (const link of links) link.classList.toggle('active', link.getAttribute('href') === id);
+      }
+    }, { rootMargin: '-18% 0px -72% 0px', threshold: 0 });
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
+</body>
+</html>

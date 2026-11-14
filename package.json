@@ -14,7 +14,9 @@
     "scrape-xvfb": "xvfb-run npx playwright test --output=/tmp/test-results",
     "test:unit": "npx playwright test --config=playwright.unit.config.ts",
     "test:merge": "python3 scripts/merge-research-data.test.py",
-    "test:dedupe": "python3 scripts/dedupe-events.test.py"
+    "test:dedupe": "python3 scripts/dedupe-events.test.py",
+    "analysis:html": "python3 scripts/render-analysis-html.py",
+    "analysis:table-images": "python3 scripts/render-table-images.py && node scripts/screenshot-table-images.mjs"
   },
   "keywords": [],
   "author": "",

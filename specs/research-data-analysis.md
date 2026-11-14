@@ -1,16 +1,21 @@
 # Research data analysis — what the posters actually show
 
 Source: `researchData/events.json` — the single merged, de-duplicated corpus (1,245 events from 266 images)
+
 Window: 2026-01-07 → 2026-11-15, across 39 ISO weeks with data
-Grain used throughout: **1,245 listings** (act + venue + ISO week). The four per-date dumps were consolidated
+
+Grain used throughout: **1,245 listings** (bill + venue + ISO week). The four per-date dumps were consolidated
 into `researchData/events.json` and removed on 2026-11-14.
+
 Reproduce: `python3 scripts/research-data-analysis.py researchData/events.json`
+
 Last refreshed: 2026-11-14 — refreshed against the consolidated single-file corpus
+
 Method, caveats and the investigation behind the cleaning: [`research-data-methodology.md`](./research-data-methodology.md)
 
 > **Promoter pass — 2026-11-14.** The poster re-extraction added promoter/venue findings. All four
 > event dumps were merged and de-duplicated into **`researchData/events.json`**: **1,245 events**,
-> of which **159** carry a promoter, and the per-date dumps were then removed. Promoter rankings are in
+> of which **161** carry a promoter, and the per-date dumps were then removed. Promoter rankings are in
 > [§13](#13-promoters). Every section below now uses the consolidated file.
 
 ## Direct answers
@@ -35,14 +40,15 @@ not the same as named acts (1,631) — see §9 for the difference.
 | Term | Meaning |
 | --- | --- |
 | **Row** | One event as extracted from one poster image; 1,245 after merging and de-duplication. |
-| **Listing** | A unique act + venue + ISO week. Same act/venue in different weeks is **not** a duplicate. |
-| **Series** | The same act + venue appearing in 2+ weeks. A **residency** is 3+ weeks. |
+| **Listing** | A unique bill/event title + venue + ISO week. Same bill/venue in different weeks is **not** a duplicate. |
+| **Series** | The same bill/event title + venue appearing in 2+ weeks. A **residency** is 3+ weeks. |
+| **Artist residency** | The same individual artist + venue appearing in 3+ distinct weeks (act-level table in §7). |
 | **Free** | Price parsed as `0` or the `FREE` tag was present. |
 | **Unknown price** | Anything unparseable (`"undefined"`, `""`, `"N/A"`, `"Unknown"`, …) — never coerced to 0. |
 | **Day** | The day tab the listing came from (Wed–Sun), not the event's calendar date. |
 
 All timestamps were converted to `Australia/Sydney` before grouping. `venueName` was canonicalised
-from 117 raw spellings to 86 venues. `lngLat` and `venueAddress` are present in the merged file but are
+from 115 raw spellings to 84 venues. `lngLat` and `venueAddress` are present in the merged file but are
 not used here, so this analysis makes **no geographic claims**.
 
 ---
@@ -53,8 +59,8 @@ not used here, so this analysis makes **no geographic claims**.
 | --- | --- |
 | Rows in merged file | 1,245 |
 | Listings after same-week dedupe | **1,245** (0 rows collapsed — the file is already de-duplicated) |
-| Distinct act+venue pairs | 961 |
-| Canonical venues | 86 (from 117 spellings) |
+| Distinct bill+venue pairs | 961 |
+| Canonical venues | 84 (from 115 spellings) |
 | Active weeks | 39 of 45 in range — 6 missing |
 | Listings per active week | median 33 (range 1–64) |
 | Free / paid / unknown | **63.0% / 26.7% / 10.3%** |
@@ -120,13 +126,13 @@ volume is usable only to describe poster coverage.
 
 | Measure | Value |
 | --- | --- |
-| Canonical venues | 86 |
+| Canonical venues | 84 |
 | Venues needed for 50% of listings | **5** |
 | Venues needed for 80% | **12** |
-| Top 10 share | **76.3%** |
-| HHI | 753 → equivalent to ~13 equal-sized venues |
-| Gini | 0.801 |
-| Venues with a single listing | 43 |
+| Top 10 share | **76.5%** |
+| HHI | 755 → equivalent to ~13 equal-sized venues |
+| Gini | 0.799 |
+| Venues with a single listing | 41 |
 
 | # | Venue | Listings | Share | Weeks active | Free | Paid | Unknown | Median paid | Top night |
 | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -148,11 +154,11 @@ volume is usable only to describe poster coverage.
 
 **Findings**
 
-- The top three venues alone produce **38.3%** of all listings, and the top five cross half (52.7%).
+- The top three venues alone produce **38.3%** of all listings, and the top five cross half (52.8%).
 - They are also the most *intensive*: Lass O'Gowrie averages **4.7 listings per active week**,
   Hamilton Station 4.3, Maru Hi-Fi 3.5. Most venues average 1–2.
-- The long tail is thin but real: 43 of 86 venues appear exactly once in ten months.
-- `Top 10 = 76.3%` is measured against the 1,238 listings at named venues. Seven rows carry the
+- The long tail is thin but real: 41 of 84 venues appear exactly once in ten months.
+- `Top 10 = 76.5%` is measured against the 1,236 listings at named venues. Nine rows carry the
   literal venue `Unknown`; they are excluded from the ranking and the denominator.
 
 ---
@@ -320,7 +326,7 @@ the two residency acts, §9 counts 1,631 named acts.
 
 ---
 
-## 7. Residencies: 27 series carry 22% of listings
+## 7. Residencies: 27 recurring bills, 115 artist-venue runs
 
 | Series length | Series |
 | --- | ---: |
@@ -330,7 +336,7 @@ the two residency acts, §9 counts 1,631 named acts.
 
 | Measure | Value |
 | --- | --- |
-| Distinct act+venue pairs | 961 |
+| Distinct bill+venue pairs | 961 |
 | Series reappearing in 2+ weeks | 64 |
 | Residencies (3+ weeks) | 27 |
 | Listings belonging to a residency | 274 (22.0%) |
@@ -348,15 +354,40 @@ the two residency acts, §9 counts 1,631 named acts.
 | Bellicanta's | Theydy's | 14 | Wed |
 | Vinyl Night | Maru Hi-Fi | 11 | Sun |
 
+**Top artist residencies at a venue** (act-level; 3+ distinct weeks)
+
+Programme titles are excluded. `Jazz Night: Breeze` credits Breeze; Bellicanta's is excluded. **115** artist-venue series
+reach 3+ weeks. *Total* is the number of distinct weeks the artist appeared at that venue;
+*Genre* is their most common tag there.
+
+| Artist | Venue | Total | Genre |
+|---|---|---:|---|
+| Breeze | Lass O'Gowrie Hotel | 19 | JAZZ |
+| PC Dysco | The Oak | 11 | VINYL |
+| Rick A Mortis | The Oak | 9 | VINYL |
+| Rose White | Lass O'Gowrie Hotel | 9 | ALT |
+| Bardvarkk | Lass O'Gowrie Hotel | 8 | PUNK |
+| Beam | Lass O'Gowrie Hotel | 7 | TECHNO |
+| Black Tiger | The Oak | 7 | VINYL |
+| LauraPanic | Hamilton Station Hotel | 7 | PUNK |
+| Anunnaki | The Beauford Hotel | 6 | ROCK |
+| DJ Qyto | Lass O'Gowrie Hotel | 6 | DANCE |
+| Lello | Lass O'Gowrie Hotel | 6 | TECHNO |
+| Michael Dowell | Lass O'Gowrie Hotel | 6 | TECHNO |
+| Rhodes | Lass O'Gowrie Hotel | 6 | ROCK |
+| S.M.D | Croatian Club | 6 | PUNK |
+
 **Findings**
 
-- **The scene is a stable weekly grid plus a large one-off layer.** 897 of 961 act+venue pairs appear
+- **The scene is a stable weekly grid plus a large one-off layer.** 897 of 961 bill+venue pairs appear
   in only one week, yet 27 series account for almost a quarter of all listings.
 - **Three series run essentially every week:** Wharf Life (35 of 39), BYO Vinyl Night (34) and
   Open Decks (32). Jazz Night adds two sequential runs — 20 weeks at The Underground and 15 at
   Lass O'Gowrie — appearing in 30 distinct weeks under the same name.
 - **The same name can be two different runs.** "Jazz Night" at Lass O'Gowrie (W02–W16) and at The
   Underground (W03–W46) are sequential venue-specific series, not one touring night.
+- **Artist-level residencies are led by Breeze** (19 weeks at Lass O'Gowrie). PC Dysco's
+  11 weeks at The Oak is the next longest; the rest of the table are 9 weeks or fewer.
 - The Wednesday and Sunday nights in the list are what keep those low-volume days alive.
 
 ---
@@ -368,12 +399,12 @@ the two residency acts, §9 counts 1,631 named acts.
 | Rows collapsed in dedupe | 0 (0.0%) — the input file is already de-duplicated |
 | Duplicate groups with conflicting genres | 0 |
 | Duplicate groups with conflicting prices | 0 |
-| Venue spellings merged | 117 → 86 |
+| Venue spellings merged | 115 → 84 |
 | Price unusable | 128 (10.3%) |
 | Genre missing | 22 (1.8%) |
 | Weeks missing inside range | 6 |
-| Single-listing venues | 43 |
-| Venue literally `Unknown` | 7 |
+| Single-listing venues | 41 |
+| Venue literally `Unknown` | 9 |
 
 - **Genre missing is 22, not 11:** rows with no genre at all, plus rows whose only tag was `FREE` —
   lifted out as a price flag, leaving no genre behind.
@@ -404,33 +435,33 @@ After removing programme titles, spelling variants and the two excluded acts: **
 
 **Live acts (bands & soloists) — top 10 by bill appearances**
 
-| # | Act | Bills | Solo | Venues | Weeks | Top genres |
-|---:|---|---:|---:|---:|---:|---|
-| 1 | Rhodes | 20 | 0 | 8 | 18 | ROCK, INDIE, FUNK |
-| 2 | S.M.D | 16 | 0 | 6 | 14 | PUNK, ROCK, BLUES |
-| 3 | Bardvarkk | 13 | 0 | 3 | 12 | PUNK, ROCK, ALT |
-| 4 | Charlie Farmer | 11 | 0 | 8 | 10 | ROCK, ALT, INDIE |
-| 5 | Trophy Wyfe | 11 | 0 | 6 | 10 | ROCK, PUNK, INDIE |
-| 6 | LauraPanic | 10 | 0 | 3 | 9 | PUNK, ROCK, ALT |
-| 7 | Adam Miller | 9 | 9 | 5 | 9 | ACOUSTIC, JAZZ |
-| 8 | Aunty Alan | 9 | 2 | 6 | 8 | ACOUSTIC, ROCK, ALT |
-| 9 | Cormac Grant | 9 | 3 | 5 | 9 | ACOUSTIC, INDIE, ALT |
-| 10 | Gauze | 9 | 0 | 8 | 8 | PUNK, ROCK, ALT |
+| # | Act | Bills | Venues | Weeks | Top genres |
+|---:|---|---:|---:|---:|---|
+| 1 | Rhodes | 20 | 8 | 18 | ROCK, INDIE, FUNK |
+| 2 | S.M.D | 16 | 6 | 14 | PUNK, ROCK, BLUES |
+| 3 | Bardvarkk | 13 | 3 | 12 | PUNK, ROCK, ALT |
+| 4 | Charlie Farmer | 11 | 8 | 10 | ROCK, ALT, INDIE |
+| 5 | Trophy Wyfe | 11 | 6 | 10 | ROCK, PUNK, INDIE |
+| 6 | LauraPanic | 10 | 3 | 9 | PUNK, ROCK, ALT |
+| 7 | Adam Miller | 9 | 5 | 9 | ACOUSTIC, JAZZ |
+| 8 | Aunty Alan | 9 | 6 | 8 | ACOUSTIC, ROCK, ALT |
+| 9 | Cormac Grant | 9 | 5 | 9 | ACOUSTIC, INDIE, ALT |
+| 10 | Gauze | 9 | 8 | 8 | PUNK, ROCK, ALT |
 
 **DJs — top 10 by bill appearances**
 
-| # | Act | Bills | Solo | Venues | Weeks | Top genres |
-|---:|---|---:|---:|---:|---:|---|
-| 1 | PC Dysco | 11 | 3 | 1 | 11 | VINYL, ROCK, INDIE |
-| 2 | Beam | 9 | 0 | 3 | 9 | HOUSE, TECHNO, BASS |
-| 3 | DJ Qyto | 9 | 0 | 4 | 9 | TECHNO, HOUSE, AFROBEATS |
-| 4 | Rick A Mortis | 9 | 0 | 1 | 9 | VINYL, ALT, COUNTRY |
-| 5 | Black Tiger | 8 | 2 | 1 | 7 | VINYL, ALT, JAZZ |
-| 6 | High Pass | 8 | 0 | 5 | 8 | TECHNO, ALT, ELECTRONIC |
-| 7 | Lello | 8 | 0 | 3 | 8 | HOUSE, TECHNO, BASS |
-| 8 | DJ Gunggek | 7 | 0 | 4 | 7 | HOUSE, ELECTRONIC, TECHNO |
-| 9 | Homebody | 7 | 0 | 4 | 6 | ELECTRONIC, HOUSE, BREAKS |
-| 10 | JYC | 7 | 3 | 4 | 6 | HOUSE, VINYL, TECHNO |
+| # | Act | Bills | Venues | Weeks | Top genres |
+|---:|---|---:|---:|---:|---|
+| 1 | PC Dysco | 11 | 1 | 11 | VINYL, ROCK, INDIE |
+| 2 | Beam | 9 | 3 | 9 | HOUSE, TECHNO, BASS |
+| 3 | DJ Qyto | 9 | 4 | 9 | TECHNO, HOUSE, AFROBEATS |
+| 4 | Rick A Mortis | 9 | 1 | 9 | VINYL, ALT, COUNTRY |
+| 5 | Black Tiger | 8 | 1 | 7 | VINYL, ALT, JAZZ |
+| 6 | High Pass | 8 | 5 | 8 | TECHNO, ALT, ELECTRONIC |
+| 7 | Lello | 8 | 3 | 8 | HOUSE, TECHNO, BASS |
+| 8 | DJ Gunggek | 7 | 4 | 7 | HOUSE, ELECTRONIC, TECHNO |
+| 9 | Homebody | 7 | 4 | 6 | ELECTRONIC, HOUSE, BREAKS |
+| 10 | JYC | 7 | 4 | 6 | HOUSE, VINYL, TECHNO |
 
 Unclassified (genre profile gives no clear signal): Rose White (16), The Pins (3), Tyson O'Brien (2), Stacie Fields (2), Chris G (2)
 
@@ -523,24 +554,28 @@ Lass O'Gowrie Hotel leads clearly; the remaining venues are one-offs. The `Unkno
 - 2026-05-15 — 2Gruvy2Hard
 
 
-**Top 10 artists**
+**Artists with the most `WITCHHOUSE SELECT` bills**
 
-| # | Act | Listings | Venues |
-|---:|---|---:|---:|
-| 1 | DJ Gunggek | 5 | 5 |
-| 2 | Kev Sev | 4 | 3 |
-| 3 | High Pass | 3 | 3 |
-| 4 | Krisp | 3 | 2 |
-| 5 | Michael Dowell | 3 | 2 |
-| 6 | Mozz | 3 | 2 |
-| 7 | Rose White | 3 | 3 |
-| 8 | Assembler Code | 2 | 2 |
-| 9 | Charlie Farmer | 2 | 2 |
-| 10 | Chow Chow Disco | 2 | 2 |
+Artists with 2+ tagged bills. Counts are lower bounds because the tag is not recorded consistently.
 
-9 acts tie on 2 listings, so ranks 8–10 are alphabetical representatives of
-a larger tie. The tag is a brand marker and is not recorded consistently, so these counts
-are lower bounds.
+| Artist | Total | Venues |
+|---|---:|---:|
+| DJ Gunggek | 5 | 5 |
+| Kev Sev | 4 | 3 |
+| High Pass | 3 | 3 |
+| Krisp | 3 | 2 |
+| Michael Dowell | 3 | 2 |
+| Mozz | 3 | 2 |
+| Rose White | 3 | 3 |
+| Assembler Code | 2 | 2 |
+| Charlie Farmer | 2 | 2 |
+| Chow Chow Disco | 2 | 2 |
+| DJ Qyto | 2 | 1 |
+| Forward Fox | 2 | 1 |
+| Red C | 2 | 2 |
+| Shuvcheck | 2 | 2 |
+| Spaenk | 2 | 2 |
+| Weldo | 2 | 2 |
 
 ---
 
@@ -586,7 +621,7 @@ Side Room` / `Croatian Club` / `Croatian Wickham Sports Club` are one row; so ar
 same night at the same venue when the names differ only by a truncated tail or one misspelled word;
 it also folds the same bill at the same venue a day or two apart, and a one-off bill that appears
 exactly twice a week apart, while leaving weekly residencies alone.
-Result: **1,245 events**, of which **159** carry an `eventPromoters` value across **122** distinct
+Result: **1,245 events**, of which **161** carry an `eventPromoters` value across **121** distinct
 strings (splitting multi-promoter rows on commas). Before the 2026-11-14 poster pass only **4** rows had
 a promoter.
 
@@ -598,30 +633,30 @@ they are festival/council program brands rather than independent promoters. Remo
 | 1 | Kova Events | 10 |
 | 2 | Odyssey | 5 |
 | 2 | Bad Behaviour | 5 |
-| 4 | Groove Street | 3 |
-| 4 | 2Gruvy2Hard | 3 |
-| 4 | New Brain Communications | 3 |
-| 4 | Destroy All Lines | 3 |
-| 4 | C.T. | 3 |
-| 4 | Powder Your Nose | 3 |
+| 4 | C.T. | 4 |
+| 5 | Groove Street | 3 |
+| 5 | 2Gruvy2Hard | 3 |
+| 5 | New Brain Communications | 3 |
+| 5 | Destroy All Lines | 3 |
+| 5 | Ode | 3 |
+| 5 | Powder Your Nose | 3 |
 
-Ranks 4–9 are a six-way tie at 3 events. Seventeen promoters follow on 2 events, including Grindhouse,
+Six promoters tie at 3 events. Seventeen promoters follow on 2 events, including Made On Sunday, Sirocco, Grindhouse,
 Grindhead Records, The Ori, Yours & Owls and Thanks For Coming.
 
 **Findings**
 
-- **Promoter disclosure is the exception, not the rule:** 159 of 1,245 events (12.8%). Most posters do
+- **Promoter disclosure is the exception, not the rule:** 161 of 1,245 events (12.9%). Most posters do
   not name a promoter at all, so these counts are a floor, not a ranking of who runs the most gigs.
 - **Concentration is low.** The largest independent promoter has 10 events across ten months, and only
   after folding `Kova` into `Kova Events`; the next is 5. This is a venue-led scene, consistent with §3
   (five venues = half of all listings), not a promoter-led one.
 - **`Kova` and `Kova Events` are the same operator.** The canonical alias lives in the applier and the
-  merge script; `C.T.` / `C.T` (4 combined) still differ only in punctuation and are not folded.
+  merge script; `C.T` and `C.T.` are folded to `C.T.` (4 events).
 - **De-duplication moves the promoter counts.** Collapsing the three 16 Oct Grindhouse rows removed
   two duplicate credits, and merging the three `Dr Sure's Unusual Practice` rows did the same for
   New Brain Communications (4 → 3).
-- Some values are venues or event brands rather than promoters (`The Ori`, `Maru Hi-Fi`,
-  `Full Send Friday`, `Made On Sunday`), so read the list as "who is credited on the poster".
+- Some values are venues or event brands rather than promoters (`The Ori`, `Maru Hi-Fi`, `Full Send Friday`), so read the list as "who is credited on the poster".
 
 Re-run: `npm run recheck` (re-extract) → `npm run apply-recheck` (fold findings in) →
 `python3 scripts/merge-research-data.py path/to/new-dumps/*.json > researchData/events.json` →
@@ -683,13 +718,13 @@ The first pass worked on raw rows. At listing grain, several figures move:
 ## Summary
 
 1. **The usable unit is a listing, not a row.** The four dumps held 1,941 rows; merging and
-   de-duplication left 1,245 events, which equal 1,245 listings at (act, venue, ISO week) —
+   de-duplication left 1,245 events, which equal 1,245 listings at (bill, venue, ISO week) —
    35.9% of the raw rows were duplicate or near-duplicate.
 2. **It is a Thursday–Sunday scene.** 91% of listings sit on those four days; Saturday and Friday are
    tied (355 vs 339), and Sunday is a strong third (262) rather than a quiet night.
 3. **Five venues are half the scene.** Lass O'Gowrie (182), Hamilton Station (165), Maru Hi-Fi (127),
-   The Oak (98) and King Street (81) produce 52.7% of listings; 5 venues reach 50% and 12 reach 80%,
-   with the top ten accounting for 76.3%.
+   The Oak (98) and King Street (81) produce 52.8% of listings; 5 venues reach 50% and 12 reach 80%,
+   with the top ten accounting for 76.5%.
 4. **Genre is a property of the room, not the city.** Bernies is 100% dance/LGBTQIA+, The Underground
    100% jazz, The Oak 57% vinyl, The Beauford 73% rock. Only indie+rock and punk+rock appear across
    many venues.
@@ -699,7 +734,7 @@ The first pass worked on raw rows. At listing grain, several figures move:
 6. **Bills are short and names are mostly one-off.** Half of all listings are single-act, and 76.0% of
    the 1,783 raw billed strings appear exactly once; only 15 appear 10+ times.
 7. **A small permanent core carries the scene.** 27 residencies cover 22.0% of listings, led by Wharf
-   Life (35 weeks), BYO Vinyl Night (34) and Open Decks (32); the other 897 act+venue pairs appear once.
+   Life (35 weeks), BYO Vinyl Night (34) and Open Decks (32); the other 897 bill+venue pairs appear once.
 8. **The data is honest about its gaps.** Six weeks are missing (all of June plus W18 and W39),
    W43–W45 are only partially covered, 10.3% of prices are unparseable, and W38 is a catch-up spike —
    so this supports a portrait of the scene, not a time series, and not any geographic or
@@ -718,10 +753,11 @@ The first pass worked on raw rows. At listing grain, several figures move:
 13. **Heavy music is concentrated at Hamilton Station.** 41 of 72 metal/heavy/hardcore listings (57%)
     are there; Disco leads the artists with 7 venue-weeks and Fat Monica has 6, while 83.5% of the
     206 acts appear only once.
-14. **Promoters are disclosed on only 12.8% of events.** After merging and de-duplicating the four dumps
-    into 1,245 events (the per-date dumps were then removed), 159 carry a promoter; excluding the
+14. **Promoters are disclosed on only 12.9% of events.** After merging and de-duplicating the four dumps
+    into 1,245 events (the per-date dumps were then removed), 161 carry a promoter; excluding the
     `New Annual` and `Great Southern Nights` program brands, **Kova Events leads with 10** (after folding
-    in the `Kova` variant), then Odyssey and Bad Behaviour with 5 each (§13).
+    in the `Kova` variant), then Odyssey and Bad Behaviour with 5 each, and **C.T. with 4** after folding
+    `C.T` / `C.T.` together (§13).
 
 ### Witchhouse Select tables
 
@@ -736,19 +772,25 @@ The first pass worked on raw rows. At listing grain, several figures move:
 | Impulse Response | 1 |
 | Maru Hi-Fi | 1 |
 
-**Top 10 artists on `WITCHHOUSE SELECT` bills**
+**Artists with the most `WITCHHOUSE SELECT` bills**
 
-| # | Act | Listings | Venues |
-| ---: | --- | ---: | ---: |
-| 1 | DJ Gunggek | 5 | 5 |
-| 2 | Kev Sev | 4 | 3 |
-| 3 | High Pass | 3 | 3 |
-| 4 | Krisp | 3 | 2 |
-| 5 | Michael Dowell | 3 | 2 |
-| 6 | Mozz | 3 | 2 |
-| 7 | Rose White | 3 | 3 |
-| 8 | Assembler Code | 2 | 2 |
-| 9 | Charlie Farmer | 2 | 2 |
-| 10 | Chow Chow Disco | 2 | 2 |
+| Artist | Total | Venues |
+|---|---:|---:|
+| DJ Gunggek | 5 | 5 |
+| Kev Sev | 4 | 3 |
+| High Pass | 3 | 3 |
+| Krisp | 3 | 2 |
+| Michael Dowell | 3 | 2 |
+| Mozz | 3 | 2 |
+| Rose White | 3 | 3 |
+| Assembler Code | 2 | 2 |
+| Charlie Farmer | 2 | 2 |
+| Chow Chow Disco | 2 | 2 |
+| DJ Qyto | 2 | 1 |
+| Forward Fox | 2 | 1 |
+| Red C | 2 | 2 |
+| Shuvcheck | 2 | 2 |
+| Spaenk | 2 | 2 |
+| Weldo | 2 | 2 |
 
 Full detail, including the three `Unknown` bills, is in §11.

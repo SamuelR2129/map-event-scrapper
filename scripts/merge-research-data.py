@@ -47,6 +47,20 @@ from difflib import SequenceMatcher
 # value is the canonical credit written to the merged file.
 PROMOTER_ALIASES = {
     "kova": "Kova Events",
+    "ode": "Ode",
+    "sirocco": "Sirocco",
+    "c.t": "C.T.",
+    "c.t.": "C.T.",
+    "made on sunday": "Made On Sunday",
+}
+
+# Venue values that are actually promoter names. A bare promoter leaves the
+# venue unknown; "Sirocco Meantime" means Sirocco at Meantime.
+PROMOTER_ONLY_VENUES = {
+    "ode": ("Unknown", "Ode"),
+    "sirocco": ("Unknown", "Sirocco"),
+    "sirocco meantime": ("Meantime", "Sirocco"),
+    "made on sunday": ("Unknown", "Made On Sunday"),
 }
 
 STREET_ALIASES = {
@@ -102,6 +116,18 @@ def coord_key(value):
 
 def split_venue(value):
     """Return ``(venue, promoter)`` from a possibly promoter-prefixed venue."""
+    venue, promoter = _split_venue(value)
+    raw_key = re.sub(r"\s+", " ", (venue or "").strip().lower())
+    mapped = PROMOTER_ONLY_VENUES.get(raw_key)
+    if not mapped and not raw_key.startswith("the "):
+        mapped = PROMOTER_ONLY_VENUES.get(venue_key(venue))
+    if mapped:
+        venue, mapped_promoter = mapped
+        promoter = promoter or mapped_promoter
+    return venue, promoter
+
+
+def _split_venue(value):
     text = (value or "").replace("\u2019", "'").strip()
     if SEGMENT_SEPARATOR not in text:
         return text, None

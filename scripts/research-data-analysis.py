@@ -107,8 +107,15 @@ VENUE_ALIASES = {
     # Calmer
     "calmer cruise": "Calmer Cruise",
     "calmer newcastle harbour": "Calmer Cruise",
-    # Sirocco
-    "sirocco meantime": "Sirocco",
+    # Ode is a promoter; "The Ode" and "The Ode Bar" are venues.
+    "ode": "Unknown",
+    "the ode": "The Ode",
+    "the ode bar": "The Ode Bar",
+    # Made On Sunday is a promoter, not a venue.
+    "made on sunday": "Unknown",
+    # Sirocco is a promoter; "Sirocco Meantime" means Sirocco at Meantime.
+    "sirocco meantime": "Meantime",
+    "sirocco": "Unknown",
     # The Y
     "y": "The Y",
 }
@@ -179,6 +186,14 @@ BAND_OVERRIDE = {"breeze"}
 # bookings. 18 of Breeze's 25 bills are "Jazz Night: Breeze"; Bellicanta's is 13 weekly solo
 # bills at one venue.
 EXCLUDED_ACTS = {"breeze", "bellicantas"}
+
+# Manual genre labels for the artist-residency table when the tag mix is ambiguous.
+RESIDENCY_GENRE_OVERRIDES = {
+    "bardvarkk": "PUNK",
+    "dj qyto": "DANCE",
+    "rhodes": "ROCK",
+    "rose white": "ALT",
+}
 
 NAME_VARIANTS = {
     "highpass": "High Pass",
@@ -458,7 +473,7 @@ def main():
     w("")
     w(f"- Raw rows: **{len(rows):,}** from **{len(data['processedImages']):,}** processed images")
     w(f"- Listings after same-week dedupe: **{n:,}**")
-    w(f"- Distinct act+venue pairs: **{len(venue_pairs):,}**")
+    w(f"- Distinct bill+venue pairs: **{len(venue_pairs):,}**")
     w(f"- Poster range: **{dates[0]} → {dates[-1]}** across **{len(all_weeks)}** ISO weeks")
     w("")
 
@@ -717,7 +732,7 @@ def main():
                        if len(series[(event_key(r["name"]), fold(r["venue"]))]) >= 3)
     w(f"- Recurring series (≥3 distinct weeks): **{len(res)}**")
     w(f"- Listings belonging to a recurring series: **{res_listings:,}** ({pct(res_listings, n)}%)")
-    w(f"- Distinct act+venue pairs overall: **{len(series):,}**; "
+    w(f"- Distinct bill+venue pairs overall: **{len(series):,}**; "
       f"series appearing 2+ weeks: **{sum(1 for v in series.values() if len(v) >= 2)}**")
     w("")
     w("| # | Series | Venue | Weeks | First → last | Night |")
@@ -727,6 +742,61 @@ def main():
         ws_sorted = sorted(ws)
         w(f"| | {m['name'][:52]} | {m['venue'][:26]} | {len(ws)} | "
           f"{ws_sorted[0][1]:02d} → {ws_sorted[-1][1]:02d} | {m['day']} |")
+    w("")
+
+    # act-level residency at a single venue
+    act_series = collections.defaultdict(
+        lambda: {
+            "weeks": set(),
+            "venue": "",
+            "name": collections.Counter(),
+            "genres": collections.Counter(),
+        }
+    )
+    for r in listings:
+        for part in r["name"].split(","):
+            act = act_from_bill(part.strip())
+            if not act or act_key(act) == "bellicantas":
+                continue
+            d = act_series[(act_key(act), fold(r["venue"]))]
+            d["weeks"].add(r["week"])
+            d["name"][act] += 1
+            d["genres"].update(r["genres"])
+            if not d["venue"]:
+                d["venue"] = r["venue"]
+
+    artist_residencies = []
+    for d in act_series.values():
+        if len(d["weeks"]) < 3:
+            continue
+        act_name = d["name"].most_common(1)[0][0]
+        top_genre = (
+            sorted(d["genres"].items(), key=lambda pair: (-pair[1], pair[0]))[0][0]
+            if d["genres"]
+            else "—"
+        )
+        top_genre = RESIDENCY_GENRE_OVERRIDES.get(act_key(act_name), top_genre)
+        artist_residencies.append(
+            {
+                "act": act_name,
+                "venue": d["venue"],
+                "total": len(d["weeks"]),
+                "genre": top_genre,
+            }
+        )
+    artist_residencies.sort(
+        key=lambda item: (-item["total"], item["act"].lower())
+    )
+    w("**Top artist residencies at a venue** (act-level; 3+ distinct weeks)")
+    w("")
+    w("Programme titles are excluded. `Jazz Night: Breeze` credits Breeze; Bellicanta's is excluded.")
+    w(f"**{len(artist_residencies)}** artist-venue series reach 3+ weeks. *Total* is the number of")
+    w("distinct weeks the artist appeared at that venue; *Genre* is their most common tag there.")
+    w("")
+    w("| Artist | Venue | Total | Genre |")
+    w("|---|---|---:|---|")
+    for item in artist_residencies[:14]:
+        w(f"| {item['act'][:34]} | {item['venue'][:28]} | {item['total']} | {item['genre']} |")
     w("")
 
     # ---- quality
@@ -762,15 +832,15 @@ def main():
     for cls, label in [("BAND", "Live acts (bands & soloists)"), ("DJ", "DJs")]:
         w(f"**{label} — top 10 by bill appearances**")
         w("")
-        w("| # | Act | Bills | Solo | Venues | Weeks | Top genres |")
-        w("|---:|---|---:|---:|---:|---:|---|")
+        w("| # | Act | Bills | Venues | Weeks | Top genres |")
+        w("|---:|---|---:|---:|---:|---|")
         sel = sorted([d for d in acts.values() if d["class"] == cls],
                      key=lambda d: (-d["n"], d["name"].lower()))
         for i, d in enumerate(sel[:10], 1):
             gs = ", ".join(
                 g for g, _ in sorted(d["genres"].items(), key=lambda kv: (-kv[1], kv[0]))[:3]
             ) or "—"
-            w(f"| {i} | {d['name']} | {d['n']} | {d['solo']} | "
+            w(f"| {i} | {d['name']} | {d['n']} | "
               f"{len(d['venues'])} | {len(d['weeks'])} | {gs} |")
         w("")
 
@@ -849,7 +919,9 @@ def main():
               "counted twice and is not genuinely unlocated.")
             w("")
     w("")
-    w("**Top 10 artists**")
+    w("**Artists with the most `WITCHHOUSE SELECT` bills**")
+    w("")
+    w("Artists with 2+ tagged bills. Counts are lower bounds because the tag is not recorded consistently.")
     w("")
     tag_merge = {"dj gunggek": "gunggek", "gunggek": "gunggek",
                  "highpass": "high pass", "high pass": "high pass", "fob": "fob"}
@@ -874,19 +946,14 @@ def main():
             d["raw"][a] += 1
             d["venues"].add(r["venue"])
     ranked_tag = sorted(tag_acts.items(), key=lambda kv: (-kv[1]["n"], kv[0]))
-    w("| # | Act | Listings | Venues |")
-    w("|---:|---|---:|---:|")
-    for i, (k, d) in enumerate(ranked_tag[:10], 1):
+    w("| Artist | Total | Venues |")
+    w("|---|---:|---:|")
+    for k, d in ranked_tag:
+        if d["n"] < 2:
+            break
         name = tag_display.get(k, d["raw"].most_common(1)[0][0])
-        w(f"| {i} | {name} | {d['n']} | {len(d['venues'])} |")
+        w(f"| {name} | {d['n']} | {len(d['venues'])} |")
     w("")
-    if len(ranked_tag) >= 10:
-        cutoff = ranked_tag[9][1]["n"]
-        tied = sum(1 for _, d in ranked_tag if d["n"] == cutoff)
-        w(f"{tied} acts tie on {cutoff} listings, so ranks 8–10 are alphabetical representatives of")
-        w("a larger tie. The tag is a brand marker and is not recorded consistently, so these counts")
-        w("are lower bounds.")
-        w("")
 
     # ---- metal / heavy / hardcore
     metal_tags = {"METAL", "HEAVY", "HARDCORE"}

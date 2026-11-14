@@ -215,7 +215,7 @@ Result on the 2026-11-14 report:
 
 The 3 images that failed extraction (`sunday(56)`, `sunday(69)`, `friday(61)`) contributed nothing.
 Merging all four dumps into `researchData/events.json` — by id, by date + event, by venue cluster, then
-by near-identical name on the same night and venue — gives **1,245 events**, of which **159** now
+by near-identical name on the same night and venue — gives **1,245 events**, of which **161** now
 carry a promoter (up from 4). The per-date dumps were then removed; `researchData/events.json` is the
 single event file. Running the applier twice is idempotent: matched rows keep the corpus id and new
 rows derive a stable id from the finding. `scripts/dedupe-events.py` re-checks the merged file for

@@ -4826,7 +4826,7 @@
     },
     {
       "eventName": "Hannah D, Ari Kiko, DJ Gunggek",
-      "venueName": "Sirocco",
+      "venueName": "Unknown",
       "genres": "WITCHHOUSE SELECT, ELECTRONIC, HOUSE",
       "ticketCost": "35.00",
       "id": "29da7398-0b5a-40f6-b3e5-3bdb5a55dd79",
@@ -4834,7 +4834,8 @@
       "userEmail": "sam@hotmail.com",
       "localTimeZone": "Australia/Sydney",
       "eventDateTime": "2026-10-16T15:00:00.000Z",
-      "source": "whList"
+      "source": "whList",
+      "eventPromoters": "Sirocco"
     },
     {
       "eventName": "Nasty Insects, Head in a Jar, Fat Monica, Dog, Torment",
@@ -5559,7 +5560,7 @@
     },
     {
       "eventName": "LOIF, Homebody, Claire O\u2019Brien, CaucasianOpportunities",
-      "venueName": "Ode",
+      "venueName": "Unknown",
       "genres": "BREAKS, ELECTRONIC",
       "ticketCost": "50.00",
       "id": "005b162f-7a24-4f64-aa08-8b20ae93e737",
@@ -5567,7 +5568,8 @@
       "userEmail": "sam@hotmail.com",
       "localTimeZone": "Australia/Sydney",
       "eventDateTime": "2026-02-13T15:00:00.000Z",
-      "source": "whList"
+      "source": "whList",
+      "eventPromoters": "Ode"
     },
     {
       "eventName": "Madday, Pannak, Just Shai, Gimme Moore, Parachery, Moonbass, Kaytee, Serving Takeover",
@@ -6502,7 +6504,7 @@
         -32.9221
       ],
       "ticketCost": "25.00",
-      "eventPromoters": "C.T",
+      "eventPromoters": "C.T.",
       "id": "0bb74b87-e78b-4bd5-b992-dd1b13dd71c4",
       "userName": "sam",
       "userEmail": "sam@hotmail.com",

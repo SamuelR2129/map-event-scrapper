@@ -77,6 +77,8 @@ test.describe("matching keys", () => {
   test("folds promoter spelling variants into one canonical credit", () => {
     expect(mergePromoterValues(["Kova", "Kova Events"])).toEqual(["Kova Events"]);
     expect(mergePromoterValues(["kova", "KOVA EVENTS"])).toEqual(["Kova Events"]);
+    expect(mergePromoterValues(["C.T", "C.T."])).toEqual(["C.T."]);
+    expect(mergePromoterValues(["made on sunday"])).toEqual(["Made On Sunday"]);
     expect(mergePromoterValues(["Thanks For Coming, Kova"])).toEqual([
       "Thanks For Coming",
       "Kova Events",

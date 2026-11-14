@@ -71,6 +71,46 @@ test.describe("normalisePromoterAndVenue", () => {
     ).toEqual({ venueName: "The Oak", eventPromoters: undefined });
   });
 
+  test("treats Sirocco as a promoter, not a venue", () => {
+    expect(normalisePromoterAndVenue({ venueName: "Sirocco" })).toEqual({
+      venueName: "Unknown",
+      eventPromoters: "Sirocco",
+    });
+
+    expect(normalisePromoterAndVenue({ venueName: "Sirocco Meantime" })).toEqual({
+      venueName: "Meantime",
+      eventPromoters: "Sirocco",
+    });
+
+    expect(
+      normalisePromoterAndVenue({ venueName: "Sirocco", eventPromoters: "Sirocco" }),
+    ).toEqual({ venueName: "Unknown", eventPromoters: "Sirocco" });
+  });
+
+  test("treats Ode as a promoter but keeps The Ode as a venue", () => {
+    expect(normalisePromoterAndVenue({ venueName: "Ode" })).toEqual({
+      venueName: "Unknown",
+      eventPromoters: "Ode",
+    });
+
+    expect(normalisePromoterAndVenue({ venueName: "The Ode" })).toEqual({
+      venueName: "The Ode",
+      eventPromoters: undefined,
+    });
+
+    expect(normalisePromoterAndVenue({ venueName: "The Ode Bar" })).toEqual({
+      venueName: "The Ode Bar",
+      eventPromoters: undefined,
+    });
+  });
+
+  test("treats Made On Sunday as a promoter", () => {
+    expect(normalisePromoterAndVenue({ venueName: "Made On Sunday" })).toEqual({
+      venueName: "Unknown",
+      eventPromoters: "Made On Sunday",
+    });
+  });
+
   test("trims whitespace and ignores empty values", () => {
     expect(
       normalisePromoterAndVenue({

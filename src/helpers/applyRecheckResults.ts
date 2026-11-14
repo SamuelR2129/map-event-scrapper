@@ -87,6 +87,11 @@ const UNKNOWN_VENUE_FLAG = "unknown-venue";
  */
 const PROMOTER_ALIASES: Record<string, string> = {
   kova: "Kova Events",
+  ode: "Ode",
+  sirocco: "Sirocco",
+  "c.t": "C.T.",
+  "c.t.": "C.T.",
+  "made on sunday": "Made On Sunday",
 };
 
 export function normaliseForKey(value?: string): string {

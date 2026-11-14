@@ -25,6 +25,22 @@ const SEGMENT_SEPARATOR = " - ";
 /** "$33", "A$58.65", "33.00", "FREE" — a trailing segment that is a price, not a venue. */
 const PRICE_SEGMENT = /^(?:a?\$?\s*\d+(?:[.,]\d+)?|free)$/i;
 
+/**
+ * Names the vision model sometimes puts in the venue slot that are actually
+ * promoters. Bare "Ode", "Sirocco" and "Made On Sunday" leave the venue unknown;
+ * "Sirocco Meantime" means Sirocco at Meantime. "The Ode" and "The Ode Bar"
+ * are real venues and are left alone.
+ */
+const PROMOTER_ONLY_VENUES: Record<
+  string,
+  { promoter: string; venue?: string }
+> = {
+  ode: { promoter: "Ode" },
+  sirocco: { promoter: "Sirocco" },
+  "sirocco meantime": { promoter: "Sirocco", venue: "Meantime" },
+  "made on sunday": { promoter: "Made On Sunday" },
+};
+
 /** A comma on the left of the separator means it is a lineup, not a promoter. */
 const hasComma = (value: string) => value.includes(",");
 
@@ -63,6 +79,15 @@ export function normalisePromoterAndVenue({
 
   if (nextPromoter && nextVenue && nextPromoter.toLowerCase() === nextVenue.toLowerCase()) {
     nextPromoter = undefined;
+  }
+
+  // "Sirocco" is a promoter, not a venue; "Sirocco Meantime" is Sirocco at Meantime.
+  const promoterOnly = nextVenue
+    ? PROMOTER_ONLY_VENUES[nextVenue.toLowerCase()]
+    : undefined;
+  if (promoterOnly) {
+    nextPromoter ??= promoterOnly.promoter;
+    nextVenue = promoterOnly.venue ?? "Unknown";
   }
 
   return { venueName: nextVenue, eventPromoters: nextPromoter };

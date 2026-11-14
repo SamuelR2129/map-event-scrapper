@@ -289,6 +289,24 @@ class PromoterTest(unittest.TestCase):
             "Kova Events, Thanks For Coming",
         )
 
+    def test_treats_sirocco_as_a_promoter(self):
+        self.assertEqual(merge.split_venue("Sirocco"), ("Unknown", "Sirocco"))
+        self.assertEqual(merge.split_venue("Sirocco Meantime"), ("Meantime", "Sirocco"))
+        self.assertEqual(merge.split_venue("Odyssey - Sirocco"), ("Unknown", "Odyssey"))
+
+    def test_treats_ode_as_a_promoter(self):
+        self.assertEqual(merge.split_venue("Ode"), ("Unknown", "Ode"))
+        self.assertEqual(merge.split_venue("The Ode"), ("The Ode", None))
+        self.assertEqual(merge.split_venue("The Ode Bar"), ("The Ode Bar", None))
+
+    def test_treats_made_on_sunday_as_a_promoter(self):
+        self.assertEqual(
+            merge.split_venue("Made On Sunday"), ("Unknown", "Made On Sunday")
+        )
+
+    def test_folds_the_ct_punctuation_variant(self):
+        self.assertEqual(merge.canonicalise_promoters("C.T, C.T."), "C.T.")
+
 
 if __name__ == "__main__":
     unittest.main()
