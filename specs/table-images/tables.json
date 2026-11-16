@@ -95,16 +95,8 @@
     ],
     "rows": [
       [
-        "Rows in merged file",
-        "1,388"
-      ],
-      [
-        "Listings after same-week dedupe",
-        "1,388 (0 rows collapsed \u2014 the file is already de-duplicated)"
-      ],
-      [
-        "Distinct bill+venue pairs",
-        "1,061"
+        "Number of acts",
+        "1,757"
       ],
       [
         "Canonical venues",
@@ -113,6 +105,10 @@
       [
         "Active weeks",
         "43 of 45 in range \u2014 2 missing"
+      ],
+      [
+        "Busiest week",
+        "2026-W38, 64 listings (14\u201320 Sep 2026)"
       ],
       [
         "Listings per active week",
@@ -129,15 +125,11 @@
       [
         "Names billed exactly once",
         "75.8%"
-      ],
-      [
-        "Recurring series (3+ weeks)",
-        "34, covering 23.3% of listings"
       ]
     ],
     "widths": [
-      348,
-      650
+      403,
+      595
     ],
     "aligns": [
       "left",
@@ -1455,7 +1447,7 @@
       "Bills",
       "Venues",
       "Weeks",
-      "Top genres"
+      "Event genres"
     ],
     "rows": [
       [
@@ -1464,7 +1456,7 @@
         "21",
         "8",
         "19",
-        "ROCK, INDIE, FUNK"
+        "ROCK"
       ],
       [
         "2",
@@ -1472,7 +1464,7 @@
         "16",
         "6",
         "14",
-        "PUNK, ROCK, BLUES"
+        "PUNK"
       ],
       [
         "3",
@@ -1480,7 +1472,7 @@
         "14",
         "3",
         "13",
-        "PUNK, ROCK, ALT"
+        "PUNK"
       ],
       [
         "4",
@@ -1488,7 +1480,7 @@
         "12",
         "9",
         "11",
-        "ROCK, INDIE, ALT"
+        "ROCK"
       ],
       [
         "5",
@@ -1496,7 +1488,7 @@
         "12",
         "9",
         "10",
-        "PUNK, ROCK, ALT"
+        "PUNK"
       ],
       [
         "6",
@@ -1504,7 +1496,7 @@
         "12",
         "4",
         "11",
-        "PUNK, ROCK, ALT"
+        "PUNK"
       ],
       [
         "7",
@@ -1512,7 +1504,7 @@
         "11",
         "4",
         "11",
-        "ROCK, INDIE, ACOUSTIC"
+        "ROCK"
       ],
       [
         "8",
@@ -1520,7 +1512,7 @@
         "11",
         "5",
         "11",
-        "INDIE, ROCK, ALT"
+        "INDIE"
       ],
       [
         "9",
@@ -1528,7 +1520,7 @@
         "11",
         "6",
         "10",
-        "ROCK, PUNK, INDIE"
+        "ROCK"
       ],
       [
         "10",
@@ -1536,16 +1528,16 @@
         "10",
         "5",
         "10",
-        "ROCK, GRUNGE, ALT"
+        "ROCK"
       ]
     ],
     "widths": [
-      67,
-      284,
-      102,
-      116,
-      102,
-      327
+      68,
+      328,
+      118,
+      134,
+      118,
+      232
     ],
     "aligns": [
       "left",
@@ -2075,52 +2067,57 @@
       ],
       [
         "3",
+        "2Gruvy2Hard",
+        "6"
+      ],
+      [
+        "4",
         "Odyssey",
         "5"
       ],
       [
-        "4",
+        "5",
+        "Sirocco",
+        "5"
+      ],
+      [
+        "6",
         "C.T.",
         "4"
       ],
       [
-        "5",
+        "7",
+        "Made On Sunday",
+        "4"
+      ],
+      [
+        "8",
         "Groove Street",
         "3"
       ],
       [
-        "6",
-        "2Gruvy2Hard",
-        "3"
-      ],
-      [
-        "7",
+        "9",
         "New Brain Communications",
         "3"
       ],
       [
-        "8",
+        "10",
         "Destroy All Lines",
         "3"
       ],
       [
-        "9",
+        "11",
         "Ode",
         "3"
       ],
       [
-        "10",
+        "12",
         "Powder Your Nose",
         "3"
       ],
       [
-        "11",
+        "13",
         "Shenanigans",
-        "3"
-      ],
-      [
-        "12",
-        "Sirocco",
         "3"
       ]
     ],

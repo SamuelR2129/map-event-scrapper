@@ -63,16 +63,14 @@ not used here, so this analysis makes **no geographic claims**.
 
 | Metric | Value |
 | --- | --- |
-| Rows in merged file | 1,388 |
-| Listings after same-week dedupe | **1,388** (0 rows collapsed — the file is already de-duplicated) |
-| Distinct bill+venue pairs | 1,061 |
+| Number of acts | 1,757 |
 | Canonical venues | 89 (from 120 spellings) |
 | Active weeks | 43 of 45 in range — 2 missing |
+| Busiest week | 2026-W38, 64 listings (14–20 Sep 2026) |
 | Listings per active week | median 34 (range 1–64) |
 | Free / paid / unknown | **63.5% / 25.9% / 10.6%** |
 | Median paid price | **$27** (p25 $15, p75 $40) |
 | Names billed exactly once | **75.8%** |
-| Recurring series (3+ weeks) | 34, covering 23.3% of listings |
 
 ---
 
@@ -445,18 +443,18 @@ After removing programme titles, spelling variants and the two excluded acts: **
 
 **Live acts (bands & soloists) — top 10 by bill appearances**
 
-| # | Act | Bills | Venues | Weeks | Top genres |
+| # | Act | Bills | Venues | Weeks | Event genres |
 |---:|---|---:|---:|---:|---|
-| 1 | Rhodes | 21 | 8 | 19 | ROCK, INDIE, FUNK |
-| 2 | S.M.D | 16 | 6 | 14 | PUNK, ROCK, BLUES |
-| 3 | Bardvarkk | 14 | 3 | 13 | PUNK, ROCK, ALT |
-| 4 | Charlie Farmer | 12 | 9 | 11 | ROCK, INDIE, ALT |
-| 5 | Gauze | 12 | 9 | 10 | PUNK, ROCK, ALT |
-| 6 | LauraPanic | 12 | 4 | 11 | PUNK, ROCK, ALT |
-| 7 | Iryss | 11 | 4 | 11 | ROCK, INDIE, ACOUSTIC |
-| 8 | The Janes | 11 | 5 | 11 | INDIE, ROCK, ALT |
-| 9 | Trophy Wyfe | 11 | 6 | 10 | ROCK, PUNK, INDIE |
-| 10 | Portrait Of A Lady | 10 | 5 | 10 | ROCK, GRUNGE, ALT |
+| 1 | Rhodes | 21 | 8 | 19 | ROCK |
+| 2 | S.M.D | 16 | 6 | 14 | PUNK |
+| 3 | Bardvarkk | 14 | 3 | 13 | PUNK |
+| 4 | Charlie Farmer | 12 | 9 | 11 | ROCK |
+| 5 | Gauze | 12 | 9 | 10 | PUNK |
+| 6 | LauraPanic | 12 | 4 | 11 | PUNK |
+| 7 | Iryss | 11 | 4 | 11 | ROCK |
+| 8 | The Janes | 11 | 5 | 11 | INDIE |
+| 9 | Trophy Wyfe | 11 | 6 | 10 | ROCK |
+| 10 | Portrait Of A Lady | 10 | 5 | 10 | ROCK |
 
 **DJs — top 10 by bill appearances**
 
@@ -652,20 +650,25 @@ Removing them leaves the independent promoters with 3+ events:
 | ---: | --- | ---: |
 | 1 | Kova Events | 10 |
 | 2 | Bad Behaviour | 6 |
-| 3 | Odyssey | 5 |
-| 4 | C.T. | 4 |
-| 5 | Groove Street | 3 |
-| 6 | 2Gruvy2Hard | 3 |
-| 7 | New Brain Communications | 3 |
-| 8 | Destroy All Lines | 3 |
-| 9 | Ode | 3 |
-| 10 | Powder Your Nose | 3 |
-| 11 | Shenanigans | 3 |
-| 12 | Sirocco | 3 |
+| 3 | 2Gruvy2Hard | 6 |
+| 4 | Odyssey | 5 |
+| 5 | Sirocco | 5 |
+| 6 | C.T. | 4 |
+| 7 | Made On Sunday | 4 |
+| 8 | Groove Street | 3 |
+| 9 | New Brain Communications | 3 |
+| 10 | Destroy All Lines | 3 |
+| 11 | Ode | 3 |
+| 12 | Powder Your Nose | 3 |
+| 13 | Shenanigans | 3 |
 
-The `#` column is list position: seven promoters tie on 3 events. A further 14 names are credited twice
-(Grindhouse, Grindhead Records, The Ori, Yours & Owls, Made On Sunday, Thanks For Coming, Maru Hi-Fi
-among them) and the rest once.
+`Made On Sunday`, `2Gruvy2Hard` and `Sirocco` are counted at the brand level: they also appear as
+event titles (after-parties, self-titled nights), which adds to the rows where the promoter field is
+filled in.
+
+The `#` column is list position: six promoters tie on 3 events. A further 13 names are credited twice
+(Grindhouse, Grindhead Records, The Ori, Yours & Owls, Thanks For Coming, Maru Hi-Fi among them) and
+the rest once.
 
 **Findings**
 

@@ -7,7 +7,7 @@ Regenerate with `npm run analysis:table-images`.
 |---:|---|---:|---|
 | 01 | Direct answers | 5 | [01-direct-answers.png](./01-direct-answers.png) |
 | 02 | Definitions used | 7 | [02-definitions-used.png](./02-definitions-used.png) |
-| 03 | Snapshot | 10 | [03-snapshot.png](./03-snapshot.png) |
+| 03 | Snapshot | 8 | [03-snapshot.png](./03-snapshot.png) |
 | 04 | Rhythm: a Thursday–Sunday scene | 5 | [04-rhythm-a-thursday-sunday-scene.png](./04-rhythm-a-thursday-sunday-scene.png) |
 | 05 | Coverage: two missing weeks and one catch-up spike | 5 | [05-coverage-two-missing-weeks-and-one.png](./05-coverage-two-missing-weeks-and-one.png) |
 | 06 | Concentration: five venues are half the scene | 7 | [06-concentration-five-venues-are-half.png](./06-concentration-five-venues-are-half.png) |
@@ -34,5 +34,5 @@ Regenerate with `npm run analysis:table-images`.
 | 27 | Venues | 6 | [27-venues.png](./27-venues.png) |
 | 28 | Witchhouse Select: a brand tag, not a genre | 18 | [28-witchhouse-select-a-brand-tag-not.png](./28-witchhouse-select-a-brand-tag-not.png) |
 | 29 | Metal / heavy / hardcore: top 10 artists | 10 | [29-metal-heavy-hardcore-top-10.png](./29-metal-heavy-hardcore-top-10.png) |
-| 30 | Promoters | 12 | [30-promoters.png](./30-promoters.png) |
+| 30 | Promoters | 13 | [30-promoters.png](./30-promoters.png) |
 | 31 | Corrections to earlier raw-row estimates | 5 | [31-corrections-to-earlier-raw-row.png](./31-corrections-to-earlier-raw-row.png) |
