@@ -182,6 +182,11 @@ DJ_OVERRIDE = {"pc dysco", "black tiger", "rick a mortis", "mistah dux", "profes
                "sirocco djs", "mefri ghana djs", "dj secateurs", "dj secateaurs"}
 BAND_OVERRIDE = {"breeze"}
 
+# The Oak's vinyl-night residents are the venue's in-house selectors rather than billed
+# DJ acts, so they are kept in the corpus and the residency table but left out of the DJ
+# standings.
+DJ_TABLE_EXCLUDE = {"pc dysco", "rick a mortis", "black tiger"}
+
 # Excluded from the act ranking after review: both are residency titles rather than band
 # bookings. 18 of Breeze's 25 bills are "Jazz Night: Breeze"; Bellicanta's is 13 weekly solo
 # bills at one venue.
@@ -557,24 +562,23 @@ def main():
     w(f"- HHI: **{hhi(counts):.0f}** (10,000 = one venue, ~0 = perfectly spread); Gini **{gini(counts)}**")
     w(f"- Venues with a single listing: **{sum(1 for c in counts if c == 1)}**")
     w("")
-    w("| # | Venue | Listings | Share | Weeks active | Free share | Median paid | Top night |")
-    w("|---:|---|---:|---:|---:|---:|---:|---|")
+    w("| # | Venue | Listings | Share | Weeks active | Free | Paid | Unknown | Median paid |")
+    w("|---:|---|---:|---:|---:|---:|---:|---:|---:|")
     venue_weeks = collections.defaultdict(set)
     venue_free = collections.Counter()
     venue_paid = collections.defaultdict(list)
-    venue_day = collections.defaultdict(collections.Counter)
     for r in listings:
         venue_weeks[r["venue"]].add(r["week"])
-        venue_day[r["venue"]][r["day"]] += 1
         if r["price_kind"] == "free":
             venue_free[r["venue"]] += 1
         elif r["price_kind"] == "paid":
             venue_paid[r["venue"]].append(r["price"])
     for i, (v, c) in enumerate(ranked[:15], 1):
         med_paid = statistics.median(venue_paid[v]) if venue_paid.get(v) else None
-        top_day = venue_day[v].most_common(1)[0][0] if venue_day[v] else "—"
+        paid_n = len(venue_paid[v])
         w(f"| {i} | {v} | {c} | {pct(c, total_real)}% | {len(venue_weeks[v])} | "
-          f"{pct(venue_free[v], c)}% | {'$' + f'{med_paid:.0f}' if med_paid is not None else '—'} | {top_day} |")
+          f"{venue_free[v]} | {paid_n} | {c - venue_free[v] - paid_n} | "
+          f"{'$' + f'{med_paid:.0f}' if med_paid is not None else '—'} |")
     w("")
 
     # ---- genres
@@ -834,8 +838,10 @@ def main():
         w("")
         w("| # | Act | Bills | Venues | Weeks | Top genres |")
         w("|---:|---|---:|---:|---:|---|")
-        sel = sorted([d for d in acts.values() if d["class"] == cls],
-                     key=lambda d: (-d["n"], d["name"].lower()))
+        sel = sorted(
+            [d for d in acts.values()
+             if d["class"] == cls and d["name"].lower() not in DJ_TABLE_EXCLUDE],
+            key=lambda d: (-d["n"], d["name"].lower()))
         for i, d in enumerate(sel[:10], 1):
             gs = ", ".join(
                 g for g, _ in sorted(d["genres"].items(), key=lambda kv: (-kv[1], kv[0]))[:3]
@@ -844,6 +850,10 @@ def main():
               f"{len(d['venues'])} | {len(d['weeks'])} | {gs} |")
         w("")
 
+    w("`PC Dysco`, `Rick A Mortis` and `Black Tiger` are left out of the DJ standings: they")
+    w("are The Oak's in-house vinyl selectors, billed alongside the bands every week rather")
+    w("than as headlining DJs. They still appear in the residency table (§7).")
+    w("")
     unknown_acts = sorted([d for d in acts.values() if d["class"] == "UNKNOWN"],
                           key=lambda d: -d["n"])[:5]
     if unknown_acts:

@@ -1,0 +1,2185 @@
+[
+  {
+    "id": "01-direct-answers",
+    "title": "Direct answers",
+    "section": "Direct answers",
+    "header": [
+      "Question",
+      "Answer"
+    ],
+    "rows": [
+      [
+        "Most-featured live act (band/soloist)",
+        "Rhodes \u2014 21 bills across 8 venues and 19 weeks (\u00a79)"
+      ],
+      [
+        "Most-featured DJ",
+        "Beam and DJ Qyto \u2014 9 bills each (\u00a79)"
+      ],
+      [
+        "Most-featured genre excluding FREE and DANCE",
+        "ROCK \u2014 274 listings (19.7%); still first among paid listings at 67 (18.6%) (\u00a710)"
+      ],
+      [
+        "Venue with the most WITCHHOUSE SELECT listings",
+        "Lass O'Gowrie Hotel \u2014 10 of 41 (\u00a711)"
+      ],
+      [
+        "Most-featured metal/heavy/hardcore act",
+        "Disco (7 venue-weeks), Fat Monica (6) (\u00a712)"
+      ]
+    ],
+    "widths": [
+      369,
+      629
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "02-definitions-used",
+    "title": "Definitions used",
+    "section": "Definitions used",
+    "header": [
+      "Term",
+      "Meaning"
+    ],
+    "rows": [
+      [
+        "Row",
+        "One event as extracted from one poster image; 1,388 after merging and de-duplication."
+      ],
+      [
+        "Listing",
+        "A unique bill/event title + venue + ISO week. Same bill/venue in different weeks is not a duplicate."
+      ],
+      [
+        "Series",
+        "The same bill/event title + venue appearing in 2+ weeks. A residency is 3+ weeks."
+      ],
+      [
+        "Artist residency",
+        "The same individual artist + venue appearing in 3+ distinct weeks (act-level table in \u00a77)."
+      ],
+      [
+        "Free",
+        "Price parsed as 0 or the FREE tag was present."
+      ],
+      [
+        "Unknown price",
+        "Anything unparseable (\"undefined\", \"\", \"N/A\", \"Unknown\", \u2026) \u2014 never coerced to 0."
+      ],
+      [
+        "Day",
+        "The day tab the listing came from (Wed\u2013Sun), not the event's calendar date."
+      ]
+    ],
+    "widths": [
+      151,
+      847
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "03-snapshot",
+    "title": "Snapshot",
+    "section": "Snapshot",
+    "header": [
+      "Metric",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Rows in merged file",
+        "1,388"
+      ],
+      [
+        "Listings after same-week dedupe",
+        "1,388 (0 rows collapsed \u2014 the file is already de-duplicated)"
+      ],
+      [
+        "Distinct bill+venue pairs",
+        "1,061"
+      ],
+      [
+        "Canonical venues",
+        "89 (from 120 spellings)"
+      ],
+      [
+        "Active weeks",
+        "43 of 45 in range \u2014 2 missing"
+      ],
+      [
+        "Listings per active week",
+        "median 34 (range 1\u201364)"
+      ],
+      [
+        "Free / paid / unknown",
+        "63.5% / 25.9% / 10.6%"
+      ],
+      [
+        "Median paid price",
+        "$27 (p25 $15, p75 $40)"
+      ],
+      [
+        "Names billed exactly once",
+        "75.8%"
+      ],
+      [
+        "Recurring series (3+ weeks)",
+        "34, covering 23.3% of listings"
+      ]
+    ],
+    "widths": [
+      348,
+      650
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "04-rhythm-a-thursday-sunday-scene",
+    "title": "Rhythm: a Thursday\u2013Sunday scene",
+    "section": "Rhythm: a Thursday\u2013Sunday scene",
+    "header": [
+      "Day",
+      "Listings",
+      "Share",
+      "Free",
+      "Paid",
+      "Unknown",
+      "Median paid (n)"
+    ],
+    "rows": [
+      [
+        "Wed",
+        "135",
+        "9.7%",
+        "122",
+        "7",
+        "6",
+        "$40 (7)"
+      ],
+      [
+        "Thu",
+        "190",
+        "13.7%",
+        "125",
+        "57",
+        "8",
+        "$10 (57)"
+      ],
+      [
+        "Fri",
+        "372",
+        "26.8%",
+        "213",
+        "106",
+        "53",
+        "$26 (106)"
+      ],
+      [
+        "Sat",
+        "394",
+        "28.4%",
+        "192",
+        "155",
+        "47",
+        "$28 (155)"
+      ],
+      [
+        "Sun",
+        "297",
+        "21.4%",
+        "229",
+        "35",
+        "33",
+        "$34 (35)"
+      ]
+    ],
+    "widths": [
+      85,
+      166,
+      117,
+      101,
+      101,
+      149,
+      279
+    ],
+    "aligns": [
+      "left",
+      "num",
+      "num",
+      "num",
+      "num",
+      "num",
+      "left"
+    ]
+  },
+  {
+    "id": "05-coverage-two-missing-weeks-and-one",
+    "title": "Coverage: two missing weeks and one catch-up spike",
+    "section": "Coverage: two missing weeks and one catch-up spike",
+    "header": [
+      "Measure",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Active weeks",
+        "43"
+      ],
+      [
+        "Missing weeks inside range",
+        "2 \u2014 2026-W18, W39"
+      ],
+      [
+        "Median listings per active week",
+        "34 (mean 32)"
+      ],
+      [
+        "Median distinct venues per week",
+        "16"
+      ],
+      [
+        "Busiest week",
+        "2026-W38, 64 listings (14\u201320 Sep 2026)"
+      ]
+    ],
+    "widths": [
+      452,
+      546
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "06-concentration-five-venues-are-half",
+    "title": "Concentration: five venues are half the scene",
+    "section": "Concentration: five venues are half the scene",
+    "header": [
+      "Measure",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Canonical venues",
+        "89"
+      ],
+      [
+        "Venues needed for 50% of listings",
+        "5"
+      ],
+      [
+        "Venues needed for 80%",
+        "12"
+      ],
+      [
+        "Top 10 share",
+        "75.6%"
+      ],
+      [
+        "HHI",
+        "746 \u2192 equivalent to ~13 equal-sized venues"
+      ],
+      [
+        "Gini",
+        "0.806"
+      ],
+      [
+        "Venues with a single listing",
+        "43"
+      ]
+    ],
+    "widths": [
+      443,
+      555
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "07-concentration-five-venues-are-half",
+    "title": "Concentration: five venues are half the scene",
+    "section": "Concentration: five venues are half the scene",
+    "header": [
+      "#",
+      "Venue",
+      "Listings",
+      "Share",
+      "Weeks active",
+      "Free",
+      "Paid",
+      "Unknown",
+      "Median paid"
+    ],
+    "rows": [
+      [
+        "1",
+        "Lass O'Gowrie Hotel",
+        "202",
+        "14.6%",
+        "43",
+        "125",
+        "63",
+        "14",
+        "$25"
+      ],
+      [
+        "2",
+        "Hamilton Station Hotel",
+        "182",
+        "13.2%",
+        "42",
+        "104",
+        "64",
+        "14",
+        "$25"
+      ],
+      [
+        "3",
+        "Maru Hi-Fi",
+        "142",
+        "10.3%",
+        "40",
+        "142",
+        "0",
+        "0",
+        "\u2014"
+      ],
+      [
+        "4",
+        "The Oak",
+        "110",
+        "8.0%",
+        "40",
+        "102",
+        "1",
+        "7",
+        "$15"
+      ],
+      [
+        "5",
+        "King Street Hotel",
+        "91",
+        "6.6%",
+        "40",
+        "18",
+        "62",
+        "11",
+        "$47"
+      ],
+      [
+        "6",
+        "Bernies Bar",
+        "81",
+        "5.9%",
+        "40",
+        "67",
+        "5",
+        "9",
+        "$10"
+      ],
+      [
+        "7",
+        "Stag & Hunter Hotel",
+        "76",
+        "5.5%",
+        "38",
+        "25",
+        "39",
+        "12",
+        "$34"
+      ],
+      [
+        "8",
+        "The Ori",
+        "70",
+        "5.1%",
+        "29",
+        "68",
+        "0",
+        "2",
+        "\u2014"
+      ],
+      [
+        "9",
+        "The Beauford Hotel",
+        "49",
+        "3.6%",
+        "36",
+        "19",
+        "0",
+        "30",
+        "\u2014"
+      ],
+      [
+        "10",
+        "Croatian Club",
+        "40",
+        "2.9%",
+        "24",
+        "13",
+        "24",
+        "3",
+        "$15"
+      ],
+      [
+        "11",
+        "The Underground",
+        "39",
+        "2.8%",
+        "37",
+        "2",
+        "37",
+        "0",
+        "$10"
+      ],
+      [
+        "12",
+        "Queens Wharf Hotel",
+        "38",
+        "2.8%",
+        "38",
+        "38",
+        "0",
+        "0",
+        "\u2014"
+      ],
+      [
+        "13",
+        "Gallipoli House",
+        "31",
+        "2.2%",
+        "18",
+        "2",
+        "3",
+        "26",
+        "$12"
+      ],
+      [
+        "14",
+        "Charlies Rooftop",
+        "25",
+        "1.8%",
+        "24",
+        "23",
+        "2",
+        "0",
+        "$27"
+      ],
+      [
+        "15",
+        "Theydy's",
+        "19",
+        "1.4%",
+        "18",
+        "17",
+        "2",
+        "0",
+        "$12"
+      ]
+    ],
+    "widths": [
+      50,
+      252,
+      107,
+      76,
+      148,
+      65,
+      65,
+      96,
+      139
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num",
+      "num",
+      "num",
+      "num",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "08-genre-is-venue-shaped-not-scene",
+    "title": "Genre is venue-shaped, not scene-shaped",
+    "section": "Genre is venue-shaped, not scene-shaped",
+    "header": [
+      "Measure",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Listings with a genre",
+        "1,360 (98.0%)"
+      ],
+      [
+        "Distinct genre atoms",
+        "52"
+      ],
+      [
+        "Genres per tagged listing",
+        "1.37 (34.1% multi-genre)"
+      ]
+    ],
+    "widths": [
+      508,
+      490
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "09-genre-is-venue-shaped-not-scene",
+    "title": "Genre is venue-shaped, not scene-shaped",
+    "section": "Genre is venue-shaped, not scene-shaped",
+    "header": [
+      "#",
+      "Genre",
+      "Listings",
+      "Share of tagged"
+    ],
+    "rows": [
+      [
+        "1",
+        "ROCK",
+        "274",
+        "20.1%"
+      ],
+      [
+        "2",
+        "DANCE",
+        "193",
+        "14.2%"
+      ],
+      [
+        "3",
+        "JAZZ",
+        "157",
+        "11.5%"
+      ],
+      [
+        "4",
+        "INDIE",
+        "144",
+        "10.6%"
+      ],
+      [
+        "5",
+        "VINYL",
+        "141",
+        "10.4%"
+      ],
+      [
+        "6",
+        "PUNK",
+        "118",
+        "8.7%"
+      ],
+      [
+        "7",
+        "ACOUSTIC",
+        "115",
+        "8.5%"
+      ],
+      [
+        "8",
+        "LGBTQIA+",
+        "91",
+        "6.7%"
+      ],
+      [
+        "9",
+        "ALT",
+        "67",
+        "4.9%"
+      ],
+      [
+        "10",
+        "TECHNO",
+        "56",
+        "4.1%"
+      ],
+      [
+        "11",
+        "COUNTRY",
+        "47",
+        "3.5%"
+      ],
+      [
+        "12",
+        "BLUES",
+        "47",
+        "3.5%"
+      ],
+      [
+        "13",
+        "HOUSE",
+        "45",
+        "3.3%"
+      ],
+      [
+        "14",
+        "METAL",
+        "41",
+        "3.0%"
+      ],
+      [
+        "15",
+        "DJ",
+        "41",
+        "3.0%"
+      ]
+    ],
+    "widths": [
+      68,
+      253,
+      253,
+      424
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "10-venue-specialisation-share-of-that",
+    "title": "Venue specialisation (share of that venue's tagged listings in its top genre):",
+    "section": "Genre is venue-shaped, not scene-shaped",
+    "header": [
+      "Venue",
+      "Top genre",
+      "Share"
+    ],
+    "rows": [
+      [
+        "Bernies Bar",
+        "DANCE / LGBTQIA+",
+        "100.0%"
+      ],
+      [
+        "The Underground",
+        "JAZZ",
+        "100.0%"
+      ],
+      [
+        "Queens Wharf Hotel",
+        "DANCE",
+        "94.7%"
+      ],
+      [
+        "The Beauford Hotel",
+        "ROCK",
+        "73.5%"
+      ],
+      [
+        "The Oak",
+        "VINYL",
+        "57.9%"
+      ],
+      [
+        "Maru Hi-Fi",
+        "VINYL",
+        "47.7%"
+      ],
+      [
+        "Hamilton Station Hotel",
+        "ROCK",
+        "39.8%"
+      ],
+      [
+        "The Ori",
+        "ACOUSTIC",
+        "37.9%"
+      ]
+    ],
+    "widths": [
+      477,
+      359,
+      162
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num"
+    ]
+  },
+  {
+    "id": "11-pairings-are-mostly-one-venue-s",
+    "title": "Pairings are mostly one venue's signature, not a scene-wide blend:",
+    "section": "Genre is venue-shaped, not scene-shaped",
+    "header": [
+      "Pair",
+      "Listings",
+      "Concentration"
+    ],
+    "rows": [
+      [
+        "DANCE + LGBTQIA+",
+        "91",
+        "89.0% at Bernies Bar"
+      ],
+      [
+        "INDIE + ROCK",
+        "52",
+        "spread across 9 venues"
+      ],
+      [
+        "PUNK + ROCK",
+        "42",
+        "spread across 12 venues"
+      ],
+      [
+        "HOUSE + TECHNO",
+        "22",
+        "81.8% at Lass O'Gowrie"
+      ],
+      [
+        "ROCK + VINYL",
+        "19",
+        "100% at The Oak"
+      ],
+      [
+        "DANCE + TECHNO",
+        "18",
+        "100% at Gallipoli House"
+      ]
+    ],
+    "widths": [
+      339,
+      191,
+      468
+    ],
+    "aligns": [
+      "left",
+      "num",
+      "left"
+    ]
+  },
+  {
+    "id": "12-price-two-thirds-free-paid",
+    "title": "Price: two-thirds free, paid concentrated in three rooms",
+    "section": "Price: two-thirds free, paid concentrated in three rooms",
+    "header": [
+      "Measure",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Free",
+        "881 (63.5%)"
+      ],
+      [
+        "Paid",
+        "360 (25.9%)"
+      ],
+      [
+        "Unknown",
+        "147 (10.6%)"
+      ],
+      [
+        "Paid median",
+        "$27 (p25 $15, p75 $40)"
+      ],
+      [
+        "Paid mean",
+        "$31.89"
+      ],
+      [
+        "Paid range",
+        "$5\u2013$124"
+      ]
+    ],
+    "widths": [
+      353,
+      645
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "13-price-two-thirds-free-paid",
+    "title": "Price: two-thirds free, paid concentrated in three rooms",
+    "section": "Price: two-thirds free, paid concentrated in three rooms",
+    "header": [
+      "Price band",
+      "Paid listings",
+      "Share"
+    ],
+    "rows": [
+      [
+        "< $10",
+        "5",
+        "1.4%"
+      ],
+      [
+        "$10\u201319",
+        "103",
+        "28.6%"
+      ],
+      [
+        "$20\u201329",
+        "90",
+        "25.0%"
+      ],
+      [
+        "$30\u201339",
+        "68",
+        "18.9%"
+      ],
+      [
+        "$40\u201359",
+        "54",
+        "15.0%"
+      ],
+      [
+        "$60+",
+        "40",
+        "11.1%"
+      ]
+    ],
+    "widths": [
+      352,
+      438,
+      208
+    ],
+    "aligns": [
+      "left",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "14-free-share-by-genre",
+    "title": "Free share by genre",
+    "section": "Price: two-thirds free, paid concentrated in three rooms",
+    "header": [
+      "Genre",
+      "Listings",
+      "Free",
+      "Free share"
+    ],
+    "rows": [
+      [
+        "ROCK",
+        "274",
+        "157",
+        "57.3%"
+      ],
+      [
+        "DANCE",
+        "193",
+        "136",
+        "70.5%"
+      ],
+      [
+        "JAZZ",
+        "157",
+        "117",
+        "74.5%"
+      ],
+      [
+        "INDIE",
+        "144",
+        "80",
+        "55.6%"
+      ],
+      [
+        "VINYL",
+        "141",
+        "137",
+        "97.2%"
+      ],
+      [
+        "PUNK",
+        "118",
+        "62",
+        "52.5%"
+      ],
+      [
+        "ACOUSTIC",
+        "115",
+        "96",
+        "83.5%"
+      ],
+      [
+        "LGBTQIA+",
+        "91",
+        "70",
+        "76.9%"
+      ]
+    ],
+    "widths": [
+      262,
+      262,
+      160,
+      314
+    ],
+    "aligns": [
+      "left",
+      "num",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "15-bills-and-names-a-long-tail-with-a",
+    "title": "Bills and names: a long tail with a small permanent core",
+    "section": "Bills and names: a long tail with a small permanent core",
+    "header": [
+      "Measure",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Distinct billed names",
+        "1,922"
+      ],
+      [
+        "Billed exactly once",
+        "1,457 (75.8%)"
+      ],
+      [
+        "Billed 2\u20133 times",
+        "316 (16.4%)"
+      ],
+      [
+        "Billed 4\u20139 times",
+        "130 (6.8%)"
+      ],
+      [
+        "Billed 10+ times",
+        "19 (1.0%)"
+      ],
+      [
+        "Median acts per listing",
+        "1"
+      ]
+    ],
+    "widths": [
+      622,
+      376
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "16-bills-and-names-a-long-tail-with-a",
+    "title": "Bills and names: a long tail with a small permanent core",
+    "section": "Bills and names: a long tail with a small permanent core",
+    "header": [
+      "Acts on bill",
+      "Listings"
+    ],
+    "rows": [
+      [
+        "1",
+        "714"
+      ],
+      [
+        "2",
+        "179"
+      ],
+      [
+        "3",
+        "242"
+      ],
+      [
+        "4",
+        "106"
+      ],
+      [
+        "5",
+        "52"
+      ],
+      [
+        "6\u20139",
+        "73"
+      ],
+      [
+        "10+",
+        "22"
+      ]
+    ],
+    "widths": [
+      580,
+      418
+    ],
+    "aligns": [
+      "left",
+      "num"
+    ]
+  },
+  {
+    "id": "17-most-billed-entries",
+    "title": "Most-billed entries",
+    "section": "Bills and names: a long tail with a small permanent core",
+    "header": [
+      "#",
+      "Name",
+      "Listings",
+      "Venues",
+      "Weeks"
+    ],
+    "rows": [
+      [
+        "1",
+        "Jazz Night",
+        "39",
+        "2",
+        "34"
+      ],
+      [
+        "2",
+        "Wharf Life",
+        "38",
+        "1",
+        "38"
+      ],
+      [
+        "3",
+        "BYO Vinyl Night",
+        "38",
+        "2",
+        "38"
+      ],
+      [
+        "4",
+        "Open Decks",
+        "37",
+        "2",
+        "37"
+      ],
+      [
+        "5",
+        "Jazz Night: Breeze",
+        "23",
+        "1",
+        "23"
+      ],
+      [
+        "6",
+        "Rhodes",
+        "21",
+        "8",
+        "19"
+      ],
+      [
+        "7",
+        "Sunday Club",
+        "19",
+        "1",
+        "19"
+      ],
+      [
+        "8",
+        "Lvl 1 District Saturdays",
+        "18",
+        "1",
+        "18"
+      ],
+      [
+        "9",
+        "Rose White",
+        "16",
+        "8",
+        "16"
+      ],
+      [
+        "10",
+        "Bellicanta's",
+        "16",
+        "1",
+        "16"
+      ]
+    ],
+    "widths": [
+      68,
+      469,
+      183,
+      148,
+      130
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "18-residencies-34-recurring-bills-130",
+    "title": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "section": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "header": [
+      "Series length",
+      "Series"
+    ],
+    "rows": [
+      [
+        "1 week only",
+        "990"
+      ],
+      [
+        "2 weeks",
+        "37"
+      ],
+      [
+        "3+ weeks",
+        "34"
+      ]
+    ],
+    "widths": [
+      647,
+      351
+    ],
+    "aligns": [
+      "left",
+      "num"
+    ]
+  },
+  {
+    "id": "19-residencies-34-recurring-bills-130",
+    "title": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "section": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "header": [
+      "Measure",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Distinct bill+venue pairs",
+        "1,061"
+      ],
+      [
+        "Series reappearing in 2+ weeks",
+        "71"
+      ],
+      [
+        "Residencies (3+ weeks)",
+        "34"
+      ],
+      [
+        "Listings belonging to a residency",
+        "324 (23.3%)"
+      ]
+    ],
+    "widths": [
+      725,
+      273
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "20-residencies-34-recurring-bills-130",
+    "title": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "section": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "header": [
+      "Series",
+      "Venue",
+      "Weeks",
+      "Night"
+    ],
+    "rows": [
+      [
+        "Wharf Life",
+        "Queens Wharf Hotel",
+        "38",
+        "Sun"
+      ],
+      [
+        "BYO Vinyl Night",
+        "Maru Hi-Fi",
+        "37",
+        "Thu"
+      ],
+      [
+        "Open Decks",
+        "Lass O'Gowrie Hotel",
+        "36",
+        "Wed"
+      ],
+      [
+        "Jazz Night",
+        "The Underground",
+        "24",
+        "Thu"
+      ],
+      [
+        "Jazz Night: Breeze",
+        "Lass O'Gowrie Hotel",
+        "23",
+        "Thu"
+      ],
+      [
+        "Sunday Club",
+        "Charlies Rooftop",
+        "19",
+        "Sun"
+      ],
+      [
+        "Lvl 1 District Saturdays",
+        "Gallipoli House",
+        "18",
+        "Sat"
+      ],
+      [
+        "Bellicanta's",
+        "Theydy's",
+        "16",
+        "Wed"
+      ],
+      [
+        "Jazz Night",
+        "Lass O'Gowrie Hotel",
+        "15",
+        "Thu"
+      ],
+      [
+        "Vinyl Night",
+        "Maru Hi-Fi",
+        "11",
+        "Sun"
+      ]
+    ],
+    "widths": [
+      422,
+      342,
+      117,
+      117
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "left"
+    ]
+  },
+  {
+    "id": "21-residencies-34-recurring-bills-130",
+    "title": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "section": "Residencies: 34 recurring bills, 130 artist-venue runs",
+    "header": [
+      "Artist",
+      "Venue",
+      "Total",
+      "Genre"
+    ],
+    "rows": [
+      [
+        "Breeze",
+        "Lass O'Gowrie Hotel",
+        "23",
+        "JAZZ"
+      ],
+      [
+        "PC Dysco",
+        "The Oak",
+        "12",
+        "VINYL"
+      ],
+      [
+        "Bardvarkk",
+        "Lass O'Gowrie Hotel",
+        "9",
+        "PUNK"
+      ],
+      [
+        "Rick A Mortis",
+        "The Oak",
+        "9",
+        "VINYL"
+      ],
+      [
+        "Rose White",
+        "Lass O'Gowrie Hotel",
+        "9",
+        "ALT"
+      ],
+      [
+        "LauraPanic",
+        "Hamilton Station Hotel",
+        "8",
+        "PUNK"
+      ],
+      [
+        "Beam",
+        "Lass O'Gowrie Hotel",
+        "7",
+        "TECHNO"
+      ],
+      [
+        "Black Tiger",
+        "The Oak",
+        "7",
+        "VINYL"
+      ],
+      [
+        "Anunnaki",
+        "The Beauford Hotel",
+        "6",
+        "ROCK"
+      ],
+      [
+        "Breeze",
+        "The Oak",
+        "6",
+        "JAZZ"
+      ],
+      [
+        "DJ Qyto",
+        "Lass O'Gowrie Hotel",
+        "6",
+        "DANCE"
+      ],
+      [
+        "Lello",
+        "Lass O'Gowrie Hotel",
+        "6",
+        "TECHNO"
+      ],
+      [
+        "Michael Dowell",
+        "Lass O'Gowrie Hotel",
+        "6",
+        "TECHNO"
+      ],
+      [
+        "Nico",
+        "The Oak",
+        "6",
+        "ROCK"
+      ]
+    ],
+    "widths": [
+      289,
+      432,
+      130,
+      147
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "left"
+    ]
+  },
+  {
+    "id": "22-data-quality-scorecard",
+    "title": "Data quality scorecard",
+    "section": "Data quality scorecard",
+    "header": [
+      "Check",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Rows collapsed in dedupe",
+        "0 (0.0%) \u2014 the input file is already de-duplicated"
+      ],
+      [
+        "Duplicate groups with conflicting genres",
+        "0"
+      ],
+      [
+        "Duplicate groups with conflicting prices",
+        "0"
+      ],
+      [
+        "Venue spellings merged",
+        "120 \u2192 89"
+      ],
+      [
+        "Price unusable",
+        "147 (10.6%)"
+      ],
+      [
+        "Genre missing",
+        "28 (2.0%)"
+      ],
+      [
+        "Weeks missing inside range",
+        "2"
+      ],
+      [
+        "Single-listing venues",
+        "43"
+      ],
+      [
+        "Venue literally Unknown",
+        "9"
+      ]
+    ],
+    "widths": [
+      446,
+      552
+    ],
+    "aligns": [
+      "left",
+      "left"
+    ]
+  },
+  {
+    "id": "23-live-acts-bands-and-soloists-top",
+    "title": "Live acts (bands & soloists) \u2014 top 10 by bill appearances",
+    "section": "Most-featured acts: live acts vs DJs",
+    "header": [
+      "#",
+      "Act",
+      "Bills",
+      "Venues",
+      "Weeks",
+      "Top genres"
+    ],
+    "rows": [
+      [
+        "1",
+        "Rhodes",
+        "21",
+        "8",
+        "19",
+        "ROCK, INDIE, FUNK"
+      ],
+      [
+        "2",
+        "S.M.D",
+        "16",
+        "6",
+        "14",
+        "PUNK, ROCK, BLUES"
+      ],
+      [
+        "3",
+        "Bardvarkk",
+        "14",
+        "3",
+        "13",
+        "PUNK, ROCK, ALT"
+      ],
+      [
+        "4",
+        "Charlie Farmer",
+        "12",
+        "9",
+        "11",
+        "ROCK, INDIE, ALT"
+      ],
+      [
+        "5",
+        "Gauze",
+        "12",
+        "9",
+        "10",
+        "PUNK, ROCK, ALT"
+      ],
+      [
+        "6",
+        "LauraPanic",
+        "12",
+        "4",
+        "11",
+        "PUNK, ROCK, ALT"
+      ],
+      [
+        "7",
+        "Iryss",
+        "11",
+        "4",
+        "11",
+        "ROCK, INDIE, ACOUSTIC"
+      ],
+      [
+        "8",
+        "The Janes",
+        "11",
+        "5",
+        "11",
+        "INDIE, ROCK, ALT"
+      ],
+      [
+        "9",
+        "Trophy Wyfe",
+        "11",
+        "6",
+        "10",
+        "ROCK, PUNK, INDIE"
+      ],
+      [
+        "10",
+        "Portrait Of A Lady",
+        "10",
+        "5",
+        "10",
+        "ROCK, GRUNGE, ALT"
+      ]
+    ],
+    "widths": [
+      67,
+      284,
+      102,
+      116,
+      102,
+      327
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num",
+      "num",
+      "left"
+    ]
+  },
+  {
+    "id": "24-djs-top-10-by-bill-appearances",
+    "title": "DJs \u2014 top 10 by bill appearances",
+    "section": "Most-featured acts: live acts vs DJs",
+    "header": [
+      "#",
+      "Act",
+      "Bills",
+      "Venues",
+      "Weeks",
+      "Top genres"
+    ],
+    "rows": [
+      [
+        "1",
+        "Beam",
+        "9",
+        "3",
+        "9",
+        "HOUSE, TECHNO, BASS"
+      ],
+      [
+        "2",
+        "DJ Qyto",
+        "9",
+        "4",
+        "9",
+        "TECHNO, HOUSE, AFROBEATS"
+      ],
+      [
+        "3",
+        "High Pass",
+        "8",
+        "5",
+        "8",
+        "TECHNO, ALT, ELECTRONIC"
+      ],
+      [
+        "4",
+        "JYC",
+        "8",
+        "4",
+        "7",
+        "HOUSE, VINYL, BASS"
+      ],
+      [
+        "5",
+        "Lello",
+        "8",
+        "3",
+        "8",
+        "HOUSE, TECHNO, BASS"
+      ],
+      [
+        "6",
+        "2Lulu",
+        "7",
+        "3",
+        "7",
+        "HOUSE, TECHNO, FUNK"
+      ],
+      [
+        "7",
+        "DJ Gunggek",
+        "7",
+        "4",
+        "7",
+        "HOUSE, ELECTRONIC, TECHNO"
+      ],
+      [
+        "8",
+        "Homebody",
+        "7",
+        "4",
+        "6",
+        "ELECTRONIC, HOUSE, BREAKS"
+      ],
+      [
+        "9",
+        "Michael Dowell",
+        "7",
+        "2",
+        "7",
+        "HOUSE, TECHNO, BASS"
+      ],
+      [
+        "10",
+        "Shuvcheck",
+        "7",
+        "2",
+        "7",
+        "TECHNO, HOUSE, ALT"
+      ]
+    ],
+    "widths": [
+      67,
+      228,
+      102,
+      116,
+      102,
+      383
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num",
+      "num",
+      "left"
+    ]
+  },
+  {
+    "id": "25-most-featured-genre-excluding-free",
+    "title": "Most-featured genre excluding FREE and DANCE",
+    "section": "Most-featured genre excluding FREE and DANCE",
+    "header": [
+      "#",
+      "Genre",
+      "Listings",
+      "Share of all 1,388"
+    ],
+    "rows": [
+      [
+        "1",
+        "ROCK",
+        "274",
+        "19.7%"
+      ],
+      [
+        "2",
+        "JAZZ",
+        "157",
+        "11.3%"
+      ],
+      [
+        "3",
+        "INDIE",
+        "144",
+        "10.4%"
+      ],
+      [
+        "4",
+        "VINYL",
+        "141",
+        "10.2%"
+      ],
+      [
+        "5",
+        "PUNK",
+        "118",
+        "8.5%"
+      ],
+      [
+        "6",
+        "ACOUSTIC",
+        "115",
+        "8.3%"
+      ],
+      [
+        "7",
+        "LGBTQIA+",
+        "91",
+        "6.6%"
+      ],
+      [
+        "8",
+        "ALT",
+        "67",
+        "4.8%"
+      ]
+    ],
+    "widths": [
+      68,
+      234,
+      234,
+      462
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "26-most-featured-genre-excluding-free",
+    "title": "Most-featured genre excluding FREE and DANCE",
+    "section": "Most-featured genre excluding FREE and DANCE",
+    "header": [
+      "#",
+      "Genre",
+      "Paid listings",
+      "Share of 360"
+    ],
+    "rows": [
+      [
+        "1",
+        "ROCK",
+        "67",
+        "18.6%"
+      ],
+      [
+        "2",
+        "PUNK",
+        "47",
+        "13.1%"
+      ],
+      [
+        "3",
+        "INDIE",
+        "40",
+        "11.1%"
+      ],
+      [
+        "4",
+        "JAZZ",
+        "39",
+        "10.8%"
+      ],
+      [
+        "5",
+        "HOUSE",
+        "34",
+        "9.4%"
+      ],
+      [
+        "6",
+        "TECHNO",
+        "32",
+        "8.9%"
+      ],
+      [
+        "7",
+        "METAL",
+        "27",
+        "7.5%"
+      ],
+      [
+        "8",
+        "ALT",
+        "26",
+        "7.2%"
+      ]
+    ],
+    "widths": [
+      68,
+      204,
+      375,
+      351
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "27-venues",
+    "title": "Venues",
+    "section": "Witchhouse Select: a brand tag, not a genre",
+    "header": [
+      "Venue",
+      "Listings"
+    ],
+    "rows": [
+      [
+        "Lass O'Gowrie Hotel",
+        "10"
+      ],
+      [
+        "Unknown",
+        "4"
+      ],
+      [
+        "Meantime",
+        "2"
+      ],
+      [
+        "King Street Hotel",
+        "2"
+      ],
+      [
+        "Bar On The Hill",
+        "2"
+      ],
+      [
+        "Hamilton Station Hotel",
+        "2"
+      ]
+    ],
+    "widths": [
+      701,
+      297
+    ],
+    "aligns": [
+      "left",
+      "num"
+    ]
+  },
+  {
+    "id": "28-witchhouse-select-a-brand-tag-not",
+    "title": "Witchhouse Select: a brand tag, not a genre",
+    "section": "Witchhouse Select: a brand tag, not a genre",
+    "header": [
+      "Artist",
+      "Total",
+      "Venues"
+    ],
+    "rows": [
+      [
+        "DJ Gunggek",
+        "5",
+        "5"
+      ],
+      [
+        "Kev Sev",
+        "4",
+        "3"
+      ],
+      [
+        "High Pass",
+        "3",
+        "3"
+      ],
+      [
+        "Krisp",
+        "3",
+        "2"
+      ],
+      [
+        "Michael Dowell",
+        "3",
+        "2"
+      ],
+      [
+        "Mozz",
+        "3",
+        "2"
+      ],
+      [
+        "Rose White",
+        "3",
+        "3"
+      ],
+      [
+        "Spaenk",
+        "3",
+        "2"
+      ],
+      [
+        "Assembler Code",
+        "2",
+        "2"
+      ],
+      [
+        "Charlie Farmer",
+        "2",
+        "2"
+      ],
+      [
+        "Chow Chow Disco",
+        "2",
+        "2"
+      ],
+      [
+        "DJ Qyto",
+        "2",
+        "1"
+      ],
+      [
+        "EEJ",
+        "2",
+        "2"
+      ],
+      [
+        "Forward Fox",
+        "2",
+        "1"
+      ],
+      [
+        "Red C",
+        "2",
+        "2"
+      ],
+      [
+        "Shuvcheck",
+        "2",
+        "2"
+      ],
+      [
+        "Splak!",
+        "2",
+        "2"
+      ],
+      [
+        "Weldo",
+        "2",
+        "2"
+      ]
+    ],
+    "widths": [
+      525,
+      221,
+      252
+    ],
+    "aligns": [
+      "left",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "29-metal-heavy-hardcore-top-10",
+    "title": "Metal / heavy / hardcore: top 10 artists",
+    "section": "Metal / heavy / hardcore: top 10 artists",
+    "header": [
+      "#",
+      "Act",
+      "Venue-weeks",
+      "Venues"
+    ],
+    "rows": [
+      [
+        "1",
+        "Disco",
+        "7",
+        "2"
+      ],
+      [
+        "2",
+        "Fat Monica",
+        "6",
+        "3"
+      ],
+      [
+        "3",
+        "Deathfeeder",
+        "5",
+        "2"
+      ],
+      [
+        "4",
+        "Exyle",
+        "5",
+        "3"
+      ],
+      [
+        "5",
+        "Fatal Excuse",
+        "4",
+        "1"
+      ],
+      [
+        "6",
+        "Latest God",
+        "4",
+        "2"
+      ],
+      [
+        "7",
+        "Phantom",
+        "4",
+        "2"
+      ],
+      [
+        "8",
+        "Exsister",
+        "3",
+        "2"
+      ],
+      [
+        "9",
+        "Feign",
+        "3",
+        "3"
+      ],
+      [
+        "10",
+        "Torment",
+        "3",
+        "2"
+      ]
+    ],
+    "widths": [
+      68,
+      370,
+      345,
+      215
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num",
+      "num"
+    ]
+  },
+  {
+    "id": "30-promoters",
+    "title": "Promoters",
+    "section": "Promoters",
+    "header": [
+      "#",
+      "Promoter",
+      "Events"
+    ],
+    "rows": [
+      [
+        "1",
+        "Kova Events",
+        "10"
+      ],
+      [
+        "2",
+        "Bad Behaviour",
+        "6"
+      ],
+      [
+        "3",
+        "Odyssey",
+        "5"
+      ],
+      [
+        "4",
+        "C.T.",
+        "4"
+      ],
+      [
+        "5",
+        "Groove Street",
+        "3"
+      ],
+      [
+        "6",
+        "2Gruvy2Hard",
+        "3"
+      ],
+      [
+        "7",
+        "New Brain Communications",
+        "3"
+      ],
+      [
+        "8",
+        "Destroy All Lines",
+        "3"
+      ],
+      [
+        "9",
+        "Ode",
+        "3"
+      ],
+      [
+        "10",
+        "Powder Your Nose",
+        "3"
+      ],
+      [
+        "11",
+        "Shenanigans",
+        "3"
+      ],
+      [
+        "12",
+        "Sirocco",
+        "3"
+      ]
+    ],
+    "widths": [
+      68,
+      707,
+      223
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "num"
+    ]
+  },
+  {
+    "id": "31-corrections-to-earlier-raw-row",
+    "title": "Corrections to earlier raw-row estimates",
+    "section": "Corrections to earlier raw-row estimates",
+    "header": [
+      "Metric",
+      "Raw rows",
+      "Listing grain"
+    ],
+    "rows": [
+      [
+        "Listings",
+        "1,275",
+        "1,260"
+      ],
+      [
+        "Act+venue pairs",
+        "980",
+        "958"
+      ],
+      [
+        "Recurring series",
+        "364",
+        "77 (2+ weeks), 28 (3+ weeks)"
+      ],
+      [
+        "Names billed once",
+        "822 of 1,744 (47%)",
+        "1,287 of 1,738 (74%)"
+      ],
+      [
+        "Free share of priced",
+        "70.5%",
+        "71.0%"
+      ]
+    ],
+    "widths": [
+      305,
+      278,
+      415
+    ],
+    "aligns": [
+      "left",
+      "left",
+      "left"
+    ]
+  }
+]

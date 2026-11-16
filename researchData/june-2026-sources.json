@@ -1,0 +1,181 @@
+{
+  "batch": "June 2026",
+  "addedOn": "2026-11-16",
+  "sourceDirectory": "~/Downloads/june",
+  "note": "Twenty Witchhouse weekday posters recovered retrospectively. Each was copied into ~/Downloads as <weekday>(n).jpg using the weekday shown on its highlighted tab, and its file creation date (birthtime) was set to the poster's own date. The date is carried by the creation date, not the filename; the filename only names the weekday. These images represent June 2026 and only June 2026.",
+  "weekdayCounts": {
+    "wednesday": 4,
+    "thursday": 4,
+    "friday": 4,
+    "saturday": 4,
+    "sunday": 4
+  },
+  "weeks": {
+    "W23": "2026-06-01 to 2026-06-07",
+    "W24": "2026-06-08 to 2026-06-14",
+    "W25": "2026-06-15 to 2026-06-21",
+    "W26": "2026-06-22 to 2026-06-28"
+  },
+  "images": [
+    {
+      "originalFilename": "716550029_18365121421228823_4560302286416423426_n.jpg",
+      "renamedTo": "~/Downloads/wednesday(75).jpg",
+      "posterDate": "2026-06-03",
+      "weekday": "wednesday",
+      "week": "W23",
+      "posterRange": "03 - 07 June"
+    },
+    {
+      "originalFilename": "716871608_18365121412228823_1286724862629570836_n.jpg",
+      "renamedTo": "~/Downloads/thursday(80).jpg",
+      "posterDate": "2026-06-04",
+      "weekday": "thursday",
+      "week": "W23",
+      "posterRange": "03 - 07 June"
+    },
+    {
+      "originalFilename": "713443463_18365121409228823_3341464788332427085_n.jpg",
+      "renamedTo": "~/Downloads/friday(101).jpg",
+      "posterDate": "2026-06-05",
+      "weekday": "friday",
+      "week": "W23",
+      "posterRange": "03 - 07 June"
+    },
+    {
+      "originalFilename": "716650251_18365121394228823_2697262591177754808_n.jpg",
+      "renamedTo": "~/Downloads/saturday(113).jpg",
+      "posterDate": "2026-06-06",
+      "weekday": "saturday",
+      "week": "W23",
+      "posterRange": "03 - 07 June"
+    },
+    {
+      "originalFilename": "716209941_18365121430228823_5743843772539061190_n.jpg",
+      "renamedTo": "~/Downloads/sunday(97).jpg",
+      "posterDate": "2026-06-07",
+      "weekday": "sunday",
+      "week": "W23",
+      "posterRange": "03 - 07 June"
+    },
+    {
+      "originalFilename": "722077749_18366279937228823_5389368286020733793_n.jpg",
+      "renamedTo": "~/Downloads/wednesday(76).jpg",
+      "posterDate": "2026-06-10",
+      "weekday": "wednesday",
+      "week": "W24",
+      "posterRange": "10 - 14 June"
+    },
+    {
+      "originalFilename": "721104161_18366279928228823_8406637191091276741_n.jpg",
+      "renamedTo": "~/Downloads/thursday(81).jpg",
+      "posterDate": "2026-06-11",
+      "weekday": "thursday",
+      "week": "W24",
+      "posterRange": "10 - 14 June"
+    },
+    {
+      "originalFilename": "722205122_18366279916228823_3127950021315805400_n.jpg",
+      "renamedTo": "~/Downloads/friday(102).jpg",
+      "posterDate": "2026-06-12",
+      "weekday": "friday",
+      "week": "W24",
+      "posterRange": "10 - 14 June"
+    },
+    {
+      "originalFilename": "723238569_18366279925228823_4150878835838507333_n.jpg",
+      "renamedTo": "~/Downloads/saturday(114).jpg",
+      "posterDate": "2026-06-13",
+      "weekday": "saturday",
+      "week": "W24",
+      "posterRange": "10 - 14 June"
+    },
+    {
+      "originalFilename": "721841541_18366279901228823_2657509360378539216_n.jpg",
+      "renamedTo": "~/Downloads/sunday(98).jpg",
+      "posterDate": "2026-06-14",
+      "weekday": "sunday",
+      "week": "W24",
+      "posterRange": "10 - 14 June"
+    },
+    {
+      "originalFilename": "724684907_18367118830228823_6879204259605287636_n.jpg",
+      "renamedTo": "~/Downloads/wednesday(77).jpg",
+      "posterDate": "2026-06-17",
+      "weekday": "wednesday",
+      "week": "W25",
+      "posterRange": "17 - 21 June"
+    },
+    {
+      "originalFilename": "725213980_18367118827228823_8933361544568952512_n.jpg",
+      "renamedTo": "~/Downloads/thursday(82).jpg",
+      "posterDate": "2026-06-18",
+      "weekday": "thursday",
+      "week": "W25",
+      "posterRange": "17 - 21 June"
+    },
+    {
+      "originalFilename": "723239031_18367118854228823_3032751740328106018_n.jpg",
+      "renamedTo": "~/Downloads/friday(103).jpg",
+      "posterDate": "2026-06-19",
+      "weekday": "friday",
+      "week": "W25",
+      "posterRange": "17 - 21 June"
+    },
+    {
+      "originalFilename": "724299770_18367118857228823_3669836557247430918_n.jpg",
+      "renamedTo": "~/Downloads/saturday(115).jpg",
+      "posterDate": "2026-06-20",
+      "weekday": "saturday",
+      "week": "W25",
+      "posterRange": "17 - 21 June"
+    },
+    {
+      "originalFilename": "724612951_18367118839228823_5435641216905279095_n.jpg",
+      "renamedTo": "~/Downloads/sunday(99).jpg",
+      "posterDate": "2026-06-21",
+      "weekday": "sunday",
+      "week": "W25",
+      "posterRange": "17 - 21 June"
+    },
+    {
+      "originalFilename": "727839229_18368185069228823_363103992117632170_n.jpg",
+      "renamedTo": "~/Downloads/wednesday(78).jpg",
+      "posterDate": "2026-06-24",
+      "weekday": "wednesday",
+      "week": "W26",
+      "posterRange": "24 - 28 June"
+    },
+    {
+      "originalFilename": "728809698_18368185075228823_4178537222058004103_n.jpg",
+      "renamedTo": "~/Downloads/thursday(83).jpg",
+      "posterDate": "2026-06-25",
+      "weekday": "thursday",
+      "week": "W26",
+      "posterRange": "24 - 28 June"
+    },
+    {
+      "originalFilename": "728675340_18368185093228823_3433032272022284710_n.jpg",
+      "renamedTo": "~/Downloads/friday(104).jpg",
+      "posterDate": "2026-06-26",
+      "weekday": "friday",
+      "week": "W26",
+      "posterRange": "24 - 28 June"
+    },
+    {
+      "originalFilename": "729669935_18368185072228823_6536947709851083561_n.jpg",
+      "renamedTo": "~/Downloads/saturday(116).jpg",
+      "posterDate": "2026-06-27",
+      "weekday": "saturday",
+      "week": "W26",
+      "posterRange": "24 - 28 June"
+    },
+    {
+      "originalFilename": "728451637_18368185084228823_5625499262527813223_n.jpg",
+      "renamedTo": "~/Downloads/sunday(100).jpg",
+      "posterDate": "2026-06-28",
+      "weekday": "sunday",
+      "week": "W26",
+      "posterRange": "24 - 28 June"
+    }
+  ]
+}

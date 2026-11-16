@@ -1,6 +1,10 @@
 {
   "processedImages": [
     "/Users/samreedy/Downloads/friday(100).png",
+    "/Users/samreedy/Downloads/friday(101).jpg",
+    "/Users/samreedy/Downloads/friday(102).jpg",
+    "/Users/samreedy/Downloads/friday(103).jpg",
+    "/Users/samreedy/Downloads/friday(104).jpg",
     "/Users/samreedy/Downloads/friday(23).png",
     "/Users/samreedy/Downloads/friday(24).png",
     "/Users/samreedy/Downloads/friday(25).png",
@@ -69,6 +73,10 @@
     "/Users/samreedy/Downloads/saturday(110).png",
     "/Users/samreedy/Downloads/saturday(111).png",
     "/Users/samreedy/Downloads/saturday(112).png",
+    "/Users/samreedy/Downloads/saturday(113).jpg",
+    "/Users/samreedy/Downloads/saturday(114).jpg",
+    "/Users/samreedy/Downloads/saturday(115).jpg",
+    "/Users/samreedy/Downloads/saturday(116).jpg",
     "/Users/samreedy/Downloads/saturday(23).png",
     "/Users/samreedy/Downloads/saturday(24).png",
     "/Users/samreedy/Downloads/saturday(25).png",
@@ -121,6 +129,7 @@
     "/Users/samreedy/Downloads/saturday(97).png",
     "/Users/samreedy/Downloads/saturday(98).png",
     "/Users/samreedy/Downloads/saturday(99).png",
+    "/Users/samreedy/Downloads/sunday(100).jpg",
     "/Users/samreedy/Downloads/sunday(20).png",
     "/Users/samreedy/Downloads/sunday(21).png",
     "/Users/samreedy/Downloads/sunday(22).png",
@@ -176,6 +185,9 @@
     "/Users/samreedy/Downloads/sunday(94).png",
     "/Users/samreedy/Downloads/sunday(95).png",
     "/Users/samreedy/Downloads/sunday(96).png",
+    "/Users/samreedy/Downloads/sunday(97).jpg",
+    "/Users/samreedy/Downloads/sunday(98).jpg",
+    "/Users/samreedy/Downloads/sunday(99).jpg",
     "/Users/samreedy/Downloads/thursday(17).png",
     "/Users/samreedy/Downloads/thursday(18).png",
     "/Users/samreedy/Downloads/thursday(19).png",
@@ -223,6 +235,10 @@
     "/Users/samreedy/Downloads/thursday(77).png",
     "/Users/samreedy/Downloads/thursday(78).png",
     "/Users/samreedy/Downloads/thursday(79).png",
+    "/Users/samreedy/Downloads/thursday(80).jpg",
+    "/Users/samreedy/Downloads/thursday(81).jpg",
+    "/Users/samreedy/Downloads/thursday(82).jpg",
+    "/Users/samreedy/Downloads/thursday(83).jpg",
     "/Users/samreedy/Downloads/wednesday(14).png",
     "/Users/samreedy/Downloads/wednesday(15).png",
     "/Users/samreedy/Downloads/wednesday(16).png",
@@ -265,7 +281,11 @@
     "/Users/samreedy/Downloads/wednesday(71).png",
     "/Users/samreedy/Downloads/wednesday(72).png",
     "/Users/samreedy/Downloads/wednesday(73).png",
-    "/Users/samreedy/Downloads/wednesday(74).png"
+    "/Users/samreedy/Downloads/wednesday(74).png",
+    "/Users/samreedy/Downloads/wednesday(75).jpg",
+    "/Users/samreedy/Downloads/wednesday(76).jpg",
+    "/Users/samreedy/Downloads/wednesday(77).jpg",
+    "/Users/samreedy/Downloads/wednesday(78).jpg"
   ],
   "events": [
     {
@@ -10468,13 +10488,18 @@
     {
       "eventName": "The Mal Eastick Review",
       "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Road, Mayfield NSW 2304",
       "genres": "BLUES",
+      "lngLat": [
+        151.7368,
+        -32.8973
+      ],
       "ticketCost": "39.30",
-      "id": "7aa0e08b-6446-4f17-af8e-a894bf0419e9",
+      "id": "532f3fd9-3d68-428b-84c6-505706c4dd6f",
       "userName": "sam",
       "userEmail": "sam@hotmail.com",
       "localTimeZone": "Australia/Sydney",
-      "eventDateTime": "2026-05-30T16:00:00.000Z",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
       "source": "whList"
     },
     {
@@ -16164,6 +16189,2358 @@
       "userEmail": "sam@hotmail.com",
       "localTimeZone": "Australia/Sydney",
       "eventDateTime": "2026-11-06T15:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Flangipanis, Boudicca, Exit Mould, LauraPanic",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296",
+      "genres": "ROCK, PUNK, FREE",
+      "lngLat": [
+        151.724,
+        -32.916
+      ],
+      "ticketCost": "0.00",
+      "id": "c013f0da-4ebd-4895-bc31-fa3b6439c7aa",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Autumn Hearts, The On And Ons",
+      "venueName": "The Oak Hotel",
+      "venueAddress": "225 Macquarie St, Tighes Hill NSW 2297",
+      "genres": "FREE, VINYL, ROCK",
+      "lngLat": [
+        151.733,
+        -32.911
+      ],
+      "ticketCost": "0.00",
+      "id": "15e03a2c-36ba-4e9e-aaf2-d91287d59694",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Baam Bam, One Flew Over, Fabels, Lonely Mountain Garden Party, S.A.M From Uncle, Sambafrog",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "PUNK, FREE, ROCK",
+      "lngLat": [
+        151.75,
+        -32.923
+      ],
+      "ticketCost": "0.00",
+      "id": "9e44c086-0e77-44bc-a224-441387d305e8",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Pretty Littles, Catpiss & Trophy Wyfe",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "PUNK, INDIE",
+      "lngLat": [
+        151.721,
+        -32.903
+      ],
+      "ticketCost": "44.40",
+      "id": "d14b38d9-6521-4e54-95d9-ef5eaaeefffa",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Mash Ups",
+      "venueName": "Bernies Bar",
+      "venueAddress": "261 Hunter St, Newcastle NSW 2300",
+      "genres": "LGBTQI+, DANCE, FREE",
+      "lngLat": [
+        151.777,
+        -32.928
+      ],
+      "ticketCost": "0.00",
+      "id": "7dd57a4b-c3c3-43b8-b01a-4824f8b9a0dc",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Janes, Sky Valley, Izzy & Dom",
+      "venueName": "Beauford Hotel",
+      "venueAddress": "109 Beaumont St, Hamilton NSW 2303",
+      "genres": "ROCK",
+      "lngLat": [
+        151.73,
+        -32.919
+      ],
+      "id": "ef1a56eb-9f0e-4887-9ac2-dd9f9a371008",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Decorum",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+      "genres": "FREE, JAZZ",
+      "lngLat": [
+        151.773,
+        -32.928
+      ],
+      "ticketCost": "0.00",
+      "id": "2b82f46c-c369-40f9-8d83-8de16d6a1488",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Tryouts",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2300",
+      "genres": "FREE, INDIE",
+      "lngLat": [
+        151.769,
+        -32.926
+      ],
+      "ticketCost": "0.00",
+      "id": "414a3482-b168-4007-9dad-27ed3ab407bf",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-04T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "William Crighton, Magpie Diaries, Melody Pool",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "ROCK, FOLK",
+      "lngLat": [
+        151.7485,
+        -32.9168
+      ],
+      "ticketCost": "43.00",
+      "id": "2bef1eee-2446-4e3f-82a2-71219ca63d4c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Future Is Phantom, Ramjets, Arthur Cinnamons",
+      "venueName": "The Oak",
+      "venueAddress": "189 Maitland Rd, Tighes Hill NSW 2297",
+      "genres": "FREE",
+      "lngLat": [
+        151.7371,
+        -32.9095
+      ],
+      "ticketCost": "0.00",
+      "id": "79ada569-9c19-45b6-94c0-9fb6d30eb659",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Dear Seattle, C.O.B.B., Jan., G.A.G, Bilby Queen, Suede Effect, Empress",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "PUNK, FREE, ROCK",
+      "lngLat": [
+        151.7583,
+        -32.9234
+      ],
+      "ticketCost": "22.00",
+      "id": "0a061a55-8529-4ad6-999a-f7942dc1a443",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Iryss, Exyle, Feign",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ROCK, INDIE, FREE",
+      "lngLat": [
+        151.7376,
+        -32.9095
+      ],
+      "ticketCost": "0.00",
+      "id": "2fd07553-95fe-438e-aa91-6a4b1e9a8c97",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Emo Night",
+      "venueName": "Bernies Bar",
+      "venueAddress": "410 King St, Newcastle West NSW 2300",
+      "genres": "LGBTQIA+, DANCE, FREE",
+      "lngLat": [
+        151.7645,
+        -32.9274
+      ],
+      "ticketCost": "0.00",
+      "id": "60793e35-d65b-494a-ac1a-869dbcffcab1",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Casual Wrecks, Cellophane Smile",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+      "genres": "FREE, INDIE",
+      "lngLat": [
+        151.7687,
+        -32.9262
+      ],
+      "ticketCost": "0.00",
+      "id": "c8ea2ebf-ff1b-4464-96b5-fbb060ca3b5c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Revenant, Portrait Of A Lady, Zack & Nicole",
+      "venueName": "Beauford Hotel",
+      "venueAddress": "39 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ROCK",
+      "lngLat": [
+        151.7351,
+        -32.9095
+      ],
+      "ticketCost": "undefined",
+      "id": "9cb887a4-21f4-4ea2-ab20-1a82baae63e6",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bentley Duo",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2300",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.7629,
+        -32.9272
+      ],
+      "ticketCost": "0.00",
+      "id": "cbdf1189-1592-4a0a-9f72-6496a6d78c55",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bangalley, Blind Pretty, Rhodes",
+      "venueName": "King Street Warehouse",
+      "venueAddress": "15 Steel St, Newcastle West NSW 2302",
+      "genres": "FREE, ROCK",
+      "lngLat": [
+        151.7641,
+        -32.9277
+      ],
+      "ticketCost": "0.00",
+      "id": "0fdd2f7c-b3db-49e7-9402-7687effecc0b",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-11T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Herd Immunity, Zamboni Jones, Bullshit Artiste",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "ROCK",
+      "ticketCost": "0.00",
+      "id": "b80977ab-bdc0-4efd-8280-f78da9f32722",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Moon Over Water, Edge Case, PC Dysco",
+      "venueName": "The Oak",
+      "venueAddress": "207 Maitland Rd, Tighes Hill NSW 2297",
+      "genres": "",
+      "ticketCost": "0.00",
+      "id": "99907bd2-6efb-4d47-85b6-eea9f0c8a702",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Ruffians, Out Of Focus, Ashby, Donuts, Neon Sunset",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "ALT, ROCK",
+      "ticketCost": "0.00",
+      "id": "11424c4d-fc40-4989-a96c-79799c9b0eb1",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Ruby Runaway",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ROCK, INDIE",
+      "ticketCost": "0.00",
+      "id": "ffbd3099-ade9-46ac-b796-b3eb37b69c8c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Breakout Drag Comp",
+      "venueName": "Bernies Bar",
+      "venueAddress": "410 King St, Newcastle West NSW 2302",
+      "genres": "LGBTQI+, DANCE",
+      "id": "bead16fc-86b7-48b0-ba80-51cafd287a9d",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Indelible, Jhalaena Mae, Maeve Collins",
+      "venueName": "Beaufort Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ROCK, ACOUSTIC",
+      "id": "3b9d772b-829c-4234-a138-749c3790aaec",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Starcrazy, Laurapanic, Revenant",
+      "venueName": "King Street Warehouse",
+      "venueAddress": "15 Steel St, Newcastle West NSW 2302",
+      "genres": "ROCK, HEAVY",
+      "ticketCost": "0.00",
+      "id": "b5d201a4-2cfe-47af-a4d3-bdb565892a45",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Huckleberry & The Devils Dandruff",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2302",
+      "genres": "COUNTRY",
+      "ticketCost": "0.00",
+      "id": "7482cbd4-94b0-46a1-a778-cc36eec6ebec",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-18T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Blades, Prem Bedlam, Nhostic & Riley JM, Proph & MaDMan, Leafe Greene",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "FREE, RAP",
+      "lngLat": [
+        151.7246,
+        -32.9157
+      ],
+      "ticketCost": "0.00",
+      "id": "fec33c3d-9faa-4501-a0bf-0005afe49869",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bilby Queen The Ori",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+      "genres": "FREE, FUNK",
+      "lngLat": [
+        151.7645,
+        -32.9329
+      ],
+      "ticketCost": "0.00",
+      "id": "9bc0493a-4820-4797-854a-efad63b33a76",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Side Effects, Nico, The Nikkis",
+      "venueName": "The Oak",
+      "venueAddress": "207 Maitland Rd, Tighes Hill NSW 2297",
+      "genres": "FREE, ROCK, VINYL",
+      "lngLat": [
+        151.74797,
+        -32.90674
+      ],
+      "ticketCost": "0.00",
+      "id": "d1cb9052-15b2-4ad4-922e-1c5e03a7e9c8",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bennetts Grove, Old House, Bardvarkk, Talk House, Vertebrae, Denise & Christopher",
+      "venueName": "The Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "FREE, PUNK, ROCK",
+      "lngLat": [
+        151.7584,
+        -32.9238
+      ],
+      "ticketCost": "0.00",
+      "id": "24494946-75b5-4e86-a179-ea426978a0ba",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "T Shirt Couture",
+      "venueName": "Bernies Bar",
+      "venueAddress": "410 King St, Newcastle West NSW 2300",
+      "genres": "LGBTQI+, DANCE, FREE",
+      "lngLat": [
+        151.7662,
+        -32.928
+      ],
+      "ticketCost": "0.00",
+      "id": "510f86ad-8077-425e-8bbc-1cd0a7dee282",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Headhunters (Guy Contact & Solar Suite), Where\u2019s Molly, Peptalk, Spaenk, Tedek",
+      "venueName": "Meantime",
+      "venueAddress": "104 Beaumont St, Hamilton NSW 2303",
+      "genres": "HOUSE, TECHNO, WITCHHOUSE SELECT",
+      "eventPromoters": "Sirocco",
+      "lngLat": [
+        151.7336,
+        -32.909
+      ],
+      "ticketCost": "45.00",
+      "id": "4d1567c6-933a-4096-982d-1c8ad91a0b69",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Poisoned Cherry, Sam Kelly, Johnny Goodlife",
+      "venueName": "Beaufort Hotel",
+      "venueAddress": "151 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ROCK, ACOUSTIC",
+      "lngLat": [
+        151.7355,
+        -32.9109
+      ],
+      "id": "a888d0ec-b423-413c-b95f-a9ee5ee497db",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Allan Parmenter",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2300",
+      "genres": "FREE, BLUES",
+      "lngLat": [
+        151.769,
+        -32.928
+      ],
+      "ticketCost": "0.00",
+      "id": "86c7f157-ecf1-466c-bd5a-b93f4d884208",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-25T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jungle Party 2.0",
+      "venueName": "The Oak Hotel",
+      "venueAddress": "201 Macquarie St, Tighes Hill NSW 2297",
+      "genres": "VINYL, FREE",
+      "lngLat": [
+        151.7224,
+        -32.9095
+      ],
+      "ticketCost": "0.00",
+      "id": "3f34a98b-a55e-42c7-9974-577f51ecda40",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Under The Palms: Shipwrek, Jordan Brando, William Kiss, Lips, Jyc.",
+      "venueName": "The Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "HOUSE, BASS",
+      "eventPromoters": "Bad Behaviour",
+      "lngLat": [
+        151.7585,
+        -32.9238
+      ],
+      "ticketCost": "74.00",
+      "id": "839e63f0-dccf-4082-a264-ca8e167c0535",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "19TWENTY",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "BLUES",
+      "lngLat": [
+        151.7264,
+        -32.9032
+      ],
+      "ticketCost": "44.40",
+      "id": "44f29b05-3ee5-4e4c-94b9-38bd4cdf59bd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "6.6.26 FEST w/ Head In A Jar, Phantom, Nasty Insects, Bongfist, Exsister, Leshen",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296",
+      "genres": "METAL",
+      "lngLat": [
+        151.7447,
+        -32.9157
+      ],
+      "id": "4eca27a3-b25b-41d1-81b4-0182365ea0f6",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Coming Out Party",
+      "venueName": "Bernies Bar",
+      "venueAddress": "521 Hunter St, Newcastle NSW 2300",
+      "genres": "LGBTQI+, DANCE, FREE",
+      "lngLat": [
+        151.7766,
+        -32.9265
+      ],
+      "ticketCost": "0.00",
+      "id": "86bf48e5-76e9-4983-aa78-21de7ece2287",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bellicanta's Launch Party",
+      "venueName": "The Argyle House",
+      "venueAddress": "129 Darby St, Cooks Hill NSW 2300",
+      "genres": "FREE, JAZZ",
+      "lngLat": [
+        151.7725,
+        -32.9317
+      ],
+      "ticketCost": "0.00",
+      "id": "a27e19c2-0baf-45c9-9146-205a901da593",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "LAN. pres Davy Roe Kree8",
+      "venueName": "The Bennett Hotel",
+      "venueAddress": "147 Beaumont St, Hamilton NSW 2303",
+      "genres": "FREE, HOUSE",
+      "lngLat": [
+        151.7441,
+        -32.9189
+      ],
+      "ticketCost": "0.00",
+      "id": "3a868ab2-8097-4fc5-974c-2fc2eaea269e",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "COMPLETE, Omac, Kryple",
+      "venueName": "King Street Hotel",
+      "venueAddress": "150 King St, Newcastle NSW 2300",
+      "genres": "RAP",
+      "lngLat": [
+        151.7752,
+        -32.9257
+      ],
+      "ticketCost": "56.65",
+      "id": "b7e5763f-5725-4ef4-b9d9-75e94f1a3137",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sound Social",
+      "venueName": "Earp Distillery",
+      "venueAddress": "41 Darling St, Carrington NSW 2294",
+      "genres": "ROCK, INDIE",
+      "lngLat": [
+        151.7648,
+        -32.9135
+      ],
+      "ticketCost": "10.00",
+      "id": "e7ce9bc6-66f6-41b6-9681-249af96dc940",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Smith & Western Jury, Emily A Smith",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+      "genres": "FREE, COUNTRY",
+      "lngLat": [
+        151.7667,
+        -32.9324
+      ],
+      "ticketCost": "0.00",
+      "id": "f28293e6-38bb-432a-9b79-43003df901dd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-05T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Red Rocket, Microwave Johnny",
+      "venueName": "The Oak",
+      "venueAddress": "207 Maitland Road, Tighes Hill, NSW 2297",
+      "genres": "FREE, ALT, INDIE",
+      "lngLat": [
+        151.7371,
+        -32.9015
+      ],
+      "ticketCost": "0.00",
+      "id": "f96067c5-7473-46eb-a688-9b64175fdbb7",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Y2K Tarty Party",
+      "venueName": "The Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham, NSW 2293",
+      "genres": "HOUSE, BASS",
+      "lngLat": [
+        151.7513,
+        -32.9234
+      ],
+      "ticketCost": "20.00",
+      "id": "79e00ec7-6a94-42c7-b980-846be8fe2711",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Swampfest Blues & Rhythm Festival",
+      "venueName": "The Wicko",
+      "venueAddress": "61 Maitland Road, Islington, NSW 2296",
+      "genres": "BLUES",
+      "lngLat": [
+        151.7429,
+        -32.9157
+      ],
+      "ticketCost": "51.00",
+      "id": "d3080295-221e-4c29-926d-414dd75caf6b",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Dave Graney & Clare Moore",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Road, Mayfield, NSW 2304",
+      "genres": "FOLK",
+      "lngLat": [
+        151.7368,
+        -32.8973
+      ],
+      "ticketCost": "50.00",
+      "id": "15bff8f6-86d8-41e0-b83e-566da91634da",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Full On Arvo II",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont Street, Islington, NSW 2296",
+      "genres": "PUNK, INDIE, DANCE, WITCHHOUSE SELECT",
+      "lngLat": [
+        151.7455,
+        -32.9155
+      ],
+      "ticketCost": "30.00",
+      "id": "d4f382cf-9a33-46b3-a94e-4b3eb8265153",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Gay Anthems",
+      "venueName": "Bernies Bar",
+      "venueAddress": "410 King Street, Newcastle West, NSW 2300",
+      "genres": "LGBTQI+, DANCE, FREE",
+      "lngLat": [
+        151.7651,
+        -32.9272
+      ],
+      "ticketCost": "0.00",
+      "id": "7714ff38-8d99-4dcd-89fb-33ea42b2b1f6",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sticky Tart Saturdays: Mob Wives",
+      "venueName": "Bar Romeo",
+      "venueAddress": "97-107 Darby Street, Cooks Hill, NSW 2300",
+      "genres": "LGBTQI+, DANCE, FREE",
+      "lngLat": [
+        151.7709,
+        -32.9304
+      ],
+      "ticketCost": "0.00",
+      "id": "a0b3f500-ea3f-4d71-a544-59b51f44c967",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Allan Parmenter, Green Whistle",
+      "venueName": "The Ori",
+      "venueAddress": "100-102 Darby St, Cooks Hill, NSW 2300",
+      "genres": "FREE, ROCK, BLUES",
+      "lngLat": [
+        151.7711,
+        -32.9308
+      ],
+      "ticketCost": "0.00",
+      "id": "aef23c2c-4b06-43d5-be98-0326983397d2",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Lvl 1 District Saturdays",
+      "venueName": "Gallipoli House",
+      "venueAddress": "3/5 Beaumont St, Hamilton, NSW 2303",
+      "genres": "DANCE, TECHNO",
+      "lngLat": [
+        151.7458,
+        -32.9157
+      ],
+      "ticketCost": "undefined",
+      "id": "8f53a602-3dac-4e4a-a40e-f00682e2597e",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Poison The Well, Haywire, Iron Mind, and Cutthroat",
+      "venueName": "King Street Bandroom",
+      "venueAddress": "15 Steel St, Newcastle West, NSW 2302",
+      "genres": "HARDCORE",
+      "lngLat": [
+        151.7641,
+        -32.9277
+      ],
+      "ticketCost": "84.90",
+      "id": "513ff709-20c2-4558-9c15-272fea018d6b",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Butterknife, Grace Aberhart, Flower Kid",
+      "venueName": "King Street Warehouse",
+      "venueAddress": "15 Steel St, Newcastle West, NSW 2302",
+      "genres": "FREE, ROCK, INDIE",
+      "lngLat": [
+        151.7641,
+        -32.9277
+      ],
+      "ticketCost": "0.00",
+      "id": "15456f08-0729-4b7f-917d-6879781aa6b8",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-12T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Gauze, Father Of The Bride, Boiler",
+      "venueName": "The Oak",
+      "venueAddress": "117 Glebe Rd, The Junction NSW 2291",
+      "genres": "FREE, ROCK, PUNK",
+      "lngLat": [
+        151.764,
+        -32.937
+      ],
+      "ticketCost": "0.00",
+      "id": "b27b5e09-9819-4c93-867d-3b03b63c703c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Vors",
+      "venueName": "Hiss & Crackle",
+      "venueAddress": "5/63 Cleary St, Hamilton NSW 2303",
+      "genres": "FREE, ROCK",
+      "lngLat": [
+        151.737,
+        -32.915
+      ],
+      "ticketCost": "0.00",
+      "id": "b1f8647c-d8af-49ae-818f-84bdf99ac3bd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Skegsssss & Friends",
+      "venueName": "Bar On The Hill",
+      "venueAddress": "University Dr, Callaghan NSW 2308",
+      "genres": "ROCK, PUNK, WITCHHOUSE SELECT",
+      "lngLat": [
+        151.708,
+        -32.893
+      ],
+      "ticketCost": "72.95",
+      "id": "7eda08a6-7c9c-493d-b1e1-825aa8aaed0f",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Velvet Club, Kev Sev, Sweet Heaps, Ohna, Bloom Band, Iryss",
+      "venueName": "The Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "ROCK, INDIE, FUNK",
+      "lngLat": [
+        151.751,
+        -32.923
+      ],
+      "ticketCost": "11.75",
+      "id": "60d03cbf-a6a3-449b-a540-f648c298b311",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sticky Tart Saturdays: Mob Wives",
+      "venueName": "Bar Romeo",
+      "venueAddress": "109 Hunter St, Newcastle NSW 2300",
+      "genres": "LGBTQI+, DANCE, FREE",
+      "eventPromoters": "Sticky Tart",
+      "lngLat": [
+        151.776,
+        -32.928
+      ],
+      "ticketCost": "0.00",
+      "id": "73d1d381-9718-405f-bf8f-ca28cfb43c71",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Re-Mains, Lachlan X Morris",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ALT, COUNTRY",
+      "lngLat": [
+        151.731,
+        -32.912
+      ],
+      "ticketCost": "28.60",
+      "id": "5dc1b02b-8619-4c1e-bd07-ffed72b61062",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Wild! by House of Bearhole",
+      "venueName": "Bernies Bar",
+      "venueAddress": "291 Hunter St, Newcastle NSW 2300",
+      "genres": "LGBTQI+, DANCE",
+      "lngLat": [
+        151.777,
+        -32.929
+      ],
+      "id": "fafed7f3-77e4-49e2-a951-a173dccb273a",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Lvl 1 District Saturdays",
+      "venueName": "Gallipoli House",
+      "venueAddress": "88 Young St, Carrington NSW 2294",
+      "genres": "DANCE, TECHNO",
+      "eventPromoters": "Lvl 1 District",
+      "lngLat": [
+        151.758,
+        -32.916
+      ],
+      "id": "4037a8eb-d4d7-474e-86b9-e24430a56960",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jono B",
+      "venueName": "Shout Brewing",
+      "venueAddress": "2/122 Industrial Dr, Mayfield NSW 2304",
+      "genres": "ACOUSTIC, FREE",
+      "lngLat": [
+        151.736,
+        -32.917
+      ],
+      "ticketCost": "0.00",
+      "id": "132270cf-9132-49fc-a591-69cfff745a97",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-19T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Ross Mvnro",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "177 King St, Newcastle NSW 2300, Australia",
+      "genres": "ELECTRONIC",
+      "lngLat": [
+        151.7766,
+        -32.9287
+      ],
+      "ticketCost": "0.00",
+      "id": "f1ec7649-47a4-4ac7-b66c-eb35a3ce15dc",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Big League, The Sweet Heaps, DJ Secateurs",
+      "venueName": "The Oak",
+      "venueAddress": "189 Hunter St, Newcastle NSW 2300, Australia",
+      "genres": "ROCK",
+      "lngLat": [
+        151.7774,
+        -32.9272
+      ],
+      "ticketCost": "0.00",
+      "id": "31628f5e-6d4a-41ee-92a7-728814a9becb",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "K+Lab, LO'99, Modul8, Sami Pav, Manix, Patrice, Equalise, Km3y, Shark, 2Lulu, Marco",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293, Australia",
+      "genres": "BASS, FUNK, TECHNO",
+      "eventPromoters": "Shenanigans",
+      "lngLat": [
+        151.7644,
+        -32.9234
+      ],
+      "ticketCost": "30.00",
+      "id": "ddf3c836-f4f5-4ffb-9890-16f047ab8b3b",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "After Dark Emo Night",
+      "venueName": "King Street Hotel",
+      "venueAddress": "150 King St, Newcastle NSW 2300, Australia",
+      "genres": "CLUB",
+      "lngLat": [
+        151.7758,
+        -32.9276
+      ],
+      "ticketCost": "29.95",
+      "id": "21496b44-1059-4571-be67-ffd602c22535",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Autumn Hearts, The Hovering Spooks",
+      "venueName": "Stag & Hunter",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304, Australia",
+      "genres": "ROCK",
+      "lngLat": [
+        151.7245,
+        -32.9038
+      ],
+      "ticketCost": "0.00",
+      "id": "1aa507e5-9c61-45a8-b0cd-4abe5b189c9c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Cast Call",
+      "venueName": "Bernies Bar",
+      "venueAddress": "88 Darby St, Cooks Hill NSW 2300, Australia",
+      "genres": "LGBTQI+, DANCE",
+      "lngLat": [
+        151.7733,
+        -32.9304
+      ],
+      "ticketCost": "0.00",
+      "id": "4242c8cf-2e5f-4173-866f-b5df55a5fb2c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Lvl 1 District Saturdays",
+      "venueName": "Gallipoli House",
+      "venueAddress": "80 Beaumont St, Hamilton NSW 2303, Australia",
+      "genres": "DANCE, TECHNO",
+      "lngLat": [
+        151.7451,
+        -32.9169
+      ],
+      "ticketCost": "",
+      "id": "2eadcb8d-7b6e-4a55-8c3c-36558e68bfdd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jono B",
+      "venueName": "Shout Brewing",
+      "venueAddress": "28/30 Clyde St, Hamilton North NSW 2292, Australia",
+      "genres": "ACOUSTIC",
+      "lngLat": [
+        151.7374,
+        -32.9135
+      ],
+      "ticketCost": "0.00",
+      "id": "bcd86638-e037-4be6-968e-e153db942ef1",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Friends of Owl, Ella Day",
+      "venueName": "The Ori",
+      "venueAddress": "75 Union St, Cooks Hill NSW 2300, Australia",
+      "genres": "",
+      "lngLat": [
+        151.7711,
+        -32.9298
+      ],
+      "ticketCost": "0.00",
+      "id": "e8554cfd-6041-4ade-9a1e-aaa146dd2981",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-26T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "High Andies, Dan Phelan",
+      "venueName": "The Oak Hotel",
+      "venueAddress": "111 Industrial Dr, Mayfield NSW 2304, Australia",
+      "genres": "FREE, VINYL, COUNTRY",
+      "lngLat": [
+        151.7226,
+        -32.9095
+      ],
+      "ticketCost": "0.00",
+      "id": "868c1478-95d5-477b-a0b0-b93f1b7623d7",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bodie",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "131 Hunter St, Newcastle NSW 2300, Australia",
+      "genres": "FREE, ACOUSTIC",
+      "lngLat": [
+        151.7779,
+        -32.9288
+      ],
+      "ticketCost": "0.00",
+      "id": "8abbc2f6-1368-42d7-906a-5d3f9bef9d80",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Lyzah",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293, Australia",
+      "genres": "ACOUSTIC, FREE",
+      "lngLat": [
+        151.7554,
+        -32.9221
+      ],
+      "ticketCost": "0.00",
+      "id": "cfe0f0f3-e997-42ea-a11d-937834aca9cd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Class Traitor, Lily Of The Valley, Daisy Chain, Exsister",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296, Australia",
+      "genres": "METAL, FREE",
+      "lngLat": [
+        151.7483,
+        -32.9168
+      ],
+      "ticketCost": "0.00",
+      "id": "5a5837f4-cc66-418b-a23f-dd4666094892",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Wharf Life",
+      "venueName": "Queens Wharf Hotel",
+      "venueAddress": "150 Wharf Rd, Newcastle NSW 2300, Australia",
+      "genres": "FREE, DANCE",
+      "lngLat": [
+        151.7828,
+        -32.9254
+      ],
+      "ticketCost": "0.00",
+      "id": "46dfc636-96f8-4ec8-9239-c695fbf23e18",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sunday Club",
+      "venueName": "Charlies Rooftop",
+      "venueAddress": "281 Hunter St, Newcastle NSW 2300, Australia",
+      "genres": "FREE, DANCE",
+      "lngLat": [
+        151.7744,
+        -32.9272
+      ],
+      "ticketCost": "0.00",
+      "id": "7164f0c5-978d-4cba-895e-beebc407021f",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Room 2 Dance",
+      "venueName": "Gallipoli Legion Club",
+      "venueAddress": "30 Beaumont St, Hamilton NSW 2303, Australia",
+      "genres": "CLUB",
+      "lngLat": [
+        151.7488,
+        -32.9189
+      ],
+      "id": "57f0fb07-3b51-43f5-8177-44ac87f61a38",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jason Cole, Kofi Harara",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300, Australia",
+      "genres": "FREE, ACOUSTIC",
+      "lngLat": [
+        151.7663,
+        -32.9324
+      ],
+      "ticketCost": "0.00",
+      "id": "651cc266-7b5b-4a40-9a16-6eab9c82bf79",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-27T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Wire Knives, Not Good, Not Bad",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont Street, Islington, NSW 2296",
+      "genres": "ROCK, FREE",
+      "lngLat": [
+        151.7454,
+        -32.9169
+      ],
+      "ticketCost": "0.00",
+      "id": "d1f2d580-8a41-4863-a336-625c8f6c0395",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Imdwnsouth, Kaymin The Ori",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+      "genres": "ACOUSTIC, FREE",
+      "lngLat": [
+        151.7686,
+        -32.9298
+      ],
+      "ticketCost": "0.00",
+      "id": "5fcd7436-592b-4171-b2ee-f51b16fe379a",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "High Andies, Straight Arrows & More",
+      "venueName": "The Oak",
+      "venueAddress": "207 Maitland Road, Tighes Hill, NSW 2297",
+      "genres": "FREE, VINYL, BAND",
+      "lngLat": [
+        151.7391,
+        -32.9095
+      ],
+      "ticketCost": "0.00",
+      "id": "0701a792-6560-47b9-9e91-2e884c93aade",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Benny Rowdy Quartet",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union Street, Newcastle West NSW 2300",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.7656,
+        -32.9264
+      ],
+      "ticketCost": "0.00",
+      "id": "2a316b64-08a3-4bb8-ac8f-1d34f6c07f6c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Any Given Sunday Long Weekend Party",
+      "venueName": "King Street Hotel",
+      "venueAddress": "15 Steel Street, Newcastle West NSW 2302",
+      "genres": "FREE, DANCE",
+      "lngLat": [
+        151.7673,
+        -32.9272
+      ],
+      "ticketCost": "0.00",
+      "id": "b31af8c3-97be-4b8c-8702-8b28d8f32c04",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Letters To Lion, Sun Wilde, Sam Nicholls And The Supernatural, Divers, Carnivara, Sam Collins Band, Abbi Yeo Band",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway Street, Wickham NSW 2293",
+      "genres": "ROCK, INDIE",
+      "lngLat": [
+        151.7561,
+        -32.9223
+      ],
+      "ticketCost": "27.50",
+      "id": "634ba36f-87a9-41ff-bfbd-41402c995c0b",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Ray Beadle",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Road, Mayfield NSW 2304",
+      "genres": "BLUES",
+      "lngLat": [
+        151.7368,
+        -32.8973
+      ],
+      "ticketCost": "39.30",
+      "id": "03854ed3-3519-4414-9baf-c4a282423000",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Good Kids, Butterknife, Chin Wag, Trip Fandino, Metro Lane",
+      "venueName": "Earp Distillery",
+      "venueAddress": "41 Darling Street, Carrington NSW 2294",
+      "genres": "ROCK, INDIE, FREE",
+      "lngLat": [
+        151.7644,
+        -32.9157
+      ],
+      "ticketCost": "0.00",
+      "id": "a1b20530-3578-47ce-9223-b5fc6776cf4d",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Au4r33y, EEJ, Splak!",
+      "venueName": "Wavvy",
+      "venueAddress": "Hunter Street, Newcastle NSW 2300",
+      "genres": "WITCHHOUSE SELECT, ELECTRONIC",
+      "lngLat": [
+        151.7766,
+        -32.929
+      ],
+      "ticketCost": "37.71",
+      "id": "fcbe0bd8-a8a0-4767-98b8-e914d5e328fa",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-06T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "High Andies, Breeze, Dan Huish",
+      "venueName": "The Oak",
+      "venueAddress": "207 Maitland Rd, Tighes Hill NSW 2297",
+      "genres": "VINYL, COUNTRY, JAZZ",
+      "ticketCost": "0.00",
+      "id": "b7f44495-40c0-404c-8d76-cace85e451fc",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Charlie Farmer",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2300",
+      "genres": "INDIE",
+      "ticketCost": "0.00",
+      "id": "06bfc965-1b83-4eae-bcc9-6a9c62023d50",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Wholly Smoked, Gugi",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "ROCK, INDIE",
+      "lngLat": [
+        151.759995,
+        -32.919998
+      ],
+      "id": "a93461da-e3c9-4170-b7ee-a291739e98f6",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "FIST, Derrick",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296",
+      "genres": "ROCK",
+      "lngLat": [
+        151.7486,
+        -32.9234
+      ],
+      "id": "eb8fbecd-eee0-4266-9ae3-e5fabac34f4a",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazmine Mary, Zeal.H",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "FOLK",
+      "lngLat": [
+        151.7367714,
+        -32.8973172
+      ],
+      "id": "b1c54e0a-e48e-4a04-b0c3-2c8710ca2768",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Abbie Yeo, Jason Cole",
+      "venueName": "The Oriental Hotel",
+      "venueAddress": "53 Bull St, Cooks Hill NSW 2300",
+      "genres": "ACOUSTIC",
+      "ticketCost": "0.00",
+      "id": "f4c92a84-16ad-4fd4-be6c-bdd07dc01f8a",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Wharf Life",
+      "venueName": "The Queens Wharf Hotel",
+      "venueAddress": "150 Wharf Rd, Newcastle NSW 2300",
+      "genres": "DANCE",
+      "ticketCost": "0.00",
+      "id": "d1ee1011-db06-4946-8099-75d2444442bf",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sunday Club",
+      "venueName": "Charlies Rooftop",
+      "venueAddress": "529 Hunter St, Newcastle NSW 2300",
+      "genres": "DANCE",
+      "ticketCost": "0.00",
+      "id": "7a503eff-e40a-49ed-9e2c-452b4d9d0e7c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-13T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "High Andies, Ryan & Tomek",
+      "venueName": "The Oak",
+      "venueAddress": "110 Maitland Rd, Tighes Hill NSW 2297",
+      "genres": "FREE, VINYL, COUNTRY",
+      "lngLat": [
+        151.7226,
+        -32.9099
+      ],
+      "ticketCost": "0.00",
+      "id": "2f33d74f-2f24-49a5-bb8e-f1da04a8b282",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "The Blacklock Quartet",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "100 Maitland Rd, Islington NSW 2296",
+      "genres": "FREE, JAZZ",
+      "lngLat": [
+        151.7377,
+        -32.9157
+      ],
+      "ticketCost": "0.00",
+      "id": "1b6b146d-3a1a-4739-ae83-54f159f56c23",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Lyzah",
+      "venueName": "Lass O'Gowrie",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "ACOUSTIC, FREE",
+      "lngLat": [
+        151.7513,
+        -32.9238
+      ],
+      "ticketCost": "0.00",
+      "id": "5f7e8b39-e770-4c60-af97-22f8717ad2e7",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Izaak Clifford & His Hired Hands, The Janes, Boiler",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296",
+      "genres": "ALT, INDIE",
+      "lngLat": [
+        151.7405,
+        -32.9157
+      ],
+      "id": "ddcfa700-3d17-461f-90d5-7292e7599d55",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "James Blundell, Briar Blundell",
+      "venueName": "Stag & Hunter Hotel",
+      "venueAddress": "187 Maitland Rd, Mayfield NSW 2304",
+      "genres": "COUNTRY",
+      "lngLat": [
+        151.7247,
+        -32.9037
+      ],
+      "id": "32a83515-338a-458a-b8c7-3395bc794272",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Wharf Life",
+      "venueName": "The Queens Wharf Hotel",
+      "venueAddress": "150 Wharf Rd, Newcastle NSW 2300",
+      "genres": "FREE, DANCE",
+      "lngLat": [
+        151.7831,
+        -32.9268
+      ],
+      "ticketCost": "0.00",
+      "id": "3c65cbd2-56a7-43d6-838e-813061b06cde",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sunday Club",
+      "venueName": "Charlies Rooftop",
+      "venueAddress": "108 Beaumont St, Hamilton NSW 2303",
+      "genres": "FREE, DANCE",
+      "lngLat": [
+        151.7376,
+        -32.9192
+      ],
+      "ticketCost": "0.00",
+      "id": "bfee2646-c4b3-4491-9997-0fb5db215ca0",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Winter Solstice Variety Show",
+      "venueName": "Frothers Espresso",
+      "venueAddress": "104 Darby St, Cooks Hill NSW 2300",
+      "genres": "FREE",
+      "lngLat": [
+        151.7744,
+        -32.9328
+      ],
+      "ticketCost": "0.00",
+      "id": "f398d15b-0c16-43b2-a940-101b52364b53",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Virtues, Bound In Fear, Pray4Me, Local Support",
+      "venueName": "King Street Warehouse",
+      "venueAddress": "140 King St, Newcastle NSW 2300",
+      "genres": "METAL",
+      "lngLat": [
+        151.7779,
+        -32.9272
+      ],
+      "ticketCost": "40.00",
+      "id": "95be02bc-af27-480d-8d5a-541d7e70f398",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Plague Dweller, Terra Meridian",
+      "venueName": "Hiss & Crackle",
+      "venueAddress": "4/88 Glebe Rd, The Junction NSW 2291",
+      "genres": "FREE, HEAVY",
+      "lngLat": [
+        151.7651,
+        -32.9377
+      ],
+      "ticketCost": "0.00",
+      "id": "f1978e9a-efd7-4c4c-8137-83e86c01a186",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-20T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night",
+      "venueName": "The Underground",
+      "venueAddress": "147 Beaumont St, Hamilton NSW 2303",
+      "genres": "JAZZ",
+      "lngLat": [
+        151.7484,
+        -32.9234
+      ],
+      "ticketCost": "10.00",
+      "id": "c8ad16e0-2bdc-4d88-b91a-f2d41cc576d9",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-03T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night: Breeze",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.7641,
+        -32.9221
+      ],
+      "ticketCost": "0.00",
+      "id": "91e735d6-9916-4895-9437-39ef5617fa50",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-03T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "BYO Vinyl Night",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "1/159 Beaumont St, Hamilton NSW 2303",
+      "genres": "VINYL, FREE",
+      "lngLat": [
+        151.7482,
+        -32.9243
+      ],
+      "ticketCost": "0.00",
+      "id": "3c5f0543-cd10-4161-a009-b1ec5bb4d2d5",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-03T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Gauze, Portrait Of A Lady, Toast",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296",
+      "genres": "HEAVY, FREE",
+      "lngLat": [
+        151.7492,
+        -32.9201
+      ],
+      "ticketCost": "0.00",
+      "id": "9d9e6905-3ec8-42c5-93fc-ff32b6897540",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-03T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night",
+      "venueName": "The Underground",
+      "venueAddress": "10/12 Market St, Newcastle NSW 2300, Australia",
+      "genres": "JAZZ",
+      "lngLat": [
+        151.7788,
+        -32.9287
+      ],
+      "ticketCost": "10.00",
+      "id": "54f2b472-f73c-4709-83b8-7cbd9505ab09",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-10T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night: Breeze",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293, Australia",
+      "genres": "JAZZ",
+      "lngLat": [
+        151.7584,
+        -32.9234
+      ],
+      "ticketCost": "0.00",
+      "id": "5369b529-319a-4322-8e00-7e285b37e837",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-10T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "BYO Vinyl Night",
+      "venueName": "Maru",
+      "venueAddress": "384 Hunter St, Newcastle NSW 2300, Australia",
+      "genres": "VINYL",
+      "lngLat": [
+        151.7766,
+        -32.9284
+      ],
+      "ticketCost": "0.00",
+      "id": "f227bb30-3056-4f32-8b74-e96c6958f960",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-10T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Mudkrab, Izaak Clifford & His Hired Hands, The Sobars, Pieces Of The Storm",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296, Australia",
+      "genres": "ALT, ROCK",
+      "lngLat": [
+        151.7473,
+        -32.9213
+      ],
+      "ticketCost": "0.00",
+      "id": "3e108e20-5d59-449f-902a-befe16639bfe",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-10T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night",
+      "venueName": "The Underground",
+      "venueAddress": "371 Hunter St, Newcastle NSW 2300, Australia",
+      "genres": "JAZZ",
+      "lngLat": [
+        151.7788,
+        -32.9287
+      ],
+      "ticketCost": "10.00",
+      "id": "c0d4bbd4-a07e-4994-911c-a7f13b1b6a4f",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-17T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night: Breeze",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293, Australia",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.7558,
+        -32.9234
+      ],
+      "ticketCost": "0.00",
+      "id": "8f8dd50d-8c4a-4726-83df-c49164fc2ce6",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-17T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "BYO Vinyl Night",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "169 Darby St, Cooks Hill NSW 2300, Australia",
+      "genres": "VINYL, FREE",
+      "lngLat": [
+        151.7735,
+        -32.9348
+      ],
+      "ticketCost": "0.00",
+      "id": "1637675c-1b67-41af-be54-a5827d339f93",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-17T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Sanguisugabogg, PeelingFlesh, Gutless",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2/6 Beaumont St, Islington NSW 2296, Australia",
+      "genres": "METAL",
+      "lngLat": [
+        151.7456,
+        -32.9197
+      ],
+      "id": "fbc167f8-e9df-4234-a7f3-b6c63f594329",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-17T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night",
+      "venueName": "The Underground",
+      "venueAddress": "Lower Ground, 32 Church St, Newcastle NSW 2300",
+      "genres": "JAZZ",
+      "lngLat": [
+        151.7788,
+        -32.9284
+      ],
+      "ticketCost": "10.00",
+      "id": "7834cd6f-d2ed-40fe-a4c3-f82340830afd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-24T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Jazz Night: Breeze",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.7561,
+        -32.9223
+      ],
+      "ticketCost": "0.00",
+      "id": "6a05ea14-c025-45d6-89cc-40c0265082bc",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-24T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "BYO Vinyl Night",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2300",
+      "genres": "VINYL, FREE",
+      "lngLat": [
+        151.7634,
+        -32.9271
+      ],
+      "ticketCost": "0.00",
+      "id": "8d37d4fb-8ddf-4e8d-a3dc-a40ef2341a25",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-24T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Joseph Miles, Zenith Paltrow",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "ACOUSTIC, FREE",
+      "lngLat": [
+        151.7486,
+        -32.9197
+      ],
+      "ticketCost": "0.00",
+      "id": "5bc6e1d3-0078-4f04-b9a9-a0b6a1c8df0c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-24T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Last Dinosaurs, Bad Suns",
+      "venueName": "King Street Warehouse",
+      "venueAddress": "15 Steel St, Newcastle West NSW 2302",
+      "genres": "ROCK",
+      "lngLat": [
+        151.7641,
+        -32.9277
+      ],
+      "ticketCost": "79.90",
+      "id": "4ec0e00c-7ef8-4d55-a6f3-088bcc9cb2da",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-24T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Open Decks",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "DJ",
+      "lngLat": [
+        151.7589,
+        -32.9238
+      ],
+      "ticketCost": "0.00",
+      "id": "823fbd65-1f3f-4fee-ad6a-8ef084b754bc",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-02T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "SF Wrens",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "137 Maitland Rd, Mayfield NSW 2304",
+      "genres": "JAZZ",
+      "lngLat": [
+        151.7285,
+        -32.909
+      ],
+      "ticketCost": "0.00",
+      "id": "945b5069-cae6-4ddf-b378-cbe81fb7df18",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-02T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Arietta, Ashby, Gauze, Suede Effect",
+      "venueName": "King Street Hotel",
+      "venueAddress": "15 King St, Newcastle NSW 2300",
+      "genres": "PUNK",
+      "lngLat": [
+        151.7828,
+        -32.9288
+      ],
+      "ticketCost": "0.00",
+      "id": "c1547062-3007-4057-ac4d-f1e1f644a94b",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-02T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Zipper Clone, Obstructive, pee wee 50s",
+      "venueName": "Beauford Hotel",
+      "venueAddress": "73 Maitland Rd, Mayfield NSW 2304",
+      "genres": "ROCK",
+      "lngLat": [
+        151.7314,
+        -32.9119
+      ],
+      "id": "973e656b-6652-4f01-a8b3-51bef93ec2b5",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-02T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Open Decks",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "FREE, DJ",
+      "lngLat": [
+        151.7456,
+        -32.9238
+      ],
+      "ticketCost": "0.00",
+      "id": "a5d7713b-cfcb-4bbd-b1e6-7835dbcd7c53",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-09T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Mick Daley vs the Golden Shadow, Gibberish Collective, Su Morley",
+      "venueName": "Beauford Hotel",
+      "venueAddress": "39 Maitland Rd, Mayfield NSW 2304",
+      "genres": "COUNTRY",
+      "lngLat": [
+        151.7246,
+        -32.9084
+      ],
+      "id": "40c9ae7e-e809-4631-9b3d-26c101d03aad",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-09T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Poco Loco",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union Street, Newcastle West NSW 2302",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.761,
+        -32.9268
+      ],
+      "ticketCost": "0.00",
+      "id": "08897e67-da69-44ae-a32a-4184242e1458",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-09T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Steel City Scurvy Dogs",
+      "venueName": "Mad Poet",
+      "venueAddress": "537 Hunter Street, Newcastle West NSW 2302",
+      "genres": "FREE",
+      "lngLat": [
+        151.7554,
+        -32.9257
+      ],
+      "ticketCost": "0.00",
+      "id": "18805f9f-e4be-4095-a01b-ce3bcfc86b1c",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-09T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Blunt Cactus, Sam Collins",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "FREE, ROCK",
+      "lngLat": [
+        151.7346,
+        -32.9213
+      ],
+      "ticketCost": "0.00",
+      "id": "b68266c1-7dd5-435c-b48a-6a372d4943cf",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-09T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bellicanta's",
+      "venueName": "Theydy's",
+      "venueAddress": "50 Clyde St, Hamilton North NSW 2292",
+      "genres": "FREE, JAZZ",
+      "lngLat": [
+        151.7378,
+        -32.9115
+      ],
+      "ticketCost": "0.00",
+      "id": "057bfd00-6b76-4e44-9b61-79a3f65aaf92",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-09T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Open Decks",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "FREE, DJ",
+      "lngLat": [
+        151.7589,
+        -32.9229
+      ],
+      "ticketCost": "0.00",
+      "id": "5438cfba-7def-4ad1-98c3-840725a9da47",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-16T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Steel City Scurvy Dogs",
+      "venueName": "Mad Poet",
+      "venueAddress": "537 Hunter St, Newcastle West NSW 2302",
+      "genres": "FREE",
+      "lngLat": [
+        151.7654,
+        -32.9274
+      ],
+      "ticketCost": "0.00",
+      "id": "2f1b4e2f-c67e-472a-8aac-2e0cfba0f827",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-16T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Phoenix Pritchard",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "FREE, ACOUSTIC",
+      "lngLat": [
+        151.7397,
+        -32.9168
+      ],
+      "ticketCost": "0.00",
+      "id": "fd537c5a-4c9b-4b7d-a8cb-54773edc8ccd",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-16T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bellicanta's Theydy's",
+      "venueName": "Theydy's",
+      "venueAddress": "50 Clyde St, Hamilton North NSW 2292",
+      "genres": "FREE, JAZZ",
+      "lngLat": [
+        151.7378,
+        -32.9115
+      ],
+      "ticketCost": "0.00",
+      "id": "c38e75c6-e602-4a1f-aaa2-a994fb4f7c69",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-16T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bleu Collective",
+      "venueName": "Maru Hi-Fi",
+      "venueAddress": "10 Union St, Newcastle West NSW 2302",
+      "genres": "JAZZ, FREE",
+      "lngLat": [
+        151.7645,
+        -32.9268
+      ],
+      "ticketCost": "0.00",
+      "id": "0b5cbdf5-a50e-4ee4-a413-a402844a6ea7",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-16T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Open Decks",
+      "venueName": "Lass O'Gowrie Hotel",
+      "venueAddress": "14 Railway St, Wickham NSW 2293",
+      "genres": "DJ",
+      "ticketCost": "0.00",
+      "id": "17d6fcc7-3626-4eb9-bef1-197f81f3790a",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-23T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Steel City Scurvy Dogs",
+      "venueName": "Mad Poet",
+      "venueAddress": "537 Hunter St, Newcastle West NSW 2302",
+      "genres": "PUNK",
+      "ticketCost": "0.00",
+      "id": "6d619fdc-27d6-4af9-81cf-34063db99d3f",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-23T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Bellicanta's",
+      "venueName": "Theydy's",
+      "venueAddress": "50 Clyde St, Hamilton North NSW 2292",
+      "genres": "JAZZ",
+      "ticketCost": "0.00",
+      "id": "603b8963-95c7-406f-8eed-72fbaaaa54b9",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-23T16:00:00.000Z",
+      "source": "whList"
+    },
+    {
+      "eventName": "Crash & The Carpenters, Mudkrab, Cornea",
+      "venueName": "Hamilton Station Hotel",
+      "venueAddress": "2-6 Beaumont St, Islington NSW 2296",
+      "genres": "PUNK, ROCK",
+      "ticketCost": "0.00",
+      "id": "54ff848a-410c-4da6-9318-adbd6f76732d",
+      "userName": "sam",
+      "userEmail": "sam@hotmail.com",
+      "localTimeZone": "Australia/Sydney",
+      "eventDateTime": "2026-06-23T16:00:00.000Z",
       "source": "whList"
     }
   ]

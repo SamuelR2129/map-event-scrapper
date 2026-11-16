@@ -22,6 +22,22 @@ Deliverable: this document. No charts, no image assets, no code changes.
 > - Free / paid / unknown is **63.7% / 26.0% / 10.2%**; the paid median is still $25.
 > - Listing grain by weekday: Sat 354 · Fri 344 · Sun 267 · Thu 178 · Wed 117.
 
+> **June 2026 batch — 2026-11-16.** The four June weeks missing from the corpus (W23–W26, 1–28 June
+> 2026) were recovered from 20 posters downloaded to `~/Downloads/june/` on 16 Nov 2026. They are the
+> same Witchhouse weekday collages as the rest of the corpus, but arrived with Facebook media-ID
+> filenames, no EXIF date, and a file creation date of the download rather than the poster.
+>
+> They were copied (originals left in place) into `~/Downloads` as `<weekday>(n).jpg`, with the weekday
+> read from the highlighted tab on each poster, and their creation date set to the poster's own date
+> (`Fri 05/06` → `friday(101).jpg`, created 5 June 2026). **The date is carried by the file creation
+> date, not the filename** — the filename only names the weekday. These 20 images therefore represent
+> **June 2026**, and only June 2026; no other month is drawn from a retrospective batch.
+>
+> Provenance for every file (original → renamed → poster date → weekday) is in
+> [`../researchData/june-2026-sources.json`](../researchData/june-2026-sources.json). June is no longer
+> a gap: the historical gap analysis below describes the 17 Oct / 14 Nov corpus, and the current state
+> (two missing weeks, W18 and W39) is in `research-data-analysis.md` §2.
+
 > **Revised numbers:** `specs/research-data-analysis.md` supersedes several raw-row estimates
 > below (listings, recurring series, one-off rate). See its "Corrections to earlier raw-row
 > estimates" section before quoting anything from this document.

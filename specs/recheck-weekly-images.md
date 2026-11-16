@@ -4,6 +4,13 @@ Status: implemented. Full 266-image re-extraction complete on 2026-11-14, and it
 unknown-venue findings applied to the research corpus. The applier's output was merged into
 `researchData/events.json` and the per-date dumps were then removed on 2026-11-14.
 
+The corpus has since grown to **286 images / 1,388 events**. The extra 20 are the **June 2026 batch**
+(W23–W26, 1–28 June), extracted on 2026-11-16 from `~/Downloads/june/` after being copied into
+`~/Downloads` with the poster's weekday in the filename and its own date as the creation date — see
+[`research-data-methodology.md`](./research-data-methodology.md) and
+[`../researchData/june-2026-sources.json`](../researchData/june-2026-sources.json). Everything below
+describes the 2026-11-14 pass.
+
 The research run (`npm run research`) extracts each poster once and never revisits it. That leaves two
 persistent gaps in `researchData/events-*.json`:
 
@@ -28,7 +35,7 @@ outputs are `researchData/recheck-images-<date>.json` and `.md`. A separate appl
 | `package.json` | `"recheck"` and `"apply-recheck"` scripts |
 | `src/helpers/getImageResearchData.ts` | Exports `getWeeklyImagesFromDownloads`, `getImageEventDateTime`, `ImageFile`, `DayOfWeek` so both scripts share one Downloads scan |
 | `researchData/events.json` | The merged, de-duplicated event corpus (source of truth) |
-| `researchData/processed-images.json` | Pipeline state: the 266 images already processed |
+| `researchData/processed-images.json` | Pipeline state: the 286 images already processed |
 | `researchData/recheck-images-<date>.json` / `.md` | Generated per recheck run, then folded into `events.json`; not kept afterwards |
 
 ## Usage
@@ -220,6 +227,9 @@ carry a promoter (up from 4). The per-date dumps were then removed; `researchDat
 single event file. Running the applier twice is idempotent: matched rows keep the corpus id and new
 rows derive a stable id from the finding. `scripts/dedupe-events.py` re-checks the merged file for
 duplicate `eventName` + `eventDateTime` rows (venue-aware by default; `--strict` ignores venue).
+
+After the June 2026 batch (2026-11-16) the same file holds **1,388 events from 286 images**, of which
+**166** carry a promoter.
 
 ## Caveats
 
