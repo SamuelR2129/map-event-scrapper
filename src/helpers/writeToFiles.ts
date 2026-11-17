@@ -10,6 +10,19 @@ export const researchDataDir = path.join(__dirname, "..", "..", "researchData");
 
 export const getEventFilePath = (cityName: string, fileName: string) => path.join(eventFilesDir, cityName, fileName);
 
+/**
+ * Read an event file from disk. Returns null when the file is missing or unparseable,
+ * so callers can fall back instead of throwing.
+ */
+export const readEventFile = (cityName: string, fileName: string): ScrapedEvent[] | null => {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(getEventFilePath(cityName, fileName), "utf8"));
+    return Array.isArray(parsed) ? (parsed as ScrapedEvent[]) : null;
+  } catch {
+    return null;
+  }
+};
+
 export function writeWithFallback(filePath: string, data: string, successMsg: string) {
   const dir = path.dirname(filePath);
   try {
@@ -38,24 +51,43 @@ export const clearEventFile = (cityName: string, fileName: string, successMsg: s
   writeWithFallback(getEventFilePath(cityName, fileName), JSON.stringify([]), successMsg);
 };
 
-export const writeToIncompleteEventFiles = (incompleteEvents: ScrapedEvent[], config: CityConfig) => {
+export type IncompleteWriteMode = "merge" | "replace";
+
+/**
+ * Write the events that could not be completed.
+ *
+ * `replace` makes the file reflect only the current run, so a map run does not
+ * accumulate stale investigation entries from previous runs.
+ */
+export const writeToIncompleteEventFiles = (
+  incompleteEvents: ScrapedEvent[],
+  config: CityConfig,
+  mode: IncompleteWriteMode = "merge",
+) => {
   const { city, eventFiles } = config;
 
-  const mergedEvents = eventFiles.incomplete.length
-    ? [...eventFiles.incomplete, ...incompleteEvents]
-    : incompleteEvents;
+  const existing =
+    mode === "replace" ? [] : (readEventFile(city.cityName, "incomplete-events.json") ?? eventFiles.incomplete);
+
+  const mergedEvents = existing.length ? [...existing, ...incompleteEvents] : incompleteEvents;
 
   writeWithFallback(
     getEventFilePath(city.cityName, "incomplete-events.json"),
     JSON.stringify(mergedEvents),
-    `${incompleteEvents.length} events added to incomplete-events for investigation.`,
+    mode === "replace"
+      ? `${incompleteEvents.length} events written to incomplete-events for investigation.`
+      : `${incompleteEvents.length} events added to incomplete-events for investigation.`,
   );
 };
 
 export const writeToCompleteEventFiles = async (completeEvents: ScrapedEvent[], config: CityConfig) => {
   const { city, eventFiles } = config;
 
-  const mergedEvents = eventFiles.complete.length ? [...eventFiles.complete, ...completeEvents] : completeEvents;
+  // Read from disk so events pruned by deleteOldEvents are not re-added from the
+  // start-of-run snapshot held in `config.eventFiles`.
+  const existing = readEventFile(city.cityName, "complete-events.json") ?? eventFiles.complete;
+
+  const mergedEvents = existing.length ? [...existing, ...completeEvents] : completeEvents;
 
   const { dedupedEvents, removedEvents } = await aiDedupCompleteEvents(mergedEvents);
 
@@ -71,7 +103,9 @@ export const writeToCompleteEventFiles = async (completeEvents: ScrapedEvent[], 
 export const writeToPastEventFiles = (events: ScrapedEvent[], config: CityConfig) => {
   const { city, eventFiles } = config;
 
-  const mergedEvents = eventFiles.complete.length ? [...eventFiles.past, ...events] : events;
+  const existing = readEventFile(city.cityName, "past-events.json") ?? eventFiles.past;
+
+  const mergedEvents = existing.length ? [...existing, ...events] : events;
 
   writeWithFallback(
     getEventFilePath(city.cityName, "past-events.json"),

@@ -2,12 +2,16 @@ import { ScrapedEvent } from "../scrappers/types";
 import { sanitizeEvents } from "./sanitizer";
 import { CityConfig } from "../cityConfig";
 import { deleteOldEvents } from "./deleteOldEvents";
-import { writeWithFallback, getEventFilePath } from "./writeToFiles";
+import { writeWithFallback, getEventFilePath, readEventFile } from "./writeToFiles";
 
 export const writeToStagingEventFile = (stagingEvents: ScrapedEvent[], scrapperName: string, config: CityConfig) => {
-  const mergedEvents = config.eventFiles.staging.length
-    ? [...config.eventFiles.staging, ...stagingEvents]
-    : stagingEvents;
+  // Read the file at merge time rather than trusting `config.eventFiles.staging`,
+  // which is a snapshot from the start of the run and would re-add events that
+  // `deleteOldEvents` has just pruned.
+  const existing =
+    readEventFile(config.city.cityName, "staging-events.json") ?? config.eventFiles.staging ?? [];
+
+  const mergedEvents = [...existing, ...stagingEvents];
 
   writeWithFallback(
     getEventFilePath(config.city.cityName, "staging-events.json"),

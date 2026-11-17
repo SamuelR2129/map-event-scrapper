@@ -21,6 +21,56 @@ function addressMatches(a: string | undefined, b: string | undefined): boolean {
   return a.toLowerCase().trim() === b.toLowerCase().trim();
 }
 
+const normaliseText = (value: string | undefined) =>
+  (value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const tokenSet = (value: string | undefined) => new Set(normaliseText(value).split(" ").filter(Boolean));
+
+function jaccard(a: Set<string>, b: Set<string>): number {
+  if (a.size === 0 || b.size === 0) return 0;
+  let intersection = 0;
+  for (const token of a) {
+    if (b.has(token)) intersection++;
+  }
+  return intersection / (a.size + b.size - intersection);
+}
+
+/**
+ * Whether two event names describe the same event.
+ *
+ * Only near-identical names count: dense venues list several different events at the
+ * same address on the same night ("[UNHINGED] Fridays" vs "Ultimate Fridays"), so a
+ * partial word overlap must go to the AI rather than be treated as a duplicate.
+ */
+export function namesAreSimilar(a: string | undefined, b: string | undefined): boolean {
+  const normA = normaliseText(a);
+  const normB = normaliseText(b);
+  if (!normA || !normB) return false;
+  if (normA === normB) return true;
+
+  const shorter = normA.length <= normB.length ? normA : normB;
+  const longer = normA.length <= normB.length ? normB : normA;
+  if (shorter.length >= 8 && longer.includes(shorter)) return true;
+
+  return jaccard(tokenSet(normA), tokenSet(normB)) >= 0.85;
+}
+
+/** Venue names ignore leading articles, joining words and punctuation ("The Stag & Hunter Hotel" ~ "Stag and Hunter Hotel"). */
+export function venuesAreSimilar(a: string | undefined, b: string | undefined): boolean {
+  const stopWords = new Set(["the", "a", "an", "and", "of", "at", "in", "on"]);
+  const venueTokens = (value: string | undefined) =>
+    new Set([...tokenSet(value)].filter((token) => !stopWords.has(token)));
+
+  const tokensA = venueTokens(a);
+  const tokensB = venueTokens(b);
+  if (tokensA.size === 0 || tokensB.size === 0) return false;
+
+  return jaccard(tokensA, tokensB) >= 0.8;
+}
+
 type DedupResponse = {
   isSameEvent: boolean;
 };
@@ -59,39 +109,46 @@ export const aiDedupCompleteEvents = async (events: ScrapedEvent[]): Promise<Ded
 
       if (!sameDate(eventA.eventDateTime, eventB.eventDateTime)) continue;
 
-      const coordsClose = coordsMatch(eventA.lngLat, eventB.lngLat, 0.001);
+      // Same night, same venue: within ~110m, an identical address string, or the same venue name.
+      const sameVenue =
+        coordsMatch(eventA.lngLat, eventB.lngLat, 0.001) ||
+        addressMatches(eventA.venueAddress, eventB.venueAddress) ||
+        venuesAreSimilar(eventA.venueName, eventB.venueName);
+
+      // Wider ~550m net catches the same event geocoded slightly differently.
+      const nearbyVenue = coordsMatch(eventA.lngLat, eventB.lngLat, 0.005);
 
       let isSameEvent = false;
 
-      if (coordsClose || addressMatches(eventA.venueAddress, eventB.venueAddress)) {
+      if (sameVenue && namesAreSimilar(eventA.eventName, eventB.eventName)) {
+        // Identical names at the same venue on the same date - no need to ask the AI.
         isSameEvent = true;
-      } else {
-        const coordsFuzzy = coordsMatch(eventA.lngLat, eventB.lngLat, 0.005);
+      } else if (sameVenue || nearbyVenue) {
+        // Same venue (or a geocoding wobble) but different billing: let the AI decide.
+        const prompt = [
+          {
+            text: `Are these two events the same event at the same venue on the same date?
 
-        if (coordsFuzzy) {
-          const prompt = [
-            {
-              text: `Are these two events the same event at the same venue on the same date?
+            Event A (source: ${eventA.source}):
+            - Name: "${eventA.eventName}"
+            - Venue: "${eventA.venueName}"
+            - Address: "${eventA.venueAddress}"
+            - Date: "${eventA.eventDateTime}"
+            - Coordinates: [${eventA.lngLat}]
 
-              Event A (source: ${eventA.source}):
-              - Name: "${eventA.eventName}"
-              - Venue: "${eventA.venueName}"
-              - Address: "${eventA.venueAddress}"
-              - Date: "${eventA.eventDateTime}"
-              - Coordinates: [${eventA.lngLat}]
+            Event B (source: ${eventB.source}):
+            - Name: "${eventB.eventName}"
+            - Venue: "${eventB.venueName}"
+            - Address: "${eventB.venueAddress}"
+            - Date: "${eventB.eventDateTime}"
+            - Coordinates: [${eventB.lngLat}]
 
-              Event B (source: ${eventB.source}):
-              - Name: "${eventB.eventName}"
-              - Venue: "${eventB.venueName}"
-              - Address: "${eventB.venueAddress}"
-              - Date: "${eventB.eventDateTime}"
-              - Coordinates: [${eventB.lngLat}]`,
-            },
-          ];
+            Different event names at the same venue on the same night are usually different events.`,
+          },
+        ];
 
-          const aiRes = await googleGenClient<DedupResponse>(prompt, dedupSchema);
-          isSameEvent = aiRes?.isSameEvent === true;
-        }
+        const aiRes = await googleGenClient<DedupResponse>(prompt, dedupSchema);
+        isSameEvent = aiRes?.isSameEvent === true;
       }
 
       if (isSameEvent) {

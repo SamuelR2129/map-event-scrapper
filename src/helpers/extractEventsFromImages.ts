@@ -5,7 +5,12 @@ import { googleGenClient } from "../apis/geminiAiApi";
 import { ScrapedEvent } from "../scrappers/types";
 import { randomUUID } from "crypto";
 import { cityConfig } from "../cityConfig";
-import { writeToCompleteEventFiles, writeToIncompleteEventFiles, eventFilesDir } from "./writeToFiles";
+import {
+  clearEventFile,
+  writeToCompleteEventFiles,
+  writeToIncompleteEventFiles,
+  eventFilesDir,
+} from "./writeToFiles";
 import { australianDateTimeMapper } from "./australianDateTimeMapper";
 import { deleteOldEvents } from "./deleteOldEvents";
 import { getBrowser } from "./getBrowser";
@@ -232,6 +237,9 @@ if (require.main === module) {
 
     const removedEvents = await writeToCompleteEventFiles(completeEvent, config);
     writeToIncompleteEventFiles([...incompleteEvent, ...removedEvents], config);
+
+    // The image run consumes staging too; leave an empty array behind.
+    clearEventFile(config.city.cityName, "staging-events.json", "Staging cleared after image extraction.");
     process.exit(0);
   })();
 }

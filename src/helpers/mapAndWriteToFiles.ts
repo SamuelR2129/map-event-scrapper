@@ -4,10 +4,12 @@ import { findMissingAddressAndLngLat } from "./findAddressAndLngLat";
 import { getEventGenresWithAi } from "./ai/googleAi";
 import { cityConfig } from "../cityConfig";
 import { randomUUID } from "crypto";
-import { writeToCompleteEventFiles, writeToIncompleteEventFiles } from "./writeToFiles";
+import { clearEventFile, writeToCompleteEventFiles, writeToIncompleteEventFiles } from "./writeToFiles";
 import { aiRemoveNonMusicEvents } from "./ai/removeNonMusicEvents";
 import { aiDedupCompleteEvents } from "./ai/dedupCompleteEvents";
 import { inspectEventCopy } from "./ai/promptInjectionDetector";
+import { isPastEvent } from "./eventTime";
+import { deleteOldEvents } from "./deleteOldEvents";
 
 (async () => {
   let completeEvent: ScrapedEvent[] = [];
@@ -18,6 +20,9 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
   if (!city) {
     throw new Error("Error: PROJECT environment variable is not set");
   }
+
+  // Archive finished events before loading the config so every snapshot below is current.
+  deleteOldEvents(city);
 
   const config = await cityConfig(city);
 
@@ -36,6 +41,7 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
 
     for (const pastEvent of config.eventFiles.past) {
       if (
+        isPastEvent(pastEvent) &&
         pastEvent.venueAddress === googleParsedEvent.venueAddress &&
         pastEvent.eventDateTime === googleParsedEvent.eventDateTime
       ) {
@@ -85,6 +91,9 @@ import { inspectEventCopy } from "./ai/promptInjectionDetector";
   const removedExisting = await writeToCompleteEventFiles(completeEvent, config);
   incompleteEvent.push(...removedExisting);
 
-  writeToIncompleteEventFiles(incompleteEvent, config);
+  writeToIncompleteEventFiles(incompleteEvent, config, "replace");
+
+  // Staging is an input queue: once it has been mapped, leave an empty array behind.
+  clearEventFile(city, "staging-events.json", `Staging cleared after mapping (${config.eventFiles.staging.length} events processed).`);
   process.exit(0);
 })();
